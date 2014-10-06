@@ -1,5 +1,6 @@
 ---
 layout: default
+categories: blog
 ---
 
 Overtone lives!

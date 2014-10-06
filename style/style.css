@@ -24,7 +24,7 @@ ol { margin: 15px 0 15px 20px; list-style-type: decimal; }
 strong, b { font-weight: bold; }
 blockquote { margin: 20px 40px; padding: 10px; background-color: #eee; border: 1px #ddd solid; }
 
-#main-logo {position: absolute; left: -18em ; top: -5em; z-index:-10;}
+#main-logo {position: absolute; left: 0em ; top: -1em; z-index:-10;}
 #overtone-text {position: relative; left: -31px ; top: 0px; z-index:-1;}
 
 .line { clear: both; border-bottom: 1px #ccc dotted; }
@@ -34,6 +34,13 @@ blockquote { margin: 20px 40px; padding: 10px; background-color: #eee; border: 1
 
 #header { padding: 50px 0 0 0; }
 #header img { float: left; }
+
+#search { display: block; float: left; }
+#search input { display: block; padding: 5px; width: 455px; line-height: 150%; font-size: 150%; margin-top: 20px; }
+
+#search-results { float: left; background: rgba(0,0,0,0.02); padding: 20px; width: 100%; }
+#search-results .entries article { background: white; padding: 10px; margin-bottom: 5px;}
+#search-results .entries article small { float: right; margin-right: 5px; background: #eee; padding: 5px; line-height: 1em; font-size: 0.5em;}
 
 #nav { float: left;  width: 960px; padding: 80px  0px 0px;  position: relative; list-style: none; margin: 20px 0 0 0; z-index: 0; }
 #nav a { float: left; display: block; font: normal 18px Arial, sans-serif; color: #555555; }
