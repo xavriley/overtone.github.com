@@ -11,17 +11,17 @@
   Overtone
 </title>
 
-<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.0.css"/>
-<link rel="stylesheet" href="/style/syntax.css" type="text/css"/>
-<link rel="stylesheet/less" href="/style/overtone.less" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{ site.url }/js/fancybox/jquery.fancybox-1.3.0.css"/>
+<link rel="stylesheet" href="{ site.url }/style/syntax.css" type="text/css"/>
+<link rel="stylesheet/less" href="{ site.url }/style/overtone.less" type="text/css"/>
 
 {% for css in page.css %}
-<link rel="stylesheet" href="{{ css }}" type="text/css" />
+<link rel="stylesheet" href="{ site.url }{{ css }}" type="text/css" />
 {% endfor %}
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
-<script type="text/javascript" src="js/fancybox/jquery.fancybox-1.3.0.pack.js"></script>
-<script type="text/javascript" src="js/less-1.0.41.min.js"></script>
+<script type="text/javascript" src="{ site.url }/js/fancybox/jquery.fancybox-1.3.0.pack.js"></script>
+<script type="text/javascript" src="{ site.url }/js/less-1.0.41.min.js"></script>
 
 {% for js in page.javascript %}
 <script type="text/javascript" src="{{ js }}"></script>

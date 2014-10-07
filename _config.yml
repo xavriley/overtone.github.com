@@ -1,3 +1,4 @@
+baseurl: '/overtone.github.io'
 exclude: ['src', 'ext', 'lib', 'doc', 'autodoc']
-highlighter: true
+pygements: true
 lsi: false
