@@ -1,4 +1,4 @@
 baseurl: '/overtone.github.io'
-exclude: ['src', 'ext', 'lib', 'doc', 'autodoc']
+exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', 'src', 'ext', 'lib', 'doc', 'autodoc']
 pygements: true
 lsi: false
