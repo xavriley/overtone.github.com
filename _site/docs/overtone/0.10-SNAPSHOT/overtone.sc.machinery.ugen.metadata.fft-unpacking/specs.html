@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/fft_unpacking.clj
+      Line: 9
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="c1">;; // Actually this just wraps up a bundle of Unpack1FFT UGens</span>
+      <span class="c1">;; UnpackFFT : MultiOutUGen {</span>
+      <span class="c1">;;   *new { | chain, bufsize, frombin=0, tobin |</span>
+      <span class="c1">;;     var upperlimit = bufsize/2;</span>
+      <span class="c1">;;     tobin = if(tobin.isNil, upperlimit, {tobin.min(upperlimit)});</span>
+      <span class="c1">;;     ^[Unpack1FFT(chain, bufsize, (frombin..tobin), 0),</span>
+      <span class="c1">;;       Unpack1FFT(chain, bufsize, (frombin..tobin), 1)].flop.flatten;</span>
+      <span class="c1">;;   }</span>
+      <span class="c1">;; }</span>
+
+
+
+      <span class="c1">;; Unpack1FFT : PV_ChainUGen {</span>
+      <span class="c1">;;   *new { | chain, bufsize, binindex, whichmeasure=0 |</span>
+      <span class="c1">;;     //(&quot;bufsize:&quot;+bufsize).postln;</span>
+      <span class="c1">;;     ^this.multiNew(&#39;demand&#39;, chain, bufsize, binindex, whichmeasure);</span>
+      <span class="c1">;;   }</span>
+      <span class="c1">;; }</span>
+
+      <span class="c1">;; // This does the demanding, to push the data back into an FFT buffer.</span>
+      <span class="c1">;; PackFFT : PV_ChainUGen {</span>
+
+      <span class="c1">;;   *new { | chain, bufsize, magsphases, frombin=0, tobin, zeroothers=0 |</span>
+      <span class="c1">;;     tobin = tobin ?? {bufsize/2};</span>
+      <span class="c1">;;     ^this.multiNewList([&#39;control&#39;, chain, bufsize, frombin, tobin, zeroothers, magsphases.size] ++ magsphases.asArray)</span>
+      <span class="c1">;;   }</span>
+
+      <span class="c1">;; }</span>
+
+      <span class="c1">;; // Conveniences to apply calculations to an FFT chain</span>
+      <span class="c1">;; PV_ChainUGen : UGen {</span>
+
+      <span class="c1">;;   // Give it a func to apply to whole set of vals: func(mags, phases)</span>
+      <span class="c1">;;   pvcalc { |numframes, func, frombin=0, tobin, zeroothers=0|</span>
+      <span class="c1">;;     var origmagsphases, magsphases, ret;</span>
+      <span class="c1">;;     origmagsphases = UnpackFFT(this, numframes, frombin, tobin).clump(2).flop;</span>
+      <span class="c1">;;     magsphases = func.value(origmagsphases[0], origmagsphases[1]);</span>
+      <span class="c1">;;     // Add phases back if they&#39;ve been ignored</span>
+      <span class="c1">;;     magsphases = magsphases.size.switch(</span>
+      <span class="c1">;;       1, {magsphases ++ origmagsphases[1]},</span>
+      <span class="c1">;;       2, {magsphases},</span>
+      <span class="c1">;;       // any larger than 2 and we assume it&#39;s a list of magnitudes</span>
+      <span class="c1">;;          {[magsphases, origmagsphases[1]]}</span>
+      <span class="c1">;;       );</span>
+      <span class="c1">;;     magsphases = magsphases.flop.flatten;</span>
+      <span class="c1">;;     ^PackFFT(this, numframes, magsphases, frombin, tobin, zeroothers);</span>
+      <span class="c1">;;   }</span>
+      <span class="c1">;;   // The same but for two chains together</span>
+      <span class="c1">;;   pvcalc2 { |chain2, numframes, func, frombin=0, tobin, zeroothers=0|</span>
+      <span class="c1">;;     var origmagsphases, origmagsphases2, magsphases, ret;</span>
+      <span class="c1">;;     origmagsphases  = UnpackFFT(this,   numframes, frombin, tobin).clump(2).flop;</span>
+      <span class="c1">;;     origmagsphases2 = UnpackFFT(chain2, numframes, frombin, tobin).clump(2).flop;</span>
+      <span class="c1">;;     magsphases = func.value(origmagsphases[0], origmagsphases[1], origmagsphases2[0], origmagsphases2[1]);</span>
+      <span class="c1">;;     // Add phases back if they&#39;ve been ignored</span>
+      <span class="c1">;;     magsphases = magsphases.size.switch(</span>
+      <span class="c1">;;       1, {magsphases ++ origmagsphases[1]},</span>
+      <span class="c1">;;       2, {magsphases},</span>
+      <span class="c1">;;       // any larger than 2 and we assume it&#39;s a list of magnitudes</span>
+      <span class="c1">;;          {[magsphases, origmagsphases[1]]}</span>
+      <span class="c1">;;       );</span>
+      <span class="c1">;;     magsphases = magsphases.flop.flatten;</span>
+      <span class="c1">;;     ^PackFFT(this, numframes, magsphases, frombin, tobin, zeroothers);</span>
+      <span class="c1">;;   }</span>
+
+      <span class="c1">;;   // Give it a func to apply to each bin in turn: func(mag, phase, index)</span>
+      <span class="c1">;;   pvcollect { |numframes, func, frombin=0, tobin, zeroothers=0|</span>
+      <span class="c1">;;     var magsphases, ret;</span>
+      <span class="c1">;;     magsphases = UnpackFFT(this, numframes, frombin, tobin).clump(2);</span>
+      <span class="c1">;;     magsphases = magsphases.collect({ |mp, index|</span>
+      <span class="c1">;;       ret = func.value(mp[0], mp[1], index).asArray;</span>
+      <span class="c1">;;       ret = if(ret.size==1, {ret ++ mp[1]}, ret); // Add phase if it&#39;s been ignored</span>
+      <span class="c1">;;     }).flatten;</span>
+      <span class="c1">;;     ^PackFFT(this, numframes, magsphases, frombin, tobin, zeroothers);</span>
+      <span class="c1">;;   }</span>
+
+      <span class="c1">;; }</span>
+      <span class="p">])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

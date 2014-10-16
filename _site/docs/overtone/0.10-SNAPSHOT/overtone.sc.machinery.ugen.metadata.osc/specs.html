@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/osc.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Oscy&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Lookup buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Phase offset or modulator in radians&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer-pow2?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Linear interpolating wavetable lookup oscillator with</span>
+<span class="s">             frequency and phase modulation inputs.</span>
+
+<span class="s">             This oscillator requires a buffer to be filled with a</span>
+<span class="s">             wavetable format signal.  This preprocesses the Signal into</span>
+<span class="s">             a form which can be used efficiently by the Oscillator.</span>
+<span class="s">             The buffer size must be a power of 2.</span>
+
+<span class="s">             This can be achieved by creating a Buffer object and</span>
+<span class="s">             sending it one of the b_gen messages ( sine1, sine2, sine3</span>
+<span class="s">             ) with the wavetable flag set to true.</span>
+
+<span class="s">             This can also be achieved by creating a Signal object and</span>
+<span class="s">             sending it the &#39;asWavetable&#39; message, saving it to disk,</span>
+<span class="s">             and having the server load it from there.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Osc&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Lookup buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Phase offset or modulator in radians&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer-pow2?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Linear interpolating wavetable lookup oscillator with</span>
+<span class="s">             frequency and phase modulation inputs.</span>
+
+<span class="s">             This oscillator requires a buffer to be filled with a</span>
+<span class="s">             wavetable format signal.  This preprocesses the Signal into</span>
+<span class="s">             a form which can be used efficiently by the Oscillator.</span>
+<span class="s">             The buffer size must be a power of 2.</span>
+
+<span class="s">             This can be achieved by creating a Buffer object and</span>
+<span class="s">             sending it one of the b_gen messages (sine1, sine2, sine3)</span>
+<span class="s">             with the wavetable flag set to true.</span>
+
+<span class="s">             This can also be achieved by creating a Signal object and</span>
+<span class="s">             sending it the &#39;asWavetable&#39; message, saving it to disk,</span>
+<span class="s">             and having the server load it from there.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SinOsc&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Phase offset or modulator in radians&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;mul&quot;</span>
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Output will be multiplied by this value.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;add&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;This value will be added to the output.&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:summary</span> <span class="s">&quot;Sine table lookup oscillator&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Outputs a sine wave with values oscillating between -1 and</span>
+<span class="s">             1 similar to osc except that the table has already been</span>
+<span class="s">             fixed as a sine table of 8192 entries.</span>
+
+<span class="s">             Sine waves are often used for creating sub-basses or are</span>
+<span class="s">             mixed with other waveforms to add extra body or bottom end</span>
+<span class="s">             to a sound.  They contain no harmonics and consist entirely</span>
+<span class="s">             of the fundamental frequency. This means that they&#39;re not</span>
+<span class="s">             suitable for subtractive synthesis i.e. passing through</span>
+<span class="s">             filters such as a hpf or lpf. However, they are useful for</span>
+<span class="s">             additive synthesis i.e. adding multiple sine waves</span>
+<span class="s">             together at different frequencies, amplitudes and phase to</span>
+<span class="s">             create new timbres.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SinOscFB&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency of oscillator&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;feedback&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;amplitude of phase feedback in radians&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:summary</span> <span class="s">&quot;Sine oscillator with phase modulation feedback&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Different feedback values results in a modulation between a</span>
+<span class="s">             sine wave and a sawtooth like wave. Overmodulation causes</span>
+<span class="s">             chaotic oscillation.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;OscN&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Buffer index.  The buffer size must be a power of</span>
+<span class="s">                     2.  The buffer should NOT be filled using Wavetable</span>
+<span class="s">                     format (b_gen commands should set wavetable flag to</span>
+<span class="s">                     false.  Raw signals (not converted with</span>
+<span class="s">                     asWavetable) can be saved to disk and loaded into</span>
+<span class="s">                     the buffer.&quot;</span> <span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>, <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Phase offset or modulator in radians&quot;</span><span class="p">}]</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer-pow2?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Noninterpolating wavetable lookup oscillator with frequency</span>
+<span class="s">             and phase modulation inputs.</span>
+
+<span class="s">             It is usually better to use the interpolating oscillator.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;VOsc&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufpos&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Buffer index. Can be swept continuously among</span>
+<span class="s">                     adjacent wavetable buffers of the same size.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Phase offset of modulator in radians&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;A wavetable lookup oscillator which can be swept smoothly</span>
+<span class="s">             across wavetables. All the wavetables must be allocated to</span>
+<span class="s">             the same size. Fractional values of table will interpolate</span>
+<span class="s">             between two adjacent tables.</span>
+
+<span class="s">             This oscillator requires at least two buffers to be filled</span>
+<span class="s">             with a wavetable format signal.  This preprocesses the</span>
+<span class="s">             Signal into a form which can be used efficiently by the</span>
+<span class="s">             Oscillator.  The buffer size must be a power of 2.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;VOsc3&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufpos&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Buffer index. Can be swept continuously among</span>
+<span class="s">                     adjacent wavetable buffers of the same size.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq1&quot;</span>
+               <span class="ss">:default</span> <span class="mf">110.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz of first oscillator&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq2&quot;</span>
+               <span class="ss">:default</span> <span class="mf">220.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz of second oscillator&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq3&quot;</span>
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz of third oscillator&quot;</span><span class="p">}]</span>,
+       <span class="ss">:doc</span> <span class="s">&quot;Three variable wavetable oscillators.</span>
+
+<span class="s">             A wavetable lookup oscillator which can be swept smoothly</span>
+<span class="s">             across wavetables. All the wavetables must be allocated to</span>
+<span class="s">             the same size. Fractional values of table will interpolate</span>
+<span class="s">             between two adjacent tables. This unit generator contains</span>
+<span class="s">             three oscillators at different frequencies, mixed together.</span>
+
+<span class="s">             This oscillator requires at least two buffers to be filled</span>
+<span class="s">             with a wavetable format signal.  This preprocesses the</span>
+<span class="s">             Signal into a form which can be used efficiently by the</span>
+<span class="s">             Oscillator.  The buffer size must be a power of 2. &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;COsc&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The number of a buffer filled in wavetable format&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;beats&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Beat frequency in Hertz&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;Chorusing wavetable lookup oscillator. Produces sum of two</span>
+<span class="s">             signals at (freq +/- (beats / 2)). Due to summing, the peak</span>
+<span class="s">             amplitude is twice that of the wavetable.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Formant&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;fundfreq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Fundamental frequency in Hertz (control rate)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;formfreq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1760.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Formant frequency in Hertz (control rate)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bwfreq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">880.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Pulse width frequency in Hertz. Controls the</span>
+<span class="s">                     bandwidth of the formant (control rate)&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>,
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a set of harmonics around a formant frequency at</span>
+<span class="s">             a given fundamental frequency.</span>
+
+<span class="s">             The frequency inputs are read at control rate only, so if</span>
+<span class="s">             you use an audio rate UGen as an input, it will only be</span>
+<span class="s">             sampled at the start of each audio synthesis block.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFSaw&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;iphase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Initial phase offset. For efficiency reasons this</span>
+<span class="s">                     is a value ranging from 0 to 2.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;low freq (i.e. not band limited) sawtooth oscillator&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFPar&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;LFSaw&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;a non band-limited parabolic oscillator outputing a high of</span>
+<span class="s">             1 and a low of zero.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFCub&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;LFSaw&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;an oscillator outputting a sine like shape made of two</span>
+<span class="s">             cubic pieces&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFTri&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;LFSaw&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;a non-band-limited triangle oscillator&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;The triangle wave shape features two linear slopes and is</span>
+<span class="s">             not as harmonically rich as a sawtooth wave since it only</span>
+<span class="s">             contains odd harmonics (partials). Ideally, this type of</span>
+<span class="s">             wave form is mixed with a sine, square or pulse wave to add</span>
+<span class="s">             a sparkling or bright effect to a sound and is often</span>
+<span class="s">             employed on pads to give them a glittery feel.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFGauss&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;duration&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Duration of one full cycle ( for freq input: dur =</span>
+<span class="s">               1 / freq )&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Relative width of the bell. Best to keep below 0.25</span>
+<span class="s">                     when used as envelope.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;iphase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Initial offset &quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;If loop is &gt; 0, UGen oscillates. Otherwise it calls</span>
+<span class="s">                     the done action after one cycle&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Action to be evaluated after cycle</span>
+<span class="s">                    completes. Default: NO-ACTION.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A non-band-limited gaussian function oscillator. Output</span>
+<span class="s">             ranges from minval to 1.</span>
+
+<span class="s">             LFGauss implements the formula: f(x) = exp(squared(x -</span>
+<span class="s">             iphase) / (-2.0 * squared(width))) where x is to vary in</span>
+<span class="s">             the range -1 to 1 over the period dur. minval is the</span>
+<span class="s">             initial value at -1&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFPulse&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;iphase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Initial phase offset in cycles ( 0..1 )&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Pulse width duty cycle from zero to one&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:signal-range</span> <span class="ss">:unipolar</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A non-band-limited pulse oscillator. Outputs a high value</span>
+<span class="s">             of one and a low value of zero.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;VarSaw&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;iphase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Initial phase offset in cycles ( 0..1 )&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Duty cycle from zero to one. (0 = downward</span>
+<span class="s">                     sawtooth, 0.5 = triangle, 1 = upward sawtooth)&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;a variable duty cycle saw wave oscillator&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Impulse&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Phase offset in cycles ( 0..1 )&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:signal-range</span> <span class="ss">:unipolar</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+       <span class="ss">:doc</span> <span class="s">&quot;non band limited impulse oscillator. Outputs a single 1</span>
+<span class="s">             every freq cycles per second and 0 the rest of the time.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SyncSaw&quot;</span>,
+       <span class="ss">:summary</span> <span class="s">&quot;hard sync sawtooth wave oscillator&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;sync-freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency of the fundamental.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;saw-freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency of the slave synched sawtooth</span>
+<span class="s">                     wave. saw-freq should always be greater than</span>
+<span class="s">                     sync-freq.&quot;</span> <span class="p">}]</span>
+       <span class="ss">:muladd</span> <span class="nv">true</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A sawtooth wave that is hard synched to a fundamental</span>
+<span class="s">             pitch. This produces an effect similar to moving formants</span>
+<span class="s">             or pulse width modulation. The sawtooth oscillator has its</span>
+<span class="s">             phase reset when the sync oscillator completes a</span>
+<span class="s">             cycle. This is not a band limited waveform, so it may</span>
+<span class="s">             alias.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;WrapIndex&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Index&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;the input signal value is truncated to an integer value and</span>
+<span class="s">             used as an index into the table</span>
+<span class="s">             (out of range index values are wrapped)&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;IndexInBetween&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Index&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;finds the (lowest) point in the buffer at which the input</span>
+<span class="s">             signal lies in-between the two values, and returns the</span>
+<span class="s">             index&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DetectIndex&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Index&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;search a buffer for a value&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Shaper&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Index&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;performs waveshaping on the input signal by indexing into a</span>
+<span class="s">             table&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DegreeToKey&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Index of the buffer which contains the steps for</span>
+<span class="s">                     each scale degree.&quot;</span> <span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The input signal.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;octave&quot;</span> <span class="ss">:default</span> <span class="mf">12.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The number of steps per octave in the scale. The</span>
+<span class="s">                     default is 12.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;the input signal value is truncated to an integer value and</span>
+<span class="s">             used as an index into an octave repeating table of note</span>
+<span class="s">             values (indices wrap around the table)&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Select&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;which&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Index of array to select&quot;</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;array&quot;</span>,
+               <span class="ss">:array</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;List of ugens to choose from&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;select the output signal from an array of inputs&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Vibrato&quot;</span>,
+       <span class="ss">:summary</span> <span class="s">&quot;Models a slow frequency modulation.&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Fundamental frequency in Hertz. If the Vibrato UGen</span>
+<span class="s">                     is running at audio rate, this must not be a</span>
+<span class="s">                     constant, but an actual audio rate UGen&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+               <span class="ss">:default</span> <span class="mi">6</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Vibrato rate, speed of wobble in Hertz. Note that</span>
+<span class="s">                     if this is set to a low value (and definitely with</span>
+<span class="s">                     0.0), you may never get vibrato back, since the</span>
+<span class="s">                     rate input is only checked at the end of a cycle.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;depth&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.02</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Size of vibrato frequency deviation around the</span>
+<span class="s">                     fundamental, as a proportion of the</span>
+<span class="s">                     fundamental. 0.02 = 2% of the fundamental.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Delay before vibrato is established in seconds (a singer tends to attack a note and then stabilise with vibrato, for instance).&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;onset&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Transition time in seconds from no vibrato to full</span>
+<span class="s">                     vibrato after the initial delay time.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate-variation&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.04</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Noise on the rate, expressed as a proportion of the</span>
+<span class="s">rate; can change once per cycle of vibrato.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;depth-variation&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Noise on the depth of modulation, expressed as a</span>
+<span class="s">                     proportion of the depth; can change once per cycle</span>
+<span class="s">                     of vibrato. The noise affects independently the up</span>
+<span class="s">                     and the down part of vibrato shape within a cycle.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;iphase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Initial phase of vibrato modulation, allowing</span>
+<span class="s">                     starting above or below the fundamental rather than</span>
+<span class="s">                     on it.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;Vibrato is a slow frequency modulation. Consider the</span>
+<span class="s">            systematic deviation in pitch of a singer around a</span>
+<span class="s">            fundamental frequency, or a violinist whose finger wobbles</span>
+<span class="s">            in position on the fingerboard, slightly tightening and</span>
+<span class="s">            loosening the string to add shimmer to the pitch. There is</span>
+<span class="s">            often also a delay before vibrato is established on a</span>
+<span class="s">            note. This UGen models these processes; by setting more</span>
+<span class="s">            extreme settings, you can get back to the timbres of FM</span>
+<span class="s">            synthesis. You can also add in some noise to the vibrato</span>
+<span class="s">            rate and vibrato size (modulation depth) to make for a more</span>
+<span class="s">            realistic motor pattern.  The vibrato output is a waveform</span>
+<span class="s">            based on a squared envelope shape with four stages marking</span>
+<span class="s">            out 0.0 to 1.0, 1.0 to 0.0, 0.0 to -1.0, and -1.0 back to</span>
+<span class="s">            0.0. Vibrato rate determines how quickly you move through</span>
+<span class="s">            these stages.&quot;</span> <span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

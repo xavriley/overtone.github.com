@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/trig.clj
+      Line: 10
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TWindex&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Triggered window&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Trigger - can be any signal. A trigger happens when</span>
+<span class="s">                  the signal changes from non-positive to positive.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;array&quot;</span>,
+            <span class="ss">:doc</span>  <span class="s">&quot;list of probabilities&quot;</span>
+            <span class="ss">:array</span> <span class="nv">true</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;normalize&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;normalise flag - 0 off, 1 on&quot;</span><span class="p">}]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;When triggered, returns a random index value based on array as</span>
+<span class="s">          a list of probabilities. By default the list of probabilities</span>
+<span class="s">          should sum to 1.0, when the normalize flag is set to 1, the</span>
+<span class="s">          values get normalized by the ugen (less efficient).&quot;</span>
+
+
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Trig1&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Timed trigger&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;trigger. Trigger can be any signal. A trigger happens</span>
+<span class="s">                  when the signal changes from non-positive to</span>
+<span class="s">                  positive.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span>  <span class="s">&quot;duration of the trigger output in seconds.&quot;</span><span class="p">}]</span>
+    <span class="ss">:signal-range</span> <span class="ss">:unipolar</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs one for dur seconds whenever the input goes from</span>
+<span class="s">          negative to positive, otherwise outputs 0.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Trig&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Trig1&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Timed trigger&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;When a nonpositive to positive transition occurs at the input,</span>
+<span class="s">          Trig outputs the level of the triggering input for the</span>
+<span class="s">          specified duration, otherwise it outputs zero.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TDelay&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Trigger delay&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input trigger signal.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;delay time in seconds.&quot;</span><span class="p">}]</span>
+    <span class="ss">:signal-range</span> <span class="ss">:unipolar</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">same-rate-as-first-input</span><span class="p">)]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Delays an input trigger by dur, ignoring other triggers in the</span>
+<span class="s">          meantime&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SendTrig&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Send a /tr OSC message to Overtone&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input trigger signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;id&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;an integer that will be passed with the trigger</span>
+<span class="s">                  message. This is useful if you have more than one</span>
+<span class="s">                  send-trig in a synth design. Consider using trig-id to</span>
+<span class="s">                  genearate a unique id.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;value&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;A ugen or float that will be polled at the time of</span>
+<span class="s">                  trigger, and its value passed with the trigger</span>
+<span class="s">                  message&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+    <span class="ss">:num-outs</span> <span class="mi">0</span>
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">same-rate-as-first-input</span><span class="p">)]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;On receiving a trigger sends a :trigger event with id and</span>
+<span class="s">          value. This command is the mechanism that synths can use to</span>
+<span class="s">          trigger events in clients.</span>
+
+<span class="s">          The trigger message sent back to the client is this:</span>
+
+<span class="s">          int   - node ID</span>
+
+<span class="s">          int   - trigger ID</span>
+
+<span class="s">          float - trigger value</span>
+
+<span class="s">          This is then presented as an event on the event-stream which</span>
+<span class="s">          is a map containing the key :path with the string \&quot;/tr\&quot; and</span>
+<span class="s">          the key :args containing a sequence of the values in the above</span>
+<span class="s">          order. i.e.</span>
+
+<span class="s">          {:path /tr, :args (34 3 123.0)}</span>
+
+<span class="s">          See on-trigger, on-latest-trigger and on-sync-trigger for</span>
+<span class="s">          registering handlers for trigger events.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SendReply&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Send information via OSC to Overtone&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input trigger signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;cmd-name&quot;</span>
+            <span class="ss">:default</span> <span class="s">&quot;/reply&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;A string or symbol, as a message name.&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-string</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;values&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Array of ugens, or valid ugen inputs&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-sequence</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reply-id&quot;</span>
+            <span class="ss">:default</span> <span class="mi">-1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Integer id (similar to that used by send-trig)&quot;</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Send an array of values from the server via an</span>
+<span class="s">          message. The OSC message is formed with cmd-name as the path,</span>
+<span class="s">          followed by two compulsary args: node-id (the id of the node</span>
+<span class="s">          that sent the message) and reply-id (the value specified in</span>
+<span class="s">          the params). These args are then followed by the list of</span>
+<span class="s">          values specified in the params.</span>
+
+<span class="s">          For example, if the ugen is used as follows:</span>
+
+<span class="s">          (send-reply tr  \&quot;/foobar\&quot; [1 2 3] 42)</span>
+
+<span class="s">          When the trig tr triggers, Overtone will receive an event that</span>
+<span class="s">          looks like the following (where 32 represents the node-id of</span>
+<span class="s">          the synth that sent the message):</span>
+
+<span class="s">          {:path \&quot;/foobar\&quot; :args (32 42 1 2 3)}</span>
+
+<span class="s">          You can register to respond to this event as follows:</span>
+
+<span class="s">          (on-event \&quot;/foobar\&quot; (fn [msg] (println msg)) ::handle-foobar)&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Latch&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Sample and hold&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Trigger. Trigger can be any signal. A trigger happens</span>
+<span class="s">                  when the signal changes from non-positive to</span>
+<span class="s">                  positive.&quot;</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Holds input signal value when triggered.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gate&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Latch&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Gate or hold&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Lets signal flow when trig is positive, otherwise holds last</span>
+<span class="s">          input value&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PulseCount&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Pulse counter&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Trigger. Trigger can be any signal. A trigger happens</span>
+<span class="s">                  when the signal changes from non-positive to positive.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Resets the counter to zero when triggered.&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">same-rate-as-first-input</span><span class="p">)</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Each input trigger increments a counter value that is output.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SetResetFF&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;PulseCount&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Set-reset flip flop&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;When a trigger is received the output is set to 1.0 Subsequent</span>
+<span class="s">          triggers have no effect When a trigger is received in the</span>
+<span class="s">          reset input, the output is set back to 0.0</span>
+
+<span class="s">          One use of this is to have some precipitating event cause</span>
+<span class="s">          something to happen until you reset it.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Peak&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;PulseCount&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Track peak signal amplitude&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs the peak amplitude of the signal so far, a trigger</span>
+<span class="s">          resets to current value&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RunningMin&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;Latch&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Track minimum level&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs the minimum value received at the input. When</span>
+<span class="s">          triggered, the minimum output value is reset to the current</span>
+<span class="s">          value.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RunningMax&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;Latch&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Track maximum level&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs the maximum value received at the input. When</span>
+<span class="s">          triggered, the maximum output value is reset to the current</span>
+<span class="s">          value.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Stepper&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Pulse counter&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Triggers increment a counter which is output as a signal. The</span>
+<span class="s">          counter loops around from max to min by step increments&quot;</span>
+
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Trigger. Trigger can be any signal. A trigger happens</span>
+<span class="s">                  when the signal changes from non-positive to</span>
+<span class="s">                  positive.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Resets the counter to resetval when triggered.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;min&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;minimum value of the counter.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;maximum value of the counter.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">7</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;step&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;step value each trigger. May be negative.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;resetval&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;value to which the counter is reset when it receives a reset trigger.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span> <span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">same-rate-as-first-input</span><span class="p">)</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PulseDivider&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Pulse divider&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs a trigger every div input triggers&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Trigger. Trigger can be any signal. A trigger happens</span>
+<span class="s">                   when the signal changes from non-positive to</span>
+<span class="s">                   positive.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;div&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Number of pulses to divide by.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">2.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;start-val&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Starting value for the trigger count. This lets you</span>
+<span class="s">                   start somewhere in the middle of a count, or if</span>
+<span class="s">                   startCount is negative it adds that many counts to</span>
+<span class="s">                   the first time the output is triggers.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ToggleFF&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Toggle flip flop&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Flip-flops between zero and one each trigger&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;trigger input&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span> <span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ZeroCrossing&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Zero crossing frequency follower&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs a frequency based upon the distance between</span>
+<span class="s">          interceptions of the X axis. The X intercepts are determined</span>
+<span class="s">          via linear interpolation so this gives better than just</span>
+<span class="s">          integer wavelength resolution. This is a very crude pitch</span>
+<span class="s">          follower, but can be useful in some situations.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span> <span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">same-rate-as-first-input</span><span class="p">)}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Timer&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Trigger timer&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs time since last trigger&quot;</span>
+
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;trigger input&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span> <span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">same-rate-as-first-input</span><span class="p">)</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Sweep&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Triggered linear ramp&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;outputs a linear increasing signal by rate/second when trig</span>
+<span class="s">          input crosses from non-positive to positive&quot;</span>
+
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;trigger input&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;rate in seconds&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span> <span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Phasor&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Resettable linear ramp between two levels&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Phasor is a linear ramp between start and end values. When its</span>
+<span class="s">          trigger input crosses from non-positive to positive, Phasor&#39;s</span>
+<span class="s">          output will jump to its reset position. Upon reaching the end</span>
+<span class="s">          of its ramp Phasor will wrap back to its start. N.B. Since end</span>
+<span class="s">          is defined as the wrap point, its value is never actually</span>
+<span class="s">          output.&quot;</span>
+
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;When triggered, reset value to reset-pos (default: 0,</span>
+<span class="s">                  phasor outputs start initially)&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;The amount of change per sample i.e at a rate of 1 the</span>
+<span class="s">                  value of each sample will be 1 greater than the</span>
+<span class="s">                  preceding sample&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;start&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Starting point of the ramp&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;end&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;End point of the ramp&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset-pos&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;The value to jump to upon receiving a trigger&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PeakFollower&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Track peak signal amplitude&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs the peak signal amplitude, falling with decay over</span>
+<span class="s">         time until reaching signal level&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;decay&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;decay factor.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.999</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Pitch&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Autocorrelation pitch follower&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This is a better pitch follower than zero-crossing, but more</span>
+<span class="s">          costly of CPU. For most purposes the default settings can be</span>
+<span class="s">          used and only in needs to be supplied. Pitch returns two</span>
+<span class="s">          values (via an Array of OutputProxys, a freq which is the</span>
+<span class="s">          pitch estimate and has-freq, which tells whether a pitch was</span>
+<span class="s">          found. Some vowels are still problematic, for instance a wide</span>
+<span class="s">          open mouth sound somewhere between a low pitched short &#39;a&#39;</span>
+<span class="s">          sound as in &#39;sat&#39;, and long &#39;i&#39; sound as in &#39;fire&#39;, contains</span>
+<span class="s">          enough overtone energy to confuse the algorithm. None of these</span>
+<span class="s">          settings are time variable.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;init-freq&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Value of output pitch until first pitch detected.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;min-freq&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Minimum frequency of execution.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">60.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-freq&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Maximum frequency of execution.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">4000.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;exec-freq&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;The target rate to periodically execute in</span>
+<span class="s">                  cps. Clipped between min-freq and max-freq.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">100.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-bins-per-octave&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Number of lags for course search. A larger value will</span>
+<span class="s">                 cause the coarse search to take longer, a smaller value</span>
+<span class="s">                 will cause the subsequent fine search to take longer.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">16</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;median&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Median filter value of length median on the output</span>
+<span class="s">                  estimation. Helps eliminate outliers and jitter. Value</span>
+<span class="s">                  of 1 means no filter.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;amp-threshold&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Minum peak to peak amplitude of input signal before</span>
+<span class="s">                  pitch estimation is performed.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;peak-threshold&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Finds the next peak that is above peak-threshold times</span>
+<span class="s">                  the amplitude of the peak at lag zero. A value of 0.5</span>
+<span class="s">                  does a pretty good job of eliminating overtones.&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;down-sample&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Down sample the input signal by an integer</span>
+<span class="s">                  factor. Helps reduce CPU overthead. Also reduces pitch</span>
+<span class="s">                  resolution.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;clar&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Clarity measurement (purity of the pitched signal) if</span>
+<span class="s">                  greater than 0.&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:num-outs</span> <span class="mi">2</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;InRange&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Tests if a signal is within a given range&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;If in is &gt;= lo and &lt;= hi output 1.0, otherwise output</span>
+<span class="s">          0.0. Output is initially zero.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;low threshold&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;high threshold&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Fold&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;InRange&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Fold a signal outside given thresholds.&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Folds input wave to within the lo and hi thresholds. This</span>
+<span class="s">         differs from the ugen fold2 in that it allows one to</span>
+<span class="s">         set both low and high thresholds.&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Clip&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Clip a signal outside given thresholds.&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Clip a signal outside given thresholds. This differs from the</span>
+<span class="s">          ugen clip2 in that it allows one to set both low and high</span>
+<span class="s">          thresholds.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;The signal to be clipped&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Low threshold of clipping. Must be less then hi&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>,<span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;High threshold of clipping. Must be greater then lo&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>,<span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Wrap&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;InRange&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Wrap a signal outside given thresholds.&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Wraps input wave to the low and high thresholds. This differs</span>
+<span class="s">         from the ugen wrap2 in that it allows one to set both</span>
+<span class="s">         low and high thresholds.&quot;</span> <span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Schmidt&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;InRange&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Schmidt trigger&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outout one when signal greater than high, and zero when lower</span>
+<span class="s">         than low.&quot;</span> <span class="p">}</span>
+
+   <span class="c1">;; TODO maybe allow a rect datatype as arg</span>
+   <span class="c1">;;      and write init function to handle it</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;InRect&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Test if a point is within a given rectangle.&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Outputs one if the 2d coordinate of x,y input values falls</span>
+<span class="s">          inside a rectangle, else zero&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;x&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;X component signal&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Y component signal&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left&quot;</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;top&quot;</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;right&quot;</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bottom&quot;</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Trapezoid&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>, <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>, <span class="ss">:default</span> <span class="mf">0.2</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>, <span class="ss">:default</span> <span class="mf">0.4</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>, <span class="ss">:default</span> <span class="mf">0.6</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;d&quot;</span>, <span class="ss">:default</span> <span class="mf">0.8</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;MostChange&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Output most changed&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;output whichever signal changed the most&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;first input&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;second input&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LeastChange&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;MostChange&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Output least changed&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;output whichever signal changed the least&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LastValue&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Output the last value before the input changed&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Output the last value before the input changed by a threshold</span>
+<span class="s">          of diff&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;diff&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;difference threshold&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span><span class="p">}]</span>
+    <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>find-ugen-doc</h1>
+    <p class="doc">Find a ugen containing the specified terms which may be either strings or
+  regexp patterns. Will search the ugen's docstrings for occurrances of all the
+  specified terms. Prints out each ugens full docstring. Similar to find-doc.
+
+  (find-ugen-doc foo)         ;=> finds all ugens containing the word foo
+  (find-ugen-doc "foo" bar) ;=> finds all ugens containing the words foo
+                                    AND bar
+  (find-ugen-doc #"foo*")   ;=> finds all ugens matching the regex foo*</p>
+    <p>
+      File: overtone/repl/ugens.clj
+      Line: 97
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">find-ugen-doc</span>
+  <span class="s">&quot;Find a ugen containing the specified terms which may be either strings or</span>
+<span class="s">  regexp patterns. Will search the ugen&#39;s docstrings for occurrances of all the</span>
+<span class="s">  specified terms. Prints out each ugens full docstring. Similar to find-doc.</span>
+
+<span class="s">  (find-ugen-doc foo)         ;=&gt; finds all ugens containing the word foo</span>
+<span class="s">  (find-ugen-doc \&quot;foo\&quot; bar) ;=&gt; finds all ugens containing the words foo</span>
+<span class="s">                                    AND bar</span>
+<span class="s">  (find-ugen-doc #\&quot;foo*\&quot;)   ;=&gt; finds all ugens matching the regex foo*&quot;</span>
+  <span class="p">[</span><span class="o">&amp;</span> <span class="nv">search-terms</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">search-terms</span> <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">symbol? </span><span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nb">str </span><span class="nv">%</span><span class="p">)</span> <span class="nv">%</span><span class="p">)</span> <span class="nv">search-terms</span><span class="p">)</span>
+        <span class="nv">specs</span>        <span class="p">(</span><span class="nf">find-matching-ugen-specs</span> <span class="nv">search-terms</span><span class="p">)]</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">empty?</span> <span class="nv">specs</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">println </span><span class="s">&quot;Sorry, unable to find a matching ugen.&quot;</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">print-ugen-docs</span> <span class="nv">specs</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

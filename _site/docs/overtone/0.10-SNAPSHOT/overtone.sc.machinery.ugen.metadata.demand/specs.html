@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/demand.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Demand&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Can be any signal. A trigger happens when the signal</span>
+<span class="s">                  changes from non-positive to positive.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Resets the list of ugens when triggered.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;demand-ugens&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-sequence-set-num-outs</span>
+            <span class="ss">:doc</span> <span class="s">&quot;list of demand rate ugens&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">arg-is-demand-ugen-or-list-of-demand-ugens?</span> <span class="ss">:demand-ugens</span><span class="p">)</span> <span class="p">]</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;On every trigger it demands the next value from each of the</span>
+<span class="s">          demand ugens passed as args.  Used to pull values from the</span>
+<span class="s">          other demand rate ugens.</span>
+
+<span class="s">          By design, a reset trigger only resets the demand ugens; it</span>
+<span class="s">          does not reset the value at Demand&#39;s output. Demand continues</span>
+<span class="s">          to hold its value until the next value is demanded, at which</span>
+<span class="s">          point its output value will be the first expected item in the</span>
+<span class="s">          list.&quot;</span> <span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Duty&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Default: NO-ACTION&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">rate</span> <span class="nv">num-outs</span> <span class="p">[</span><span class="nv">dur</span> <span class="nv">reset</span> <span class="o">&amp;</span> <span class="nv">_</span><span class="p">]</span> <span class="nv">ugen</span> <span class="nv">spec</span><span class="p">]</span>
+             <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nf">dr?</span> <span class="nv">dur</span><span class="p">)</span>
+                      <span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nf">dr?</span> <span class="nv">reset</span><span class="p">)</span>
+                               <span class="p">(</span><span class="nf">ir?</span> <span class="nv">reset</span><span class="p">)</span>
+                               <span class="p">(</span><span class="nf">rate=</span> <span class="nv">reset</span> <span class="nv">rate</span><span class="p">))))</span>
+               <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;Duration argument must be demand rate, and the</span>
+<span class="s">                        reset must be either a constant or demand</span>
+<span class="s">                        rate.  (dur: %s, reset: %s)&quot;</span> <span class="nv">dur</span> <span class="nv">reset</span><span class="p">)))</span>
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the duty cgen instead.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TDuty&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Duty&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Default: NO-ACTION&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gapFirst&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span><span class="p">}]</span>
+
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the tduty cgen instead.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DemandEnvGen&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen (or other ugen) returning level values&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen (or other ugen) returning time values&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;shape&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen (or other ugen) returning shape number -</span>
+<span class="s">                  the number given is the shape number&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;curve&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen (or other ugen) returning curve values -</span>
+<span class="s">                  if shape is 5, this is the curve factor. The possible</span>
+<span class="s">                  values are: 0 - flat segments, 1 - linear segments,</span>
+<span class="s">                  the default, 2 - natural exponential growth and</span>
+<span class="s">                  decay. In this case, the levels must all be nonzero</span>
+<span class="s">                  and the have the same sign, 3 - sinusoidal S shaped</span>
+<span class="s">                  segments, 4 - sinusoidal segments shaped like the</span>
+<span class="s">                  sides of a Welch window, a Float - a curvature value</span>
+<span class="s">                  for all segments, an Array of Floats - curvature</span>
+<span class="s">                  values for each segments.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;control rate gate if gate is x &gt;= 1, the ugen runs, if</span>
+<span class="s">                  gate is 0 &gt; x &gt; 1, the ugen is released at the next</span>
+<span class="s">                  level (doneAction), if gate is x &lt;= 0, the ugen is</span>
+<span class="s">                  sampled end held&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;if reset crosses from nonpositive to positive, the</span>
+<span class="s">                  ugen is reset at the next level. If it is &gt; 1, it is</span>
+<span class="s">                  reset immediately.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;levelScale&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen returning level scaling values&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;levelBias&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen returning level offset values&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;timeScale&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen returning time scaling values&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Default: NO-ACTION&quot;</span><span class="p">}]</span>
+    <span class="c1">;;TODO: Figure out if this init fn is useful in any way</span>
+    <span class="c1">;;       :init (fn [rate [l d s c gate reset ls lb ts da] spec]</span>
+    <span class="c1">;;               (if (or (ar? gate) (ar? reset))</span>
+    <span class="c1">;;                 [l d s c (as-ar gate) (as-ar reset) ls lb ts da]))</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Plays back break point envelope contours (levels, times,</span>
+<span class="s">          shapes) given by demand ugens. The next values are called when</span>
+<span class="s">          the next node is reached.&quot;</span> <span class="p">}</span>
+
+   <span class="c1">;; DUGen : UGen {</span>
+   <span class="c1">;;  init { arg ... argInputs;</span>
+   <span class="c1">;;    super.init(*argInputs);</span>
+   <span class="c1">;;    this.forceAudioRateInputsIntoUGenGraph;</span>
+   <span class="c1">;;  }</span>
+   <span class="c1">;;  forceAudioRateInputsIntoUGenGraph {</span>
+   <span class="c1">;;      inputs.do { |in| if(in.rate == \audio) { in &lt;! 0 } }; }</span>
+   <span class="c1">;;</span>
+   <span class="c1">;;    // some n-ary op special cases</span>
+   <span class="c1">;;</span>
+   <span class="c1">;;    linlin { arg inMin, inMax, outMin, outMax, clip=\minmax;</span>
+   <span class="c1">;;        ^((this.prune(inMin, inMax, clip)-inMin)/(inMax-inMin) * (outMax-outMin) + outMin);</span>
+   <span class="c1">;;  }</span>
+   <span class="c1">;;</span>
+   <span class="c1">;;  linexp { arg inMin, inMax, outMin, outMax, clip=\minmax;</span>
+   <span class="c1">;;    ^(pow(outMax/outMin, (this-inMin)/(inMax-inMin)) * outMin)</span>
+   <span class="c1">;;      .prune(inMin, inMax, clip);</span>
+   <span class="c1">;;  }</span>
+   <span class="c1">;;</span>
+   <span class="c1">;;  explin { arg inMin, inMax, outMin, outMax, clip=\minmax;</span>
+   <span class="c1">;;    ^(log(this.prune(inMin, inMax, clip)/inMin))</span>
+   <span class="c1">;;      / (log(inMax/inMin)) * (outMax-outMin) + outMin</span>
+   <span class="c1">;;  }</span>
+   <span class="c1">;;</span>
+   <span class="c1">;;  expexp { arg inMin, inMax, outMin, outMax, clip=\minmax;</span>
+   <span class="c1">;;    ^pow(outMax/outMin, log(this.prune(inMin, inMax, clip/inMin) / log(inMax/inMin)) * outMin)</span>
+   <span class="c1">;;  }</span>
+   <span class="c1">;; }</span>
+   <span class="c1">;; TODO: understand forceAudioRateInputsIntoUGenGraph</span>
+   <span class="c1">;; which is implemented in the pseudo-ugen DUGen parent of below</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dseries&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;length&quot;</span>
+            <span class="ss">:default</span> <span class="nv">Float/POSITIVE_INFINITY</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Default: positive infinity.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;start&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;step&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the dseries cgen instead.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dgeom&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;length&quot;</span>
+            <span class="ss">:default</span> <span class="nv">Float/POSITIVE_INFINITY</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Default: positive infinity&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;start&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;grow&quot;</span>
+            <span class="ss">:default</span> <span class="mi">2</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the dgeom cgen instead.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dbufrd&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;buffer number to read from&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;index into the buffer&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;when phase exceeds number of frames in buffer, loops</span>
+<span class="s">                  when set to 1&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Read values from a buffer on demand, using phase (index) value</span>
+<span class="s">          that is also pulled on demand. All inputs can be either demand</span>
+<span class="s">          ugen or any other ugen.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dbufwr&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the dbufwr cgen instead.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dseq&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;list&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-sequence</span>,
+            <span class="ss">:array</span> <span class="nv">true</span>
+            <span class="ss">:doc</span> <span class="s">&quot;array of values or other ugens&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-repeats&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;number of repeats&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Demand rate sequence generator. Outputs a sequence of values,</span>
+<span class="s">          possibly repeating multiple times. Use INF as a repeat val to</span>
+<span class="s">          create an endless loop.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dser&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;list&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-sequence</span>
+            <span class="ss">:array</span> <span class="nv">true</span>
+            <span class="ss">:doc</span> <span class="s">&quot;array of values or other ugens&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;count&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;number of values to return&quot;</span><span class="p">}]</span>,
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Demand rate sequence generator. Generates a sequence of values</span>
+<span class="s">          like dseq, except outputs only count total values, rather than</span>
+<span class="s">          repeating.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dshuf&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Dseq&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Demand rate random sequence generator. Shuffle a sequence once</span>
+<span class="s">         and then output it one or more times.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Drand&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Dseq&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Demand rate random sequence generator. Generate a random</span>
+<span class="s">          ordering of an input sequence.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dxrand&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Dseq&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Demand rate random sequence generator. Generate a random</span>
+<span class="s">          ordering of the given sequence without repeating any element</span>
+<span class="s">          until all elements have been returned.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dswitch1&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;list&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-sequence</span>
+            <span class="ss">:array</span> <span class="nv">true</span> <span class="ss">:doc</span> <span class="s">&quot;array of values or other ugens&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;index&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;which of the inputs to return&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A demand rate switch that can be used to select one of</span>
+<span class="s">          multiple demand rate inputs.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dswitch&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Dswitch1&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A demand rate switch. In difference to Dswitch1, Dswitch</span>
+<span class="s">          embeds all items of an input demand ugen first before looking</span>
+<span class="s">          up the next index.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dwhite&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;length&quot;</span>
+            <span class="ss">:default</span> <span class="nv">Float/POSITIVE_INFINITY</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Default: positive infinity&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span> <span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the dwhite cgen instead.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Diwhite&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Dwhite&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the diwhite cgen instead.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dbrown&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;length&quot;</span>
+            <span class="ss">:default</span> <span class="nv">Float/POSITIVE_INFINITY</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Default: positive infinity&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;step&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the dbrown cgen instead.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dibrown&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Dbrown&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the dibrown cgen instead.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dstutter&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-repeats&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;number of repeats (can be a demand ugen)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input ugen&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Replicates input values n times on demand.  Both inputs can be</span>
+<span class="s">          demand rate ugens.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Donce&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dpoll&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;demand ugen to poll values from&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig-id&quot;</span>
+            <span class="ss">:default</span> <span class="mi">-1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;if greater than 0, a &#39;/tr&#39; message is sent back to the</span>
+<span class="s">                  client (similar to send-trig)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;label&quot;</span>
+            <span class="ss">:default</span> <span class="s">&quot;dpoll-val&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-string</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a label string&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;run&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;activation switch 0 or 1 (can be a demand ugen)&quot;</span><span class="p">}]</span>
+   <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">arg-is-demand-ugen?</span> <span class="ss">:in</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Print the value of an input demand ugen. The print-out is in</span>
+<span class="s">          the form: label: value block offset: offset.</span>
+
+<span class="s">          WARNING: Printing values from the Server is intensive for the</span>
+<span class="s">          CPU. Poll should be used for debugging purposes.&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

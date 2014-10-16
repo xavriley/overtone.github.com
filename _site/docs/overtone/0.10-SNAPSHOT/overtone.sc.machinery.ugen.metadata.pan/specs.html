@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/pan.clj
+      Line: 32
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Pan2&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pos&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;pan position, -1 is left, +1 is right&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a control rate level input&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:num-outs</span> <span class="mi">2</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Two channel (stereo) equal power panner.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LinPan2&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Pan2&quot;</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Two channel (stereo) linear panner. This one sounds more like</span>
+<span class="s">           the Rhodes tremolo than Pan2.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Pan4&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xpos&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;x pan position from -1 to +1 (left to right)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ypos&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;y pan position from -1 to +1 (back to front)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;a control rate level input.&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:num-outs</span> <span class="mi">4</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Four channel equal power panner. Outputs are in order</span>
+<span class="s">           LeftFront, RightFront, LeftBack, RightBack.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Balance2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;left&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;channel 1 of input stereo signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;right&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;channel 2 of input stereo signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pos&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;pan position, -1 is left, +1 is right&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;a control rate level input.&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-ar</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">(</span><span class="nf">nth-input-ar</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="ss">:num-outs</span> <span class="mi">2</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Equal power panning balances two channels; by panning, you</span>
+<span class="s">           are favouring one or other channel in the mix, and the other</span>
+<span class="s">           loses power. The middle pan position (pos=0.0) corresponds to</span>
+<span class="s">           the original stereo mix; full left (pos of -1) is essentially</span>
+<span class="s">           just left channel playing, full right (pos of 1) just the</span>
+<span class="s">           right. The output of Balance2 remains a stereo signal.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Rotate2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;x&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pos&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;angle to rotate around the circle from -1 to +1. -1</span>
+<span class="s">                   is 180 degrees, -0.5 is left, 0 is forward, +0.5 is</span>
+<span class="s">                   right, +1 is behind.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:num-outs</span> <span class="mi">2</span>
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Rotate2 can be used for rotating an ambisonic B-format sound</span>
+<span class="s">           field around an axis.</span>
+
+<span class="s">           Rotate2 does an equal power rotation so it also works well on</span>
+<span class="s">           stereo sounds.  It takes two audio inputs (x, y) and an angle</span>
+<span class="s">           control (pos).  It outputs two channels (x, y).  It computes</span>
+<span class="s">           this:</span>
+
+<span class="s">           xout = cos(angle) * xin + sin(angle) * yin;</span>
+
+<span class="s">           yout = cos(angle) * yin - sin(angle) * xin;</span>
+
+<span class="s">           where angle = pos * pi, so that -1 becomes -pi and +1 becomes</span>
+<span class="s">           +pi.  This allows you to use an LFSaw to do continuous</span>
+<span class="s">           rotation around a circle.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PanB&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;azimuth&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;in radians, -pi to +pi&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;elevation&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;in radians, -0.5pi to +0.5pi&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;a control rate level input&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:num-outs</span> <span class="mi">4</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Ambisonic B format panner. Output channels are in order</span>
+<span class="s">           W,X,Y,Z.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PanB2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;azimuth&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;position around the circle from -1 to +1. -1 is</span>
+<span class="s">                   behind, -0.5 is left, 0 is forward, +0.5 is right, +1</span>
+<span class="s">                   is behind.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;amplitude control&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:num-outs</span> <span class="mi">3</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Encode a mono signal to two dimensional ambisonic B-format.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BiPanB2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in-a&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal A&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in-b&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal B&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;azimuth&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;position around the circle from -1 to +1. -1 is</span>
+<span class="s">                   behind, -0.5 is left, 0 is forward, +0.5 is right, +1</span>
+<span class="s">                   is behind.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;amplitude control&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:num-outs</span> <span class="mi">3</span>
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">first-n-inputs-ar</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Encode a two channel signal to two dimensional ambisonic</span>
+<span class="s">           B-format.  This puts two channels at opposite poles of a 2D</span>
+<span class="s">           ambisonic field.  This is one way to map a stereo sound onto</span>
+<span class="s">           a soundfield.  It is equivalent to:</span>
+
+<span class="s">           PanB2(inA, azimuth, gain) + PanB2(inB, azimuth + 1, gain)&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DecodeB2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;numChannels&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;number of output speakers. Typically 4 to 8.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;w&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;B-format signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;B-format signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;B-format signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;orientation&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.5</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Should be zero if the front is a vertex of the</span>
+<span class="s">                   polygon. The first speaker will be directly in</span>
+<span class="s">                   front. Should be 0.5 if the front bisects a side of</span>
+<span class="s">                   the polygon. Then the first speaker will be the one</span>
+<span class="s">                   left of center. Default is 0.5.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;2D Ambisonic B-format decoder. Decode a two dimensional</span>
+<span class="s">           ambisonic B-format signal to a set of speakers in a regular</span>
+<span class="s">           polygon.  The outputs will be in clockwise order. The</span>
+<span class="s">           position of the first speaker is either center or left of</span>
+<span class="s">           center.&quot;</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">first-n-inputs-ar</span> <span class="mi">3</span><span class="p">))}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PanAz&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;number of output channels&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pos&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;pan position. Channels are evenly spaced over a</span>
+<span class="s">                   cyclic period of 2.0 with 0.0 equal to the position</span>
+<span class="s">                   directly in front, 2.0/numChans a clockwise shift</span>
+<span class="s">                   1/numChans of the way around the ring, 4.0/numChans</span>
+<span class="s">                   equal to a shift of 2/numChans, etc. Thus all</span>
+<span class="s">                   channels will be cyclically panned through if a</span>
+<span class="s">                   sawtooth wave from -1 to +1 is used to modulate the</span>
+<span class="s">                   pos. N.B. Front may or may not correspond to a</span>
+<span class="s">                   speaker depending on the setting of the orientation</span>
+<span class="s">                   arg, see below.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;a control rate level input.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">2.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;The width of the panning envelope. Nominally this is</span>
+<span class="s">                   2.0 which pans between pairs of adjacent</span>
+<span class="s">                   speakers. Width values greater than two will spread</span>
+<span class="s">                   the pan over greater numbers of speakers. Width</span>
+<span class="s">                   values less than one will leave silent gaps between</span>
+<span class="s">                   speakers.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;orientation&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.5</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;Should be zero if the front is a vertex of the</span>
+<span class="s">                   polygon. The first speaker will be directly in</span>
+<span class="s">                   front. Should be 0.5 if the front bisects a side of</span>
+<span class="s">                   the polygon. Then the first speaker will be the one</span>
+<span class="s">                   left of center. Default is 0.5.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Multichannel equal power panner.&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;XFade2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;inA&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal A&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;inB&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal B&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pan&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Pan between the two input signals with -1 being inA</span>
+<span class="s">                   only and 1 being inB only with values between being a</span>
+<span class="s">                   mix of the two.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Output level - 0 being silent and 1 being original</span>
+<span class="s">                   volume&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">first-n-inputs-ar</span> <span class="mi">2</span><span class="p">))]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Equal power two channel cross fade&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LinXFade2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;inA&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal A&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;inB&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;input signal B&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pan&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;cross fade position from -1 to +1&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;a control rate level input&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Two channel linear crossfader.&quot;</span>
+    <span class="ss">:check</span> <span class="p">[(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">first-n-inputs-ar</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)]}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

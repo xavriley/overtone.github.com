@@ -1,0 +1,47 @@
+<p>The audio synthesis API that communicates with SuperCollider is operational. You can define a synthesizer, load it and then trigger it and send it control messages to adjust parameters. Here’s a short example of creating and playing a simple synth on the repl.</p>
+<div class='highlight'><pre><code class='clojure'><span class='p'>(</span><span class='nf'>use</span> <span class='ss'>&#39;overtone.live</span><span class='p'>)</span>
+
+<span class='c1'>; import the UGen function library</span>
+<span class='c1'>; we do it this way because we need to override a bunch of built-in clojure</span>
+<span class='c1'>; functions, including +, -, *, / and other common functions.  Doing it like</span>
+<span class='c1'>; this saves you from having to exclude all this in your namespace definition.</span>
+<span class='p'>(</span><span class='nf'>refer-ugens</span><span class='p'>)</span>
+
+<span class='c1'>; boot the synth server</span>
+<span class='p'>(</span><span class='nf'>boot</span><span class='p'>)</span>
+
+<span class='c1'>; here is a random, echoing, ping synth</span>
+<span class='p'>(</span><span class='nf'>defsynth</span> <span class='nv'>chop-saw</span> <span class='p'>[</span><span class='nv'>freq</span> <span class='mi'>440</span> <span class='nv'>depth</span> <span class='mi'>5</span><span class='p'>]</span>                                                                                     
+  <span class='p'>(</span><span class='nf'>comb-n</span> <span class='p'>(</span><span class='nb'>* </span><span class='p'>(</span><span class='nf'>env-gen</span> <span class='p'>(</span><span class='nf'>perc</span> <span class='mf'>0.1</span> <span class='mf'>0.4</span><span class='p'>)</span> <span class='p'>(</span><span class='nf'>lf-pulse</span><span class='ss'>:kr</span> <span class='mi'>2</span><span class='p'>))</span> 
+             <span class='p'>(</span><span class='nf'>rlpf</span> <span class='p'>(</span><span class='nf'>saw</span> <span class='p'>(</span><span class='nb'>+ </span><span class='nv'>freq</span> <span class='p'>(</span><span class='nb'>* </span><span class='nv'>depth</span> 
+                                <span class='p'>(</span><span class='nf'>lf-saw</span><span class='ss'>:kr</span> <span class='p'>(</span><span class='nf'>lf-pulse</span><span class='ss'>:kr</span> <span class='mf'>0.1</span> <span class='mf'>0.2</span><span class='p'>)))))</span> 
+                   <span class='nv'>freq</span> <span class='mf'>0.6</span><span class='p'>))))</span>
+
+<span class='c1'>; play it</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span><span class='p'>)</span>
+
+<span class='c1'>; kill the synth instance based on the last returned node id</span>
+<span class='p'>(</span><span class='nf'>kill</span> <span class='nv'>*1</span><span class='p'>)</span> 
+
+<span class='c1'>; play it with different settings</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='mi'>440</span> <span class='mi'>20</span><span class='p'>)</span>
+
+<span class='c1'>; and control them on the fly</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:ctl</span> <span class='ss'>:freq</span> <span class='mi'>880</span> <span class='ss'>:depth</span> <span class='mi'>10</span><span class='p'>)</span>
+
+<span class='c1'>; make some more</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:freq</span> <span class='mi'>440</span><span class='p'>)</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:freq</span> <span class='mi'>220</span><span class='p'>)</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:freq</span> <span class='mi'>110</span><span class='p'>)</span>
+
+<span class='c1'>; clear all running synths</span>
+<span class='p'>(</span><span class='nf'>reset</span><span class='p'>)</span>
+
+<span class='c1'>; quit the synth server</span>
+<span class='p'>(</span><span class='nf'>quit</span><span class='p'>)</span>
+</code></pre></div>
+<p>A graph based editor (connecting nodes with edges) is coming to life now. This will allow you to define synthesizers and control patches in a basic graphical programming environment. Here’s a screenshot showing some of the widgets implemented in the first prototype (click to zoom):</p>
+
+<p><a class='fancy' href='media/overflow.png'><img src='media/overflow-small.png' /></a></p>
+
+<p>Overtone can be used as a library from Clojure code or on the repl, but there is also the beginnings of a standalone application. It currently boots the server and it has a repl that can evaluate code, but it will soon get a text editor and the flow editor.</p>

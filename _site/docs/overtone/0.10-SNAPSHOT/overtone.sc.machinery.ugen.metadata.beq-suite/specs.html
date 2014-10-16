@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/beq_suite.clj
+      Line: 6
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BLowPass&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;cutoff frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;12db/oct rolloff - 2nd order resonant Low Pass Filter based on</span>
+<span class="s">          the Second Order Section (SOS) biquad UGen&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BHiPass&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;cutoff frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q. bandwidth / cutoffFreq&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;12db/oct rolloff - 2nd order resonant Hi Pass Filter based on</span>
+<span class="s">          the Second Order Section (SOS) biquad UGen.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BAllPass&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;center frequency.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq.&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;All pass filter based on the Second Order Section (SOS) biquad</span>
+<span class="s">          UGen&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BBandPass&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span> <span class="ss">:doc</span> <span class="s">&quot;center frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bw&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the bandwidth in octaves between -3 dB frequencies&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Band pass filter based on the Second Order Section (SOS)</span>
+<span class="s">          biquad UGen&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BBandStop&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;center frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bw&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the bandwidth in octaves between -3 dB frequencies&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Band reject filter based on the Second Order Section (SOS)</span>
+<span class="s">          biquad UGen&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BPeakEQ&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;center frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;db&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;boost/cut the center frequency (in dBs)&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Parametric equalizer based on the Second Order Section (SOS)</span>
+<span class="s">          biquad UGen&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BLowShelf&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;center frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rs&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of S.  Shell boost/cut slope. When S =</span>
+<span class="s">                  1, the shelf slope is as steep as it can be and remain</span>
+<span class="s">                  monotonically increasing or decreasing gain with</span>
+<span class="s">                  frequency.  The shelf slope, in dB/octave, remains</span>
+<span class="s">                  proportional to S for all other values for a fixed</span>
+<span class="s">                  freq/SampleRate.ir and db.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;db&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;gain. boost/cut the center frequency in dBs&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Low shelf based on the Second Order Section (SOS) biquad UGen&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BHiShelf&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1200.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;center frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rs&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of S.  Shell boost/cut slope. When S =</span>
+<span class="s">                  1, the shelf slope is as steep as it can be and remain</span>
+<span class="s">                  monotonically increasing or decreasing gain with</span>
+<span class="s">                  frequency.  The shelf slope, in dB/octave, remains</span>
+<span class="s">                  proportional to S for all other values for a fixed</span>
+<span class="s">                  freq/SampleRate.ir and db.&quot;</span> <span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;db&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;gain. boost/cut the center frequency in dBs&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Hi shelfbased on the Second Order Section (SOS) biquad UGen&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

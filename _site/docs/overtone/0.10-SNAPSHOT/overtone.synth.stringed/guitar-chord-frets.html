@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>guitar-chord-frets</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/synth/stringed.clj
+      Line: 206
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">guitar-chord-frets</span>
+  <span class="p">{</span><span class="ss">:A</span>    <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:A7</span>   <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:A9</span>   <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Am</span>   <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:Am7</span>  <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span> <span class="p">]</span>
+
+   <span class="ss">:Bb</span>   <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Bb7</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">4</span> <span class="p">]</span>
+   <span class="ss">:Bb9</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Bbm</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Bbm7</span> <span class="p">[</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">1</span> <span class="p">]</span>
+
+   <span class="ss">:B</span>    <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:B7</span>   <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:B9</span>   <span class="p">[</span>  <span class="mi">2</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Bm</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">3</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Bm7</span>  <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">2</span> <span class="p">]</span>
+
+   <span class="ss">:C</span>    <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:C7</span>   <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:C9</span>   <span class="p">[</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Cm</span>   <span class="p">[</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">5</span>  <span class="mi">5</span>  <span class="mi">4</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Cm7</span>  <span class="p">[</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">5</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">3</span> <span class="p">]</span>
+
+   <span class="ss">:Db</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Db7</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">4</span> <span class="p">]</span>
+   <span class="ss">:Db9</span>  <span class="p">[</span>  <span class="mi">4</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">4</span> <span class="p">]</span>
+   <span class="ss">:Dbm</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:Dbm7</span> <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span> <span class="p">]</span>
+
+   <span class="ss">:D</span>    <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:D7</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:D9</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:Dm</span>   <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Dm7</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">1</span> <span class="p">]</span>
+
+   <span class="ss">:Eb</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">5</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Eb7</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Eb9</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Ebm</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">4</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Ebm7</span> <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">2</span> <span class="p">]</span>
+
+   <span class="ss">:E</span>    <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:E7</span>   <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:E9</span>   <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Em</span>   <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span> <span class="p">]</span>
+   <span class="ss">:Em7</span>  <span class="p">[</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">0</span> <span class="p">]</span>
+
+   <span class="ss">:F</span>    <span class="p">[</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:F7</span>   <span class="p">[</span>  <span class="mi">1</span> <span class="mi">-1</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">1</span> <span class="mi">-1</span> <span class="p">]</span>
+   <span class="ss">:F9</span>   <span class="p">[</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">0</span>  <span class="mi">1</span> <span class="mi">-1</span> <span class="p">]</span>
+   <span class="ss">:Fm</span>   <span class="p">[</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Fm7</span>  <span class="p">[</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">1</span> <span class="p">]</span>
+
+   <span class="ss">:Gb</span>   <span class="p">[</span>  <span class="mi">2</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Gb7</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">4</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Gb9</span>  <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">4</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">5</span>  <span class="mi">4</span> <span class="p">]</span>
+   <span class="ss">:Gbm</span>  <span class="p">[</span>  <span class="mi">2</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Gbm7</span> <span class="p">[</span>  <span class="mi">2</span> <span class="mi">-1</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span> <span class="mi">-1</span> <span class="p">]</span>
+
+   <span class="ss">:G</span>    <span class="p">[</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:G7</span>   <span class="p">[</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:G9</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">1</span> <span class="p">]</span>
+   <span class="ss">:Gm</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">5</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Gm7</span>  <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">0</span>  <span class="mi">3</span> <span class="mi">-1</span> <span class="p">]</span>
+
+   <span class="ss">:Ab</span>   <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">6</span>  <span class="mi">5</span>  <span class="mi">4</span>  <span class="mi">4</span> <span class="p">]</span>
+   <span class="ss">:Ab7</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Ab9</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">2</span> <span class="p">]</span>
+   <span class="ss">:Abm</span>  <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">6</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">4</span> <span class="p">]</span>
+   <span class="ss">:Abm7</span> <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">7</span>  <span class="mi">4</span> <span class="p">]</span>
+
+   <span class="ss">:Gadd5</span> <span class="p">[</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Cadd9</span> <span class="p">[</span> <span class="mi">-1</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">3</span> <span class="p">]</span>
+   <span class="ss">:Dsus4</span> <span class="p">[</span> <span class="mi">-1</span> <span class="mi">-1</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">3</span> <span class="p">]</span>
+
+   <span class="p">})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

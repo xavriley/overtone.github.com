@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>apply-at</h1>
+    <p class="doc">Scheduled function appliction. Works identically to apply, except
+   that it takes an additional initial argument: ms-time. If ms-time is
+   in the future, function application is delayed until that time, if
+   ms-time is in the past function application is immediate.
+
+   If you wish to apply slightly before specific time rather than
+   exactly at it, see apply-by.
+
+   Can be used to implement the 'temporal recursion' pattern. This is
+   where a function has a call to apply-at at its tail:
+
+   (defn foo
+     [t val]
+     (println val)
+     (let [next-t (+ t 200)]
+       (apply-at next-t #'foo [next-t (inc val)])))
+
+   (foo (now) 0) ;=> 0, 1, 2, 3...
+
+   The fn foo is written in a recursive style, yet the recursion is
+   scheduled for application 200ms in the future. By passing a function
+   using #'foo syntax instead of the symbole foo, when later called by
+   the scheduler it will lookup based on the symbol rather than using
+   the instance of the function defined earlier. This allows us to
+   redefine foo whilst the temporal recursion is continuing to execute.
+
+   To stop an executing temporal recursion pattern, either redefine the
+   function to not call itself, or use (stop).</p>
+    <p>
+      File: overtone/music/time.clj
+      Line: 125
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">apply-at</span>
+  <span class="s">&quot;Scheduled function appliction. Works identically to apply, except</span>
+<span class="s">   that it takes an additional initial argument: ms-time. If ms-time is</span>
+<span class="s">   in the future, function application is delayed until that time, if</span>
+<span class="s">   ms-time is in the past function application is immediate.</span>
+
+<span class="s">   If you wish to apply slightly before specific time rather than</span>
+<span class="s">   exactly at it, see apply-by.</span>
+
+<span class="s">   Can be used to implement the &#39;temporal recursion&#39; pattern. This is</span>
+<span class="s">   where a function has a call to apply-at at its tail:</span>
+
+<span class="s">   (defn foo</span>
+<span class="s">     [t val]</span>
+<span class="s">     (println val)</span>
+<span class="s">     (let [next-t (+ t 200)]</span>
+<span class="s">       (apply-at next-t #&#39;foo [next-t (inc val)])))</span>
+
+<span class="s">   (foo (now) 0) ;=&gt; 0, 1, 2, 3...</span>
+
+<span class="s">   The fn foo is written in a recursive style, yet the recursion is</span>
+<span class="s">   scheduled for application 200ms in the future. By passing a function</span>
+<span class="s">   using #&#39;foo syntax instead of the symbole foo, when later called by</span>
+<span class="s">   the scheduler it will lookup based on the symbol rather than using</span>
+<span class="s">   the instance of the function defined earlier. This allows us to</span>
+<span class="s">   redefine foo whilst the temporal recursion is continuing to execute.</span>
+
+<span class="s">   To stop an executing temporal recursion pattern, either redefine the</span>
+<span class="s">   function to not call itself, or use (stop).&quot;</span>
+  <span class="p">{</span><span class="ss">:arglists</span> <span class="o">&#39;</span><span class="p">([</span><span class="nv">ms-time</span> <span class="nv">f</span> <span class="nv">args*</span> <span class="nv">argseq</span><span class="p">])}</span>
+  <span class="p">[</span><span class="o">#^</span><span class="nv">clojure.lang.IFn</span> <span class="nv">ms-time</span> <span class="nv">f</span> <span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">delay-time</span> <span class="p">(</span><span class="nb">- </span><span class="nv">ms-time</span> <span class="p">(</span><span class="nf">now</span><span class="p">))]</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt;= </span><span class="nv">delay-time</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">after-delay</span> <span class="mi">0</span> <span class="o">#</span><span class="p">(</span><span class="nb">apply </span><span class="nv">f</span> <span class="p">(</span><span class="o">#</span><span class="ss">&#39;clojure.core/spread</span> <span class="nv">args</span><span class="p">)))</span>
+      <span class="p">(</span><span class="nf">after-delay</span> <span class="nv">delay-time</span> <span class="o">#</span><span class="p">(</span><span class="nb">apply </span><span class="nv">f</span> <span class="p">(</span><span class="o">#</span><span class="ss">&#39;clojure.core/spread</span> <span class="nv">args</span><span class="p">))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

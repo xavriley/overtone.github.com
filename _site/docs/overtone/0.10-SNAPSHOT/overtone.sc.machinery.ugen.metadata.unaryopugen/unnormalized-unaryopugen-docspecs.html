@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>unnormalized-unaryopugen-docspecs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/unaryopugen.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">unnormalized-unaryopugen-docspecs</span>
+  <span class="p">{</span><span class="s">&quot;neg&quot;</span> <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal inversion&quot;</span>
+          <span class="ss">:doc</span> <span class="s">&quot;Invert input signal a by changing its sign.</span>
+
+<span class="s">                i.e. 1 -&gt; -1 and -0.5 -&gt; 0.5&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;not-pos?&quot;</span>    <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Check for non positive signal&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Determines whether the signal is negative or</span>
+<span class="s">                        not. If it is less than or equal to 0 then</span>
+<span class="s">                        outputs 1, otherwise outputs 0</span>
+
+<span class="s">                        i.e. 1 -&gt; 0,  -0.5 -&gt; 1, 0 -&gt; 1&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;abs&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Absolute value&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the value of input a without regard to</span>
+<span class="s">                        its sign.</span>
+
+<span class="s">                        i.e 1 -&gt; 1 and -0.5 0.5&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;ceil&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Next higher integer&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Rounds input a up the next highest integer.</span>
+
+<span class="s">                        i.e. 5.1 -&gt; 6 and 7.0 -&gt; 7&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;floor&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Previous lower integer&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Rounds input a down to the previous lower</span>
+<span class="s">                       integer.</span>
+
+<span class="s">                       i.e. 5.9 -&gt; 5 and 7.0 -&gt; 7&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;frac&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Fractional part of signal&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the fractional part between input a and</span>
+<span class="s">                        the next higher integer. This means that</span>
+<span class="s">                        negative input vals may result in a different</span>
+<span class="s">                        output than positive input vals. Output is</span>
+<span class="s">                        always positive.</span>
+
+<span class="s">                        i.e. 3.5 -&gt; 0.5, 34.2 -&gt; 0.2, -5.2 -&gt; 0.8&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;sign&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Sign of signal&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs -1 when a &lt; 0, +1 when a &gt; 0, 0 when a</span>
+<span class="s">                        is 0.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;squared&quot;</span>     <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Squared value&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the square of input a.</span>
+
+<span class="s">                        i.e. 5 -&gt; 25 and -3 -&gt; 9&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;cubed&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Cubed value&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the cube of input a.</span>
+
+<span class="s">                        i.e. 2 -&gt; 8 and -3 -&gt; -27&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;sqrt&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Square root&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the square root of input a. The</span>
+<span class="s">                        definition of square root is extended for</span>
+<span class="s">                        signals so that when a is &lt; 0 (sqrt a)</span>
+<span class="s">                        returns (- (sqrt -a)).</span>
+
+<span class="s">                        i.e. 9 -&gt; 3 and -25 -&gt; -5&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;exp&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Exponential function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs e to the power of a, where e is the</span>
+<span class="s">                        mathematical constant (approximately</span>
+<span class="s">                        2.718281828) and a is the input signal.</span>
+
+<span class="s">                        i.e. 1 -&gt; 2.71828 and 10 -&gt; 22026.5&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;reciprocal&quot;</span>  <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Multiplicative inverse&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the multiplicative inverse of a. This is</span>
+<span class="s">                        typically denoted by 1/a or a^-1.</span>
+
+<span class="s">                        i.e. 10 -&gt; 0.1 and -1 -&gt; -1&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;midicps&quot;</span>     <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;midi-note&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;MIDI note to convert&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;Convert MIDI note to cycles per second&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the corresponding Hz or cycles per</span>
+<span class="s">                        second for input a representing a MIDI note. Inverse</span>
+<span class="s">                        of cpsmidi.</span>
+
+<span class="s">                        i.e 69 -&gt; 440 and 80 -&gt; 830.609&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;cpsmidi&quot;</span>     <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;cps&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Cycles per second&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;convert cycles per second to MIDI note&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the corresponding MIDI note for input a</span>
+<span class="s">                        representing cycles per second or Hz. Doesn&#39;t</span>
+<span class="s">                        always return a discrete integer. Inverse of</span>
+<span class="s">                        midicps.</span>
+
+<span class="s">                        i.e. 440 -&gt; 69 and 500 -&gt; 71.2131&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;midiratio&quot;</span>   <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-semitones&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Interval in MIDI notes&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;Convert an interval in MIDI notes into a frequency ratio&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs a frequency ratio that corresponds to</span>
+<span class="s">                        the interval in MIDI notes represented by</span>
+<span class="s">                        num-semitones. In other words, outputs the</span>
+<span class="s">                        amount to multiply a frequency by in order to</span>
+<span class="s">                        alter it by num-semitones. Inverse of ratiomidi.</span>
+
+<span class="s">                        i.e. 12 -&gt; 2, -2 -&gt; 0.890899&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;ratiomidi&quot;</span>   <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq-ratio&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Cycles per second&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;Convert a frequency ratio to an interval in MIDI notes&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the number of semitones difference</span>
+<span class="s">                        created when multiplying a given frequency by</span>
+<span class="s">                        freq-ratio. Inverse of midiratio.</span>
+
+<span class="s">                        i.e. 0.890899 -&gt; -1.99999 and 2 -&gt; 12 &quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;dbamp&quot;</span>       <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;decibels&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Volume in decibels&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;convert decibels to linear amplitude&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Convert decibels to the linear amplitude. For</span>
+<span class="s">                        example, to raise the amplitude by 20db, you</span>
+<span class="s">                        should multiply the signal by 10. Inverse of</span>
+<span class="s">                        ampdb.</span>
+
+<span class="s">                        i.e. 20 -&gt; 10 and 50 -&gt; 316.228&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;ampdb&quot;</span>       <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;amplitude&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Linear amplitude&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;Convert linear amplitude to decibels&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Convert a linear amplitude to number of</span>
+<span class="s">                        decibels. For example, a 20db raise in amplitude</span>
+<span class="s">                        is equivalent to multiplying a signal by</span>
+<span class="s">                        10. Inverse of dbamp.</span>
+
+<span class="s">                        i.e. 10 -&gt; 20 and 316.228 -&gt; 50&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;octcps&quot;</span>      <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;dec-octaves&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Decimal octaves&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;Convert decimal octaves to cycles per second&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the number of cycles per second</span>
+<span class="s">                        represented by dec-octaves.</span>
+
+<span class="s">                        i.e. 1 -&gt; 32.7031 -4 -&gt; 1.02197&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;cpsoct&quot;</span>      <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;cps&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Cycles per second&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;Convert cycles per second to decimal octaves&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the number of decimal octaves</span>
+<span class="s">                        represented by cps</span>
+
+<span class="s">                        i.e. 32.7031 -&gt; 0.99999 and 500 -&gt; 4.93442&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;log&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Natural logarithm&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the natural log of input a</span>
+
+<span class="s">                        i.e. 2.71828 -&gt; 0.99999 and 10 -&gt; 2.30259&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;log2&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Base 2 logarithm&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the base 2 log of input a</span>
+
+<span class="s">                        i.e. 8 -&gt; 3 and 256 -&gt; 8&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;log10&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Base 10 logarithm&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the base 10 log of input a</span>
+
+<span class="s">                        i.e. 10 -&gt; 1 and 200 -&gt; 2.30103&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;sin&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Sine function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the sine of input a</span>
+
+<span class="s">                        i.e. 1.5707986 -&gt; 1 and 3.14159265 -&gt; ~0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;cos&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Cosine function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the cosine of input a</span>
+
+<span class="s">                        i.e. 0 -&gt; 1 and 3.14159265 -&gt; -1&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;tan&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Tangent function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the tangent of input a</span>
+
+<span class="s">                        i.e. 0 -&gt; 0 and 1.570 -&gt; 1255.85&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;asin&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Arcsine function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the arcsine of input a</span>
+
+<span class="s">                        i.e. 1 -&gt; 1.5708 and 3.14159265 -&gt; nan&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;acos&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Arccosine function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the arccosine of input a</span>
+
+<span class="s">                        i.e. 1 -&gt; 0 and 3.14159265 -&gt; nan&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;atan&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Arctangent function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the arctangent of input a</span>
+
+<span class="s">                        i.e. 0 -&gt; 0 and 1 -&gt; 0.785398&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;sinh&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Hyperbolic sine function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the hyperbolic sine of input a</span>
+
+<span class="s">                        i.e. 0 -&gt; 0 and 1 -&gt; 1.1752&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;cosh&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Hyperbolic cosine function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the hyperbolic cosine of input a</span>
+
+<span class="s">                        i.e. 0 -&gt; 1 and 1 -&gt; 1.54308&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;tanh&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Hyperbolic tangent function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the hyperbolic tangent of input a.</span>
+
+<span class="s">                        Acts similar to clip2 with a value of 1 in that</span>
+<span class="s">                        it ensures that the output never exceeds +1 or</span>
+<span class="s">                        -1. However, it differs from clip2 in that it</span>
+<span class="s">                        massages the whole of the input rather than the</span>
+<span class="s">                        values which exceed the limits such that the</span>
+<span class="s">                        angles near the clipping ranges are rounder.</span>
+
+<span class="s">                        i.e. 0 -&gt; 0 and 1 -&gt; 0.761594&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;distort&quot;</span>     <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Nonlinear distortion&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Maps input a to a value between 0 and 1 if a is</span>
+<span class="s">                        positive and between 0 and -1 if a is</span>
+<span class="s">                        negative. Slope of mapping is initially steep,</span>
+<span class="s">                        then the gradient reduces as it tends towards</span>
+<span class="s">                        1. Negative part is a mirror image. Always</span>
+<span class="s">                        returns a value between -1 and 1. See softclip</span>
+<span class="s">                        if you require a linear region.</span>
+
+<span class="s">                        i.e. 0 -&gt; 0, 1 -&gt; 0.5, 10 -&gt; 0.909091,</span>
+<span class="s">                        1000 -&gt; 0.999001 and -1 -&gt; 0.5&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;softclip&quot;</span>    <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Nonlinear distortion with linear region&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Maps input a to a value between 0 and 1 if a is</span>
+<span class="s">                        positive and between 0 and -1 if a is</span>
+<span class="s">                        negative. Gradient of mapping is linear between</span>
+<span class="s">                        -0.5 and 0.5 and then gradually reduces as it</span>
+<span class="s">                        tends towards 1. Negative part is a mirror</span>
+<span class="s">                        image. Always returns a value between -1 and 1.</span>
+
+<span class="s">                        i.e. 0 -&gt; 0, 0.2 -&gt; 0.2, 0.5 -&gt; 0.5,</span>
+<span class="s">                        0.75 -&gt; 0.666667, 10 -&gt; 0.975 and 1000 -&gt; 0.99975&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;rect-window&quot;</span> <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Rectangular window function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Maps input a onto a rectangular window which</span>
+<span class="s">                        spans between 0 and 1 with height 1. If the</span>
+<span class="s">                        input signal is between 0 and 1 inclusive, the</span>
+<span class="s">                        output will be 1, otherwise the output will be</span>
+<span class="s">                        0. Always returns either 0 or 1.</span>
+
+<span class="s">                        i.e. -0.1 -&gt; 0, 0 -&gt; 1, 0.5 -&gt; 1,</span>
+<span class="s">                        0.99 -&gt; 1, 1 -&gt; 1, 1.01 -&gt; 0 and 2000 -&gt; 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;han-window&quot;</span>  <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Hanning window function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Maps input a onto a hanning window which spans</span>
+<span class="s">                        between 0 and 1 with a peak at 0.5. Any input</span>
+<span class="s">                        between 0 and 1 is mapped to the corresponding</span>
+<span class="s">                        val in hanning window (looks like a sharp tooth</span>
+<span class="s">                        - gradient quickly increases and then decreases</span>
+<span class="s">                        to the top of the tooth). All other input vals</span>
+<span class="s">                        map to 0. Always returns a value between 0 and</span>
+<span class="s">                        1.</span>
+
+<span class="s">                        i.e. 0.1 -&gt; 0.0954915, 0.3 -&gt; 0.654509, 0.5 -&gt; 1,</span>
+<span class="s">                        0.7 -&gt; 0.654509 and 0.9 -&gt; 0.0954915&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;wel-window&quot;</span>  <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Welch window function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Maps input a onto a welch window which spans</span>
+<span class="s">                       between 0 and 1 with a peak at 0.5. Any input</span>
+<span class="s">                       between 0 and 1 is mapped to the corresponding</span>
+<span class="s">                       val in welch window (looks like a rhino horn -</span>
+<span class="s">                       gradient starts off high and gradually degreases</span>
+<span class="s">                       to the top of the horn). All other input vals map</span>
+<span class="s">                       to 0. Always returns a value between 0 and 1.</span>
+
+<span class="s">                       i.e. 0.1 -&gt; 0.309017, 0.3 -&gt; 0.809017, 0.5 -&gt; 1,</span>
+<span class="s">                       0.7 -&gt; 0.809017 and 0.9 -&gt; 0.309017&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;tri-window&quot;</span>  <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Triangle window function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Maps input a onto a triangle window which spans</span>
+<span class="s">                        between 0 and 1 with a peak at 0.5. Any input</span>
+<span class="s">                        between 0 and 1 is mapped to the corresponding</span>
+<span class="s">                        val in the triangle window. All other input vals</span>
+<span class="s">                        map to 0. Always returns a value between 0 and</span>
+<span class="s">                        1.&quot;</span> <span class="p">}</span>
+
+   <span class="p">})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

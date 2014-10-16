@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>create-buffer-data</h1>
+    <p class="doc">Create a sequence of floats for use as a buffer.  Result will contain
+   values obtained by calling f with values linearly interpolated
+   between range-min (inclusive) and range-max (exclusive).  For most
+   purposes size must be a power of 2.
+
+   Examples:
+
+   Just a line from -1 to 1:
+    (create-buffer-data 32 identity -1 1)
+
+   Sine-wave for (osc) ugen:
+    (create-buffer-data 512 #(Math/sin %) 0 TWO-PI)
+
+   Chebyshev polynomial for wave-shaping:
+    (create-buffer-data 1024 #(- (* 2 % %) 1) -1 1)</p>
+    <p>
+      File: overtone/sc/buffer.clj
+      Line: 510
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">create-buffer-data</span>
+  <span class="s">&quot;Create a sequence of floats for use as a buffer.  Result will contain</span>
+<span class="s">   values obtained by calling f with values linearly interpolated</span>
+<span class="s">   between range-min (inclusive) and range-max (exclusive).  For most</span>
+<span class="s">   purposes size must be a power of 2.</span>
+
+<span class="s">   Examples:</span>
+
+<span class="s">   Just a line from -1 to 1:</span>
+<span class="s">    (create-buffer-data 32 identity -1 1)</span>
+
+<span class="s">   Sine-wave for (osc) ugen:</span>
+<span class="s">    (create-buffer-data 512 #(Math/sin %) 0 TWO-PI)</span>
+
+<span class="s">   Chebyshev polynomial for wave-shaping:</span>
+<span class="s">    (create-buffer-data 1024 #(- (* 2 % %) 1) -1 1)&quot;</span>
+  <span class="p">[</span><span class="nv">size</span> <span class="nv">f</span> <span class="nv">range-min</span> <span class="nv">range-max</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">range-size</span> <span class="p">(</span><span class="nb">- </span><span class="nv">range-max</span> <span class="nv">range-min</span><span class="p">)</span>
+        <span class="nv">rangemap</span>  <span class="o">#</span><span class="p">(</span><span class="nb">+ </span><span class="nv">range-min</span> <span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nb">* </span><span class="nv">%</span> <span class="nv">range-size</span><span class="p">)</span> <span class="nv">size</span><span class="p">))]</span>
+    <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">float </span><span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">rangemap</span> <span class="nv">%</span><span class="p">)))</span> <span class="p">(</span><span class="nb">range </span><span class="mi">0</span> <span class="nv">size</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

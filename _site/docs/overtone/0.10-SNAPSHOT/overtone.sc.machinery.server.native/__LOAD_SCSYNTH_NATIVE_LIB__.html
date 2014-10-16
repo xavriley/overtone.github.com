@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>__LOAD_SCSYNTH_NATIVE_LIB__</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/server/native.clj
+      Line: 25
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defonce </span><span class="nv">__LOAD_SCSYNTH_NATIVE_LIB__</span>
+  <span class="p">(</span><span class="nf">try</span>
+    <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nf">windows-os?</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">defclib</span>
+        <span class="nv">libc</span>
+        <span class="p">(</span><span class="ss">:libname</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>
+        <span class="p">(</span><span class="ss">:functions</span>
+         <span class="p">(</span><span class="nf">fflush</span> <span class="nv">fflush</span> <span class="p">[</span><span class="nv">void*</span><span class="p">]</span> <span class="nv">i32</span><span class="p">))))</span>
+
+    <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nf">native-scsynth-available?</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">defclib</span>
+        <span class="nv">lib-scsynth</span>
+        <span class="p">(</span><span class="ss">:libname</span> <span class="s">&quot;scsynth&quot;</span><span class="p">)</span>
+        <span class="p">(</span><span class="ss">:structs</span>
+         <span class="p">(</span><span class="nf">rate</span>
+          <span class="ss">:sample-rate</span> <span class="nv">double</span>
+          <span class="ss">:buf-rate</span>    <span class="nv">double</span>
+          <span class="ss">:radians-per-sample</span> <span class="nv">double</span><span class="p">)</span>
+
+         <span class="c1">;; supercollider/include/server/SC_WorldOptions.h</span>
+         <span class="p">(</span><span class="nf">world-options</span>
+          <span class="ss">:mPassword</span>                          <span class="nv">constchar*</span>
+          <span class="ss">:mNumBuffers</span>                        <span class="nv">i32</span>
+          <span class="ss">:mMaxLogins</span>                         <span class="nv">i32</span>
+          <span class="ss">:mMaxNodes</span>                          <span class="nv">i32</span>
+          <span class="ss">:mMaxGraphDefs</span>                      <span class="nv">i32</span>
+          <span class="ss">:mMaxWireBufs</span>                       <span class="nv">i32</span>
+          <span class="ss">:mNumAudioBusChannels</span>               <span class="nv">i32</span>
+          <span class="ss">:mNumInputBusChannels</span>               <span class="nv">i32</span>
+          <span class="ss">:mNumOutputBusChannels</span>              <span class="nv">i32</span>
+          <span class="ss">:mNumControlBusChannels</span>             <span class="nv">i32</span>
+          <span class="ss">:mBufLength</span>                         <span class="nv">i32</span>
+          <span class="ss">:mRealTimeMemorySize</span>                <span class="nv">i32</span>
+          <span class="ss">:mNumSharedControls</span>                 <span class="nv">i32</span>
+          <span class="ss">:mSharedControls</span>                    <span class="nv">float*</span>
+          <span class="ss">:mRealTime</span>                          <span class="nv">byte</span>
+          <span class="ss">:mMemoryLocking</span>                     <span class="nv">byte</span>
+          <span class="ss">:mNonRealTimeCmdFilename</span>            <span class="nv">constchar*</span>
+          <span class="ss">:mNonRealTimeInputFilename</span>          <span class="nv">constchar*</span>
+          <span class="ss">:mNonRealTimeOutputFilename</span>         <span class="nv">constchar*</span>
+          <span class="ss">:mNonRealTimeOutputHeaderFormat</span>     <span class="nv">constchar*</span>
+          <span class="ss">:mNonRealTimeOutputSampleFormat</span>     <span class="nv">constchar*</span>
+          <span class="ss">:mPreferredSampleRate</span>               <span class="nv">i32</span>
+          <span class="ss">:mNumRGens</span>                          <span class="nv">i32</span>
+          <span class="ss">:mPreferredHardwareBufferFrameSize</span>  <span class="nv">i32</span>
+          <span class="ss">:mLoadGraphDefs</span>                     <span class="nv">i32</span>
+          <span class="ss">:mInputStreamsEnabled</span>               <span class="nv">constchar*</span>
+          <span class="ss">:mOutputStreamsEnabled</span>              <span class="nv">constchar*</span>
+          <span class="ss">:mInDeviceName</span>                      <span class="nv">constchar*</span>
+          <span class="ss">:mVerbosity</span>                         <span class="nv">i32</span>
+          <span class="ss">:mRendezvous</span>                        <span class="nv">byte</span>
+          <span class="ss">:mUGensPluginPath</span>                   <span class="nv">constchar*</span>
+          <span class="ss">:mOutDeviceName</span>                     <span class="nv">constchar*</span>
+          <span class="ss">:mRestrictedPath</span>                    <span class="nv">constchar*</span>
+          <span class="ss">:mSharedMemoryID</span>                    <span class="nv">i32</span><span class="p">)</span>
+
+         <span class="c1">;; supercollider/include/plugin_interface/SC_SndBuf.h</span>
+         <span class="p">(</span><span class="nf">sound-buffer</span>
+          <span class="ss">:samplerate</span> <span class="nv">double</span>
+          <span class="ss">:sampledur</span>  <span class="nv">double</span>
+          <span class="ss">:data</span>       <span class="nv">void*</span>             <span class="c1">;float*</span>
+          <span class="ss">:channels</span>   <span class="nv">i32</span>
+          <span class="ss">:samples</span>    <span class="nv">i32</span>
+          <span class="ss">:frames</span>     <span class="nv">i32</span>
+          <span class="ss">:mask</span>       <span class="nv">i32</span>
+          <span class="ss">:mask1</span>      <span class="nv">i32</span>
+          <span class="ss">:coord</span>      <span class="nv">i32</span>
+          <span class="ss">:sndfile</span>    <span class="nv">void*</span><span class="p">)</span>
+
+         <span class="p">(</span><span class="nf">bool-val</span>
+          <span class="ss">:value</span> <span class="nv">byte</span><span class="p">)</span>
+
+         <span class="c1">;; supercollider/include/plugin_interface/SC_World.h</span>
+         <span class="p">(</span><span class="nf">world</span>
+          <span class="ss">:hidden-world</span> <span class="nv">void*</span>
+          <span class="ss">:interface-table</span> <span class="nv">void*</span>
+          <span class="ss">:sample-rate</span> <span class="nv">double</span>
+          <span class="ss">:buf-length</span>  <span class="nv">i32</span>
+          <span class="ss">:buf-counter</span> <span class="nv">i32</span>
+          <span class="ss">:num-audio-bus-channels</span>   <span class="nv">i32</span>
+          <span class="ss">:num-control-bus-channels</span> <span class="nv">i32</span>
+          <span class="ss">:num-inputs</span>               <span class="nv">i32</span>
+          <span class="ss">:num-outputs</span>              <span class="nv">i32</span>
+          <span class="ss">:audio-busses</span>             <span class="nv">float*</span>
+          <span class="ss">:control-busses</span>           <span class="nv">float*</span>
+          <span class="ss">:audio-bus-touched</span>        <span class="nv">i32*</span>
+          <span class="ss">:control-bus-touched</span>      <span class="nv">i32*</span>
+          <span class="ss">:num-snd-bufs</span>             <span class="nv">i32</span>
+          <span class="ss">:snd-bufs</span>                 <span class="nv">sound-buffer*</span>
+          <span class="ss">:snd-bufs-non-realtime</span>    <span class="nv">sound-buffer*</span>
+          <span class="ss">:snd-buf-updates</span>          <span class="nv">void*</span>
+          <span class="ss">:top-group</span>                <span class="nv">void*</span>
+          <span class="ss">:full-rate</span>                <span class="nv">rate</span>
+          <span class="ss">:buf-rate</span>                 <span class="nv">rate</span>
+          <span class="ss">:num-rgens</span>                <span class="nv">i32</span>
+          <span class="ss">:rgen</span>                     <span class="nv">void*</span>
+          <span class="ss">:num-units</span>                <span class="nv">i32</span>
+          <span class="ss">:num-graphs</span>               <span class="nv">i32</span>
+          <span class="ss">:num-groups</span>               <span class="nv">i32</span>
+          <span class="ss">:sample-offset</span>            <span class="nv">i32</span>
+          <span class="ss">:nrt-lock</span>                 <span class="nv">void*</span>
+          <span class="ss">:num-shared-controls</span>      <span class="nv">i32</span>
+          <span class="ss">:shared-controls</span>          <span class="nv">float*</span>
+          <span class="ss">:real-time?</span>               <span class="nv">byte</span>
+          <span class="ss">:running?</span>                 <span class="nv">byte</span>
+          <span class="ss">:dump-osc</span>                 <span class="nv">i32</span>
+          <span class="ss">:driver-lock</span>              <span class="nv">void*</span>
+          <span class="ss">:subsample-offset</span>         <span class="nv">float</span>
+          <span class="ss">:verbosity</span>                <span class="nv">i32</span>
+          <span class="ss">:error-notification</span>       <span class="nv">i32</span>
+          <span class="ss">:local-error-notificaiton</span> <span class="nv">i32</span>
+          <span class="ss">:rendezvous?</span>              <span class="nv">byte</span>
+          <span class="ss">:restricted-path</span>          <span class="nv">constchar*</span><span class="p">)</span>
+
+         <span class="p">(</span><span class="nf">reply-address</span>
+          <span class="ss">:sockaddr</span>     <span class="nv">void*</span>
+          <span class="ss">:sockaddr-len</span> <span class="nv">i32</span>
+          <span class="ss">:socket</span>       <span class="nv">i32</span>
+          <span class="ss">:reply-func</span>   <span class="nv">void*</span>
+          <span class="ss">:reply-data</span>   <span class="nv">void*</span><span class="p">)</span>
+         <span class="p">)</span>
+
+        <span class="p">(</span><span class="ss">:callbacks</span>
+
+         <span class="c1">;; supercollider/include/common/SC_Reply.h</span>
+         <span class="p">(</span><span class="nf">reply-callback</span> <span class="p">[</span><span class="nv">void*</span> <span class="nv">void*</span> <span class="nv">i32</span><span class="p">]</span> <span class="nv">void</span><span class="p">))</span>
+
+        <span class="c1">;; TODO: void* here is actually world*</span>
+        <span class="p">(</span><span class="ss">:functions</span>
+
+         <span class="c1">;; supercollider/include/server/SC_WorldOptions.h</span>
+         <span class="p">(</span><span class="nf">world-new</span> <span class="nv">World_New</span> <span class="p">[</span><span class="nv">world-options*</span><span class="p">]</span> <span class="nv">void*</span><span class="p">)</span>
+         <span class="p">(</span><span class="nf">world-run</span> <span class="nv">World_WaitForQuit</span> <span class="p">[</span><span class="nv">void*</span><span class="p">])</span>
+         <span class="p">(</span><span class="nf">world-cleanup</span> <span class="nv">World_Cleanup</span> <span class="p">[</span><span class="nv">void*</span><span class="p">])</span>
+
+         <span class="p">(</span><span class="nf">world-open-udp-port</span> <span class="nv">World_OpenUDP</span> <span class="p">[</span><span class="nv">void*</span> <span class="nv">i32</span><span class="p">]</span> <span class="nv">i32</span><span class="p">)</span>
+         <span class="p">(</span><span class="nf">world-open-tcp-port</span> <span class="nv">World_OpenTCP</span> <span class="p">[</span><span class="nv">void*</span> <span class="nv">i32</span> <span class="nv">i32</span> <span class="nv">i32</span><span class="p">]</span> <span class="nv">i32</span><span class="p">)</span>
+         <span class="p">(</span><span class="nf">world-send-packet</span> <span class="nv">World_SendPacket</span> <span class="p">[</span><span class="nv">void*</span> <span class="nv">i32</span> <span class="nv">byte*</span> <span class="nv">reply-callback</span><span class="p">]</span> <span class="nv">byte</span><span class="p">)</span>
+         <span class="p">(</span><span class="nf">world-copy-sound-buffer</span> <span class="nv">World_CopySndBuf</span> <span class="p">[</span><span class="nv">void*</span> <span class="nv">i32</span> <span class="nv">sound-buffer*</span> <span class="nb">byte </span><span class="nv">byte*</span><span class="p">]</span> <span class="nv">i32</span><span class="p">)))</span>
+
+      <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nf">windows-os?</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">loadlib</span> <span class="nv">libc</span><span class="p">))</span>
+
+      <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nf">native-scsynth-available?</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">loadlib</span> <span class="nv">lib-scsynth</span><span class="p">))</span>
+
+      <span class="p">(</span><span class="kd">defonce </span><span class="nv">flusher</span> <span class="p">(</span><span class="nf">at-at/every</span> <span class="mi">500</span> <span class="o">#</span><span class="p">(</span><span class="nf">fflush</span> <span class="nv">nil</span><span class="p">)</span> <span class="nv">INTERNAL-POOL</span> <span class="ss">:desc</span> <span class="s">&quot;Flush stdout&quot;</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">catch</span> <span class="nv">UnsatisfiedLinkError</span> <span class="nv">e</span>
+      <span class="p">(</span><span class="nf">warn</span> <span class="p">(</span><span class="nb">with-out-str </span><span class="p">(</span><span class="nf">.printStackTrace</span> <span class="nv">e</span><span class="p">)))</span>
+      <span class="p">(</span><span class="nf">error</span> <span class="s">&quot;Unable to load native libs c and scsynth. Please try an external server with (use &#39;overtone.core)&quot;</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

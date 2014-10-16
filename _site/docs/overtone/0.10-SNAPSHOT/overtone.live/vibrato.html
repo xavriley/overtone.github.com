@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>vibrato</h1>
+    <p class="doc">
+  Models a slow frequency modulation. 
+
+  [freq 440.0, rate 6, depth 0.02, delay 0.0, onset 0.0, rate-variation 0.04, depth-variation 0.1, iphase 0.0]
+
+  freq            - Fundamental frequency in 
+                    Hertz. If the Vibrato UGen is 
+                    running at audio rate, this 
+                    must not be a constant, but an 
+                    actual audio rate UGen 
+  rate            - Vibrato rate, speed of wobble 
+                    in Hertz. Note that if this is 
+                    set to a low value (and 
+                    definitely with 0.0), you may 
+                    never get vibrato back, since 
+                    the rate input is only checked 
+                    at the end of a cycle. 
+  depth           - Size of vibrato frequency 
+                    deviation around the 
+                    fundamental, as a proportion 
+                    of the fundamental. 0.02 = 2% 
+                    of the fundamental. 
+  delay           - Delay before vibrato is 
+                    established in seconds (a 
+                    singer tends to attack a note 
+                    and then stabilise with 
+                    vibrato, for instance). 
+  onset           - Transition time in seconds 
+                    from no vibrato to full 
+                    vibrato after the initial 
+                    delay time. 
+  rate-variation  - Noise on the rate, expressed 
+                    as a proportion of the rate; 
+                    can change once per cycle of 
+                    vibrato. 
+  depth-variation - Noise on the depth of 
+                    modulation, expressed as a 
+                    proportion of the depth; can 
+                    change once per cycle of 
+                    vibrato. The noise affects 
+                    independently the up and the 
+                    down part of vibrato shape 
+                    within a cycle. 
+  iphase          - Initial phase of vibrato 
+                    modulation, allowing starting 
+                    above or below the fundamental 
+                    rather than on it. 
+
+  Vibrato is a slow frequency modulation. Consider the 
+  systematic deviation in pitch of a singer around a 
+  fundamental frequency, or a violinist whose finger wobbles 
+  in position on the fingerboard, slightly tightening and 
+  loosening the string to add shimmer to the pitch. There is 
+  often also a delay before vibrato is established on a 
+  note. This UGen models these processes; by setting more 
+  extreme settings, you can get back to the timbres of FM 
+  synthesis. You can also add in some noise to the vibrato 
+  rate and vibrato size (modulation depth) to make for a 
+  more realistic motor pattern. The vibrato output is a 
+  waveform based on a squared envelope shape with four 
+  stages marking out 0.0 to 1.0, 1.0 to 0.0, 0.0 to -1.0, 
+  and -1.0 back to 0.0. Vibrato rate determines how quickly 
+  you move through these stages. 
+
+  Categories: 
+  Rates: [ :ar, :kr ]
+  Default rate: :ar</p>
+    <p>
+      File: 
+      Line: 
+    </p>
+    <div class="highlight"><pre><code class="clojure">      
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

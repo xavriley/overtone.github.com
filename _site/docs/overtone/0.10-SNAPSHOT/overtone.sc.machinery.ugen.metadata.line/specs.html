@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/line.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Line&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;Line generator.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;start&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Starting value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;end&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Ending value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Duration in seconds&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;A done action to be evaluated when the line is</span>
+<span class="s">                     completed. Default: NO-ACTION&quot;</span><span class="p">}]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Generates a line from the start value to the end value.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;XLine&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;Exponential line generator.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;start&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Starting value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;end&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">2.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Ending value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Duration in seconds&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;A done action to be evaluated when the line is</span>
+<span class="s">                     completed. Default: NO-ACTION&quot;</span><span class="p">}]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Generates an exponential curve from the start value to the end</span>
+<span class="s">          value. Both the start and end values must be non-zero and have</span>
+<span class="s">          the same sign.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LinExp&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;Map a linear range to an exponential range&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input to convert&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;srclo&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Lower limit of input range&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;srchi&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Upper limit of input range&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dstlo&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Lower limit of output range&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dsthi&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">2.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Upper limit of output range&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Convert from a linear range to an exponential range. The dstlo</span>
+<span class="s">          and dsthi arguments must be nonzero and have the same sign.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;AmpComp&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;Basic psychoacoustic amplitude compensation.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">261.6256</span>           <span class="c1">; default value of (midicps 60)</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input frequency value. For freq == root, the output is</span>
+<span class="s">                  1.0.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;root&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">261.6256</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Root freq relative to which the curve is</span>
+<span class="s">                  calculated (usually lowest freq)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;exp&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.3333</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Exponent: how steep the curve decreases for increasing freq&quot;</span><span class="p">}]</span>,
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span> <span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">first-input-ar</span> <span class="s">&quot;freq must be audio rate&quot;</span><span class="p">))</span>
+    <span class="ss">:doc</span> <span class="s">&quot;amplitude compensation: because higher frequencies are</span>
+<span class="s">          normally perceived as louder. Note that for frequencies very</span>
+<span class="s">          much smaller than root the amplitudes can become very high. In</span>
+<span class="s">          this case limit the freqor use amp-comp-a</span>
+
+<span class="s">          Implements the (optimized) formula:</span>
+
+<span class="s">          compensationFactor = (root / freq) ** exp&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;AmpCompA&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;AmpComp&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Basic psychoacoustic amplitude compensation (ANSI A-weighting curve).&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1000.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input frequency value. For freq == root, the output is</span>
+<span class="s">                  root-amp&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;root&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Root freq relative to which the curve is</span>
+<span class="s">                  calculated (usually lowest freq)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;min-amp&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.32</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Amplitude at the minimum point of the curve (around 2512 Hz) &quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;root-amp&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Amplitude at the root frequency.&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:doc</span> <span class="s">&quot;Higher frequencies are normally perceived as louder, which</span>
+<span class="s">          amp-comp-a compensates. Following the measurings by Fletcher</span>
+<span class="s">          and Munson, the ANSI standard describes a function for</span>
+<span class="s">          loudness vs. frequency.  Note that this curve is only valid</span>
+<span class="s">          for standardized amplitude. 1 For a simpler but more flexible</span>
+<span class="s">          curve, see amp-comp&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;K2A&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}]</span>,
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;control rate to audio rate converter via linear</span>
+<span class="s">          interpolation.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;A2K&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}]</span>,
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;audio rate to control rate converter via linear interpolation&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;T2K&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;A2K&quot;</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">first-input-ar</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;audio rate trigger to control rate trigger converter. Uses the</span>
+<span class="s">          maxiumum trigger in the input during each control period.&quot;</span> <span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;T2A&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;offset&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;sample offset within control period&quot;</span><span class="p">}]</span>,
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;control rate trigger to audio rate trigger</span>
+<span class="s">          converter (maximally one per control period).&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DC&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+            <span class="ss">:doc</span> <span class="s">&quot;constant value to output, cannot be modulated, set at</span>
+<span class="s">                  initialisation time&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-sequence-set-num-outs</span> <span class="p">}]</span>
+    <span class="ss">:doc</span> <span class="s">&quot;outputs the initial value you give it.&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Silent&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Number of channels of silence.&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>, <span class="p">}]</span>,
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Continuously outputs 0&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

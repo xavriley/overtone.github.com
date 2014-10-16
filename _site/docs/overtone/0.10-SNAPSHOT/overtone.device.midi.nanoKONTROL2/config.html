@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>config</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/device/midi/nanoKONTROL2.clj
+      Line: 33
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">config</span>
+  <span class="p">(</span><span class="nf">merge-control-defaults</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;nanoKONTROL2&quot;</span>
+    <span class="ss">:interfaces</span> <span class="p">{</span><span class="ss">:input-controls</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Input Controls&quot;</span>
+                                  <span class="ss">:type</span> <span class="ss">:midi-in</span>
+                                  <span class="ss">:midi-handle</span> <span class="s">&quot;nanoKONTROL2&quot;</span>
+                                  <span class="ss">:control-defaults</span> <span class="p">{</span><span class="ss">:chan</span> <span class="mi">0</span> <span class="ss">:cmd</span> <span class="mi">176</span> <span class="ss">:type</span> <span class="ss">:button</span><span class="p">}</span>
+                                  <span class="ss">:controls</span> <span class="p">{</span><span class="ss">:track-left</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">58</span><span class="p">}</span>
+                                             <span class="ss">:track-right</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">59</span><span class="p">}</span>
+                                             <span class="ss">:cycle</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">46</span><span class="p">}</span>
+                                             <span class="ss">:marker-set</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">60</span><span class="p">}</span>
+                                             <span class="ss">:marker-left</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">61</span><span class="p">}</span>
+                                             <span class="ss">:marker-right</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">62</span><span class="p">}</span>
+                                             <span class="ss">:rewind</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">43</span><span class="p">}</span>
+                                             <span class="ss">:fast-forward</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">44</span><span class="p">}</span>
+                                             <span class="ss">:stop</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">42</span><span class="p">}</span>
+                                             <span class="ss">:play</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">41</span><span class="p">}</span>
+                                             <span class="ss">:record</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">45</span><span class="p">}</span>
+                                             <span class="ss">:s0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">32</span><span class="p">}</span>
+                                             <span class="ss">:m0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">48</span><span class="p">}</span>
+                                             <span class="ss">:r0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">64</span><span class="p">}</span>
+                                             <span class="ss">:slider0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">0</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">16</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}</span>
+
+                                             <span class="ss">:s1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">33</span><span class="p">}</span>
+                                             <span class="ss">:m1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">49</span><span class="p">}</span>
+                                             <span class="ss">:r1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">65</span><span class="p">}</span>
+                                             <span class="ss">:slider1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">1</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">17</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}</span>
+
+                                             <span class="ss">:s2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">34</span><span class="p">}</span>
+                                             <span class="ss">:m2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">50</span><span class="p">}</span>
+                                             <span class="ss">:r2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">66</span><span class="p">}</span>
+                                             <span class="ss">:slider2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">2</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">18</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}</span>
+
+                                             <span class="ss">:s3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">35</span><span class="p">}</span>
+                                             <span class="ss">:m3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">51</span><span class="p">}</span>
+                                             <span class="ss">:r3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">67</span><span class="p">}</span>
+                                             <span class="ss">:slider3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">3</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">19</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}</span>
+
+                                             <span class="ss">:s4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">36</span><span class="p">}</span>
+                                             <span class="ss">:m4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">52</span><span class="p">}</span>
+                                             <span class="ss">:r4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">68</span><span class="p">}</span>
+                                             <span class="ss">:slider4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">4</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">20</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}</span>
+
+                                             <span class="ss">:s5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">37</span><span class="p">}</span>
+                                             <span class="ss">:m5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">53</span><span class="p">}</span>
+                                             <span class="ss">:r5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">69</span><span class="p">}</span>
+                                             <span class="ss">:slider5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">5</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">21</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}</span>
+
+                                             <span class="ss">:s6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">38</span><span class="p">}</span>
+                                             <span class="ss">:m6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">54</span><span class="p">}</span>
+                                             <span class="ss">:r6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">70</span><span class="p">}</span>
+                                             <span class="ss">:slider6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">6</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">22</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}</span>
+
+                                             <span class="ss">:s7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">39</span><span class="p">}</span>
+                                             <span class="ss">:m7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">55</span><span class="p">}</span>
+                                             <span class="ss">:r7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">71</span><span class="p">}</span>
+                                             <span class="ss">:slider7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">7</span> <span class="ss">:type</span> <span class="ss">:slider</span><span class="p">}</span>
+                                             <span class="ss">:pot7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">23</span> <span class="ss">:type</span> <span class="ss">:pot</span><span class="p">}}}</span>
+                 <span class="ss">:leds</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LEDs&quot;</span>
+                        <span class="ss">:type</span> <span class="ss">:midi-out</span>
+                        <span class="ss">:midi-handle</span> <span class="s">&quot;nanoKONTROL2&quot;</span>
+                        <span class="ss">:control-defaults</span> <span class="p">{</span><span class="ss">:type</span> <span class="ss">:led</span><span class="p">}</span>
+                        <span class="ss">:controls</span> <span class="p">{</span><span class="ss">:cycle</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">46</span><span class="p">}</span>
+                                   <span class="ss">:rewind</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">43</span><span class="p">}</span>
+                                   <span class="ss">:fast-forward</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">44</span><span class="p">}</span>
+                                   <span class="ss">:stop</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">42</span><span class="p">}</span>
+                                   <span class="ss">:play</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">41</span><span class="p">}</span>
+                                   <span class="ss">:record</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">45</span><span class="p">}</span>
+                                   <span class="ss">:s0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">32</span><span class="p">}</span>
+                                   <span class="ss">:m0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">48</span><span class="p">}</span>
+                                   <span class="ss">:r0</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">64</span><span class="p">}</span>
+                                   <span class="ss">:s1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">33</span><span class="p">}</span>
+                                   <span class="ss">:m1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">49</span><span class="p">}</span>
+                                   <span class="ss">:r1</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">65</span><span class="p">}</span>
+                                   <span class="ss">:s2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">34</span><span class="p">}</span>
+                                   <span class="ss">:m2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">50</span><span class="p">}</span>
+                                   <span class="ss">:r2</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">66</span><span class="p">}</span>
+                                   <span class="ss">:s3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">35</span><span class="p">}</span>
+                                   <span class="ss">:m3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">51</span><span class="p">}</span>
+                                   <span class="ss">:r3</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">67</span><span class="p">}</span>
+                                   <span class="ss">:s4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">36</span><span class="p">}</span>
+                                   <span class="ss">:m4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">52</span><span class="p">}</span>
+                                   <span class="ss">:r4</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">68</span><span class="p">}</span>
+                                   <span class="ss">:s5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">37</span><span class="p">}</span>
+                                   <span class="ss">:m5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">53</span><span class="p">}</span>
+                                   <span class="ss">:r5</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">69</span><span class="p">}</span>
+                                   <span class="ss">:s6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">38</span><span class="p">}</span>
+                                   <span class="ss">:m6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">54</span><span class="p">}</span>
+                                   <span class="ss">:r6</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">70</span><span class="p">}</span>
+                                   <span class="ss">:s7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">39</span><span class="p">}</span>
+                                   <span class="ss">:m7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">55</span><span class="p">}</span>
+                                   <span class="ss">:r7</span> <span class="p">{</span><span class="ss">:note</span> <span class="mi">71</span><span class="p">}}}}}))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>buffer</h1>
+    <p class="doc">Synchronously allocate a new zero filled buffer for storing audio
+  data with the specified size and num-channels. Size will be
+  automatically floored and converted to a Long - i.e. 2.7 -> 2</p>
+    <p>
+      File: overtone/sc/buffer.clj
+      Line: 117
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">buffer</span>
+  <span class="s">&quot;Synchronously allocate a new zero filled buffer for storing audio</span>
+<span class="s">  data with the specified size and num-channels. Size will be</span>
+<span class="s">  automatically floored and converted to a Long - i.e. 2.7 -&gt; 2&quot;</span>
+  <span class="p">([</span><span class="nv">size</span><span class="p">]</span> <span class="p">(</span><span class="nf">buffer</span> <span class="nv">size</span> <span class="mi">1</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">size</span> <span class="nv">num-channels-or-name</span><span class="p">]</span>
+     <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">string? </span><span class="nv">num-channels-or-name</span><span class="p">)</span>
+       <span class="p">(</span><span class="nf">buffer</span> <span class="nv">size</span> <span class="mi">1</span> <span class="nv">num-channels-or-name</span><span class="p">)</span>
+       <span class="p">(</span><span class="nf">buffer</span> <span class="nv">size</span> <span class="nv">num-channels-or-name</span> <span class="s">&quot;&quot;</span><span class="p">)))</span>
+  <span class="p">([</span><span class="nv">size</span> <span class="nv">num-channels</span> <span class="nv">name</span><span class="p">]</span>
+     <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">size</span> <span class="p">(</span><span class="nb">long </span><span class="nv">size</span><span class="p">)</span>
+           <span class="nv">id</span>   <span class="p">(</span><span class="nf">next-id</span> <span class="ss">:audio-buffer</span><span class="p">)</span>
+           <span class="nv">buf</span>  <span class="p">(</span><span class="nf">with-server-sync</span>
+                  <span class="o">#</span><span class="p">(</span><span class="nf">snd</span> <span class="s">&quot;/b_alloc&quot;</span> <span class="nv">id</span> <span class="nv">size</span> <span class="nv">num-channels</span><span class="p">)</span>
+                  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;whilst allocating a new buffer with size: &quot;</span> <span class="nv">size</span> <span class="s">&quot; and num channels: &quot;</span> <span class="nv">num-channels</span><span class="p">))</span>
+
+           <span class="nv">info</span> <span class="p">(</span><span class="nf">buffer-info</span> <span class="nv">id</span><span class="p">)]</span>
+
+       <span class="p">(</span><span class="nf">map-&gt;Buffer</span>
+        <span class="p">(</span><span class="nb">assoc </span><span class="nv">info</span>
+          <span class="ss">:name</span> <span class="nv">name</span>
+          <span class="ss">:status</span> <span class="p">(</span><span class="nf">atom</span> <span class="ss">:live</span><span class="p">))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

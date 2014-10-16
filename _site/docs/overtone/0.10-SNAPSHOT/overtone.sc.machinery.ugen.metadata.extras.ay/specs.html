@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/extras/ay.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;AY&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Emulator of the AY (aka YM) soundchip, used in Spectrum/Atari&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;tonea&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1777</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Integer tone of the first voice from 0 to</span>
+<span class="s">                  4095 (i.e. 12-bit range). Higher value = lower pitch.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;toneb&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1666</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Integer tone of the second voice from 0 to</span>
+<span class="s">                  4095 (i.e. 12-bit range). Higher value = lower pitch.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;tonec&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1555</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Integer tone of the third voice from 0 to</span>
+<span class="s">                  4095 (i.e. 12-bit range). Higher value = lower pitch.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;noise&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the period of the pseudo-random noise generator, 0 to 31&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;control&quot;</span>
+            <span class="ss">:default</span> <span class="mi">7</span>
+            <span class="ss">:doc</span> <span class="s">&quot;controls how the noise is mixed into the tone(s), 0 to</span>
+<span class="s">                  32 (0 is mute). This is a binary mask value which</span>
+<span class="s">                  masks the noise/tone mixture in each channel, so it&#39;s</span>
+<span class="s">                  not linear.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;vola&quot;</span>
+            <span class="ss">:default</span> <span class="mi">15</span>
+            <span class="ss">:doc</span> <span class="s">&quot;volume of the first channel -0 to 15 (or 0 to 31 if</span>
+<span class="s">                  using YM chiptype)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;volb&quot;</span>
+            <span class="ss">:default</span> <span class="mi">15</span>
+            <span class="ss">:doc</span> <span class="s">&quot;volume of the second channel -0 to 15 (or 0 to 31 if</span>
+<span class="s">                  using YM chiptype)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;volc&quot;</span>
+            <span class="ss">:default</span> <span class="mi">15</span>
+            <span class="ss">:doc</span> <span class="s">&quot;volume of the third channel -0 to 15 (or 0 to 31 if</span>
+<span class="s">                  using YM chiptype)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;envfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;envelope frequency, 0 to 4095&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;envstyle&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;type of envelope used, 0 to 15&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;chiptype&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;0 for AY (default), 1 for YM. The models behave</span>
+<span class="s">                 slightly differently. This input cannot be modulated -</span>
+<span class="s">                 its value is only handled at the moment the UGen</span>
+<span class="s">                 starts.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Emulates the General Instrument AY-3-8910 (a.k.a. the Yamaha</span>
+<span class="s">          YM2149) 3-voice sound chip, as found in the ZX Spectrum 128,</span>
+<span class="s">          the Atari ST, and various other home computers during the</span>
+<span class="s">          1980s.</span>
+
+<span class="s">          The chip&#39;s inputs are integer values, so non-integer values</span>
+<span class="s">          will be rounded off.</span>
+
+<span class="s">          The emulation is provided by the libayemu library:</span>
+<span class="s">          http://sourceforge.net/projects/libayemu</span>
+
+<span class="s">          To turn a frequency to a compatable tone:</span>
+<span class="s">          (/ 110300 (- freq 0.5)&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

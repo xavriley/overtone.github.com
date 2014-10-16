@@ -1,0 +1,93 @@
+<p>This post is about the inst branch of Overtone that I’m working on. The goal is to split up some of the functionality of the currenty synth and defsynth functions. Instead we will have a low-level synth interface, and a higher level instrument interface. Instruments are automatically added to the session when they are defined, and they will return back a player function. Calling an instrument function triggers the underlying synth.</p>
+
+<ul>
+<li>
+<p>synthdef</p>
+</li>
+
+<li>
+<p>create raw synthdef object</p>
+</li>
+
+<li>
+<p>synth</p>
+</li>
+
+<li>
+<p>macro to let-bind operators to ugen functions</p>
+</li>
+
+<li>
+<p>anonymous if no name symbol present</p>
+</li>
+
+<li>
+<p>auto-load onto synth server</p>
+</li>
+
+<li>
+<p>return callable map with sdef and trigger function</p>
+</li>
+
+<li>
+<p>by default all synths play in the SYNTH-GROUP</p>
+</li>
+
+<li>
+<p>defsynth</p>
+</li>
+
+<li>
+<p>(def foo (synth …))</p>
+</li>
+
+<li>
+<p>play</p>
+</li>
+
+<li>
+<p>uses synth underneath, loads and triggers immediately when ready</p>
+</li>
+
+<li>
+<p>inst (rument)</p>
+</li>
+
+<li>
+<p>calls synth to define and load the synth</p>
+</li>
+
+<li>
+<p>register itself with current session</p>
+</li>
+
+<li>
+<p>creates a group to contain synth instance nodes</p>
+</li>
+
+<li>
+<p>automatically adds pan and output ugens with existing rules</p>
+</li>
+
+<li>
+<p>definst</p>
+</li>
+
+<li>
+<p>(def foo (inst …))</p>
+</li>
+</ul>
+<div class='highlight'><pre><code class='clojure'>  <span class='c1'>; View a full sample waveform</span>
+  <span class='p'>(</span><span class='k'>def </span><span class='nv'>s</span> <span class='p'>(</span><span class='nf'>load-sample</span> <span class='s'>&quot;/home/rosejn/studio/samples/kit/boom.wav&quot;</span><span class='p'>))</span>
+  <span class='p'>(</span><span class='nf'>scope-buf</span> <span class='nv'>s</span><span class='p'>)</span>
+
+  <span class='c1'>; view a live waveform</span>
+  <span class='p'>(</span><span class='k'>def </span><span class='nv'>b</span> <span class='p'>(</span><span class='nf'>buffer</span> <span class='mi'>2048</span><span class='p'>))</span>
+  <span class='p'>(</span><span class='nf'>defsynth</span> <span class='nv'>foo</span> <span class='p'>[</span><span class='nv'>out-bus</span> <span class='mi'>20</span><span class='p'>]</span> <span class='p'>(</span><span class='nf'>out</span> <span class='nv'>out-bus</span> <span class='p'>(</span><span class='nf'>sin-osc</span> <span class='mi'>400</span><span class='p'>)))</span>
+  <span class='p'>(</span><span class='nf'>foo</span><span class='p'>)</span>           <span class='c1'>; output a sine wave onto bus 20</span>
+  <span class='p'>(</span><span class='nf'>bus-&gt;buf</span> <span class='mi'>20</span> <span class='nv'>b</span><span class='p'>)</span> <span class='c1'>; record signal from bus 20 into buffer b, looping</span>
+  <span class='p'>(</span><span class='nf'>scope-buf</span> <span class='nv'>b</span><span class='p'>)</span>   
+  <span class='p'>(</span><span class='nf'>scope-on</span><span class='p'>)</span>      <span class='c1'>; enjoy</span>
+  <span class='c1'>;...</span>
+  <span class='p'>(</span><span class='nf'>scope-off</span><span class='p'>)</span>     <span class='c1'>; stop live updates</span>
+</code></pre></div>

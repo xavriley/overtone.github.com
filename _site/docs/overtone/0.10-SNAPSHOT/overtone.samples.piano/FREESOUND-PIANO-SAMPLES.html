@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>FREESOUND-PIANO-SAMPLES</h1>
+    <p class="doc">Freesound ids and matching notes for all the loud samples in the MISStereoPiano pack</p>
+    <p>
+      File: overtone/samples/piano.clj
+      Line: 12
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">FREESOUND-PIANO-SAMPLES</span>
+  <span class="s">&quot;Freesound ids and matching notes for all the loud samples in the MISStereoPiano pack&quot;</span>
+  <span class="p">{</span><span class="mi">148401</span> <span class="ss">:BB5</span> <span class="mi">148402</span> <span class="ss">:BB6</span> <span class="mi">148403</span> <span class="ss">:B7</span>  <span class="mi">148404</span> <span class="ss">:BB0</span> <span class="mi">148405</span> <span class="ss">:B5</span>  <span class="mi">148406</span> <span class="ss">:B6</span>  <span class="mi">148407</span> <span class="ss">:BB3</span>
+   <span class="mi">148408</span> <span class="ss">:BB4</span> <span class="mi">148423</span> <span class="ss">:BB1</span> <span class="mi">148424</span> <span class="ss">:BB2</span> <span class="mi">148425</span> <span class="ss">:D1</span>  <span class="mi">148426</span> <span class="ss">:C8</span>  <span class="mi">148427</span> <span class="ss">:C1</span>  <span class="mi">148428</span> <span class="ss">:BB7</span>
+   <span class="mi">148429</span> <span class="ss">:C3</span>  <span class="mi">148430</span> <span class="ss">:C2</span>  <span class="mi">148431</span> <span class="ss">:C5</span>  <span class="mi">148432</span> <span class="ss">:C4</span>  <span class="mi">148433</span> <span class="ss">:C7</span>  <span class="mi">148434</span> <span class="ss">:C6</span>  <span class="mi">148435</span> <span class="ss">:GB4</span>
+   <span class="mi">148436</span> <span class="ss">:GB5</span> <span class="mi">148437</span> <span class="ss">:GB6</span> <span class="mi">148438</span> <span class="ss">:GB7</span> <span class="mi">148439</span> <span class="ss">:G7</span>  <span class="mi">148440</span> <span class="ss">:GB1</span> <span class="mi">148441</span> <span class="ss">:GB2</span> <span class="mi">148442</span> <span class="ss">:GB3</span>
+   <span class="mi">148471</span> <span class="ss">:AB6</span> <span class="mi">148472</span> <span class="ss">:AB5</span> <span class="mi">148473</span> <span class="ss">:AB4</span> <span class="mi">148474</span> <span class="ss">:AB3</span> <span class="mi">148475</span> <span class="ss">:B2</span>  <span class="mi">148476</span> <span class="ss">:B1</span>  <span class="mi">148477</span> <span class="ss">:B0</span>
+   <span class="mi">148478</span> <span class="ss">:AB7</span> <span class="mi">148479</span> <span class="ss">:B4</span>  <span class="mi">148480</span> <span class="ss">:B3</span>  <span class="mi">148481</span> <span class="ss">:A3</span>  <span class="mi">148482</span> <span class="ss">:A2</span>  <span class="mi">148483</span> <span class="ss">:A1</span>  <span class="mi">148484</span> <span class="ss">:A0</span>
+   <span class="mi">148485</span> <span class="ss">:A7</span>  <span class="mi">148486</span> <span class="ss">:A6</span>  <span class="mi">148487</span> <span class="ss">:A5</span>  <span class="mi">148488</span> <span class="ss">:A4</span>  <span class="mi">148489</span> <span class="ss">:AB2</span> <span class="mi">148490</span> <span class="ss">:AB1</span> <span class="mi">148491</span> <span class="ss">:EB7</span>
+   <span class="mi">148492</span> <span class="ss">:F1</span>  <span class="mi">148493</span> <span class="ss">:EB5</span> <span class="mi">148494</span> <span class="ss">:EB6</span> <span class="mi">148495</span> <span class="ss">:EB3</span> <span class="mi">148496</span> <span class="ss">:EB4</span> <span class="mi">148497</span> <span class="ss">:EB1</span> <span class="mi">148498</span> <span class="ss">:EB2</span>
+   <span class="mi">148499</span> <span class="ss">:F2</span>  <span class="mi">148500</span> <span class="ss">:F3</span>  <span class="mi">148501</span> <span class="ss">:G2</span>  <span class="mi">148502</span> <span class="ss">:G1</span>  <span class="mi">148503</span> <span class="ss">:G4</span>  <span class="mi">148504</span> <span class="ss">:G3</span>  <span class="mi">148505</span> <span class="ss">:F5</span>
+   <span class="mi">148506</span> <span class="ss">:F4</span>  <span class="mi">148507</span> <span class="ss">:F7</span>  <span class="mi">148508</span> <span class="ss">:F6</span>  <span class="mi">148509</span> <span class="ss">:G6</span>  <span class="mi">148510</span> <span class="ss">:G5</span>  <span class="mi">148511</span> <span class="ss">:D2</span>  <span class="mi">148512</span> <span class="ss">:D3</span>
+   <span class="mi">148513</span> <span class="ss">:D4</span>  <span class="mi">148514</span> <span class="ss">:D5</span>  <span class="mi">148515</span> <span class="ss">:D6</span>  <span class="mi">148516</span> <span class="ss">:D7</span>  <span class="mi">148517</span> <span class="ss">:DB1</span> <span class="mi">148518</span> <span class="ss">:DB2</span> <span class="mi">148519</span> <span class="ss">:DB3</span>
+   <span class="mi">148520</span> <span class="ss">:DB4</span> <span class="mi">148521</span> <span class="ss">:E7</span>  <span class="mi">148522</span> <span class="ss">:E6</span>  <span class="mi">148523</span> <span class="ss">:E5</span>  <span class="mi">148524</span> <span class="ss">:E4</span>  <span class="mi">148525</span> <span class="ss">:E3</span>  <span class="mi">148526</span> <span class="ss">:E2</span>
+   <span class="mi">148527</span> <span class="ss">:E1</span>  <span class="mi">148528</span> <span class="ss">:DB7</span> <span class="mi">148529</span> <span class="ss">:DB6</span> <span class="mi">148530</span> <span class="ss">:DB5</span><span class="p">})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

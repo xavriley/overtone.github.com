@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>FREESOUND-VIBRATO-FLUTE-SAMPLES</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/samples/flute.clj
+      Line: 7
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">FREESOUND-VIBRATO-FLUTE-SAMPLES</span>
+  <span class="p">{</span><span class="mi">154274</span> <span class="ss">:C7</span>  <span class="mi">154273</span> <span class="ss">:B6</span> <span class="mi">154272</span> <span class="ss">:A#6</span> <span class="mi">154271</span> <span class="ss">:A6</span> <span class="mi">154270</span> <span class="ss">:G#6</span> <span class="mi">154269</span> <span class="ss">:G6</span>  <span class="mi">154268</span> <span class="ss">:F#6</span>
+   <span class="mi">154267</span> <span class="ss">:F6</span>  <span class="mi">154266</span> <span class="ss">:E6</span> <span class="mi">154265</span> <span class="ss">:D#6</span> <span class="mi">154264</span> <span class="ss">:D6</span> <span class="mi">154263</span> <span class="ss">:C#6</span> <span class="mi">154262</span> <span class="ss">:C6</span>  <span class="mi">154261</span> <span class="ss">:B5</span>
+   <span class="mi">154260</span> <span class="ss">:A#5</span> <span class="mi">154259</span> <span class="ss">:A5</span> <span class="mi">154258</span> <span class="ss">:G#5</span> <span class="mi">154257</span> <span class="ss">:G5</span> <span class="mi">154256</span> <span class="ss">:F#5</span> <span class="mi">154255</span> <span class="ss">:F5</span>  <span class="mi">154254</span> <span class="ss">:E5</span>
+   <span class="mi">154253</span> <span class="ss">:D#5</span> <span class="mi">154252</span> <span class="ss">:D5</span> <span class="mi">154251</span> <span class="ss">:C#5</span> <span class="mi">154250</span> <span class="ss">:C5</span> <span class="mi">154249</span> <span class="ss">:B4</span>  <span class="mi">154248</span> <span class="ss">:A#4</span> <span class="mi">154247</span> <span class="ss">:A4</span>
+   <span class="mi">154246</span> <span class="ss">:G#4</span> <span class="mi">154245</span> <span class="ss">:G4</span> <span class="mi">154244</span> <span class="ss">:F#4</span> <span class="mi">154243</span> <span class="ss">:E4</span> <span class="mi">154242</span> <span class="ss">:F4</span>  <span class="mi">154241</span> <span class="ss">:D#4</span> <span class="mi">154240</span> <span class="ss">:D4</span>
+   <span class="mi">154239</span> <span class="ss">:C#4</span> <span class="mi">154238</span> <span class="ss">:C4</span><span class="p">})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

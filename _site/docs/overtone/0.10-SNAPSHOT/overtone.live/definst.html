@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>definst</h1>
+    <p class="doc">Define an instrument and return a player function. The instrument
+  definition will be loaded immediately, and a :new-inst event will be
+  emitted. Expects a name, an optional doc-string, a vector of
+  instrument params, and a ugen-form as its arguments.
+
+  Instrument parameters are a vector of name/value pairs, for example:
+
+  (definst inst-name [param0 value0 param1 value1 param2 value2] ...)
+
+  The returned player function takes any number of positional
+  arguments, followed by any number of keyword arguments. For example,
+  all of the following are equivalent:
+
+  (inst-name 0 1 2)
+  (inst-name 0 1 :param2 2)
+  (inst-name :param1 1 :param0 0 :param2 2)
+
+  Omitted parameters are given their default value from the
+  instrument's parameter list.
+
+  A doc string may also be included between the instrument's name and
+  parameter list:
+
+  (definst lucille
+    "What's that Lucille?"
+    [] ...)
+
+  Instruments are similar to basic synths but still differ in a number
+  of notable ways:
+
+  * Instruments will automatically wrap the body of code given in an
+    out ugen. You do not need to include an out ugen yourself. For
+    example:
+
+    (definst foo [freq 440]
+      (sin-osc freq))
+
+    is similar to:
+
+    (defsynth foo [freq 440]
+      (out 0 (sin-osc freq))))
+
+  * Instruments are limited to 1 or 2 channels. Instruments with more
+    than 2 channels are allowed, but additional channels will not be
+    audible. Use the mix and pan2 ugens to combine multiple channels
+    within your inst if needed. For example:
+
+    (definst bar
+      [f1 100 f2 200 f3 300 f4 400]
+      (mix (pan2 (sin-osc [f1 f2 f3 f4]) [-1 1 -1 1])))
+
+  * Each instrument is assigned its own group which all instances will
+    automatically be placed in. This allows you to control all of an
+    instrument's running synths with one command:
+
+    (ctl inst-name :param0 val0 :param1 val1)
+
+    You may also kill all of an instrument's running synths:
+
+    (kill inst-name)
+
+  * A bus and bus-mixer are created for each instrument. This allows
+    you to control the volume or pan of the instrument group with one
+    command:
+
+    (inst-pan! bar -1)     ;pan hard left.
+    (inst-volume! bar 0.5) ;half the volume.
+
+    For a stereo inst, you can control left and right pan or volume
+    separately by passing an additional arg:
+
+    (inst-pan! bar 1 -1)   ;ch1 right, ch2 left.
+    (inst-volume! bar 0 1) ;mute ch1.
+
+  * Each instrument has an fx-chain to which you can add any number of
+    'fx synths' using the inst-fx function.
+  </p>
+    <p>
+      File: overtone/studio/inst.clj
+      Line: 186
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">definst</span>
+  <span class="s">&quot;Define an instrument and return a player function. The instrument</span>
+<span class="s">  definition will be loaded immediately, and a :new-inst event will be</span>
+<span class="s">  emitted. Expects a name, an optional doc-string, a vector of</span>
+<span class="s">  instrument params, and a ugen-form as its arguments.</span>
+
+<span class="s">  Instrument parameters are a vector of name/value pairs, for example:</span>
+
+<span class="s">  (definst inst-name [param0 value0 param1 value1 param2 value2] ...)</span>
+
+<span class="s">  The returned player function takes any number of positional</span>
+<span class="s">  arguments, followed by any number of keyword arguments. For example,</span>
+<span class="s">  all of the following are equivalent:</span>
+
+<span class="s">  (inst-name 0 1 2)</span>
+<span class="s">  (inst-name 0 1 :param2 2)</span>
+<span class="s">  (inst-name :param1 1 :param0 0 :param2 2)</span>
+
+<span class="s">  Omitted parameters are given their default value from the</span>
+<span class="s">  instrument&#39;s parameter list.</span>
+
+<span class="s">  A doc string may also be included between the instrument&#39;s name and</span>
+<span class="s">  parameter list:</span>
+
+<span class="s">  (definst lucille</span>
+<span class="s">    \&quot;What&#39;s that Lucille?\&quot;</span>
+<span class="s">    [] ...)</span>
+
+<span class="s">  Instruments are similar to basic synths but still differ in a number</span>
+<span class="s">  of notable ways:</span>
+
+<span class="s">  * Instruments will automatically wrap the body of code given in an</span>
+<span class="s">    out ugen. You do not need to include an out ugen yourself. For</span>
+<span class="s">    example:</span>
+
+<span class="s">    (definst foo [freq 440]</span>
+<span class="s">      (sin-osc freq))</span>
+
+<span class="s">    is similar to:</span>
+
+<span class="s">    (defsynth foo [freq 440]</span>
+<span class="s">      (out 0 (sin-osc freq))))</span>
+
+<span class="s">  * Instruments are limited to 1 or 2 channels. Instruments with more</span>
+<span class="s">    than 2 channels are allowed, but additional channels will not be</span>
+<span class="s">    audible. Use the mix and pan2 ugens to combine multiple channels</span>
+<span class="s">    within your inst if needed. For example:</span>
+
+<span class="s">    (definst bar</span>
+<span class="s">      [f1 100 f2 200 f3 300 f4 400]</span>
+<span class="s">      (mix (pan2 (sin-osc [f1 f2 f3 f4]) [-1 1 -1 1])))</span>
+
+<span class="s">  * Each instrument is assigned its own group which all instances will</span>
+<span class="s">    automatically be placed in. This allows you to control all of an</span>
+<span class="s">    instrument&#39;s running synths with one command:</span>
+
+<span class="s">    (ctl inst-name :param0 val0 :param1 val1)</span>
+
+<span class="s">    You may also kill all of an instrument&#39;s running synths:</span>
+
+<span class="s">    (kill inst-name)</span>
+
+<span class="s">  * A bus and bus-mixer are created for each instrument. This allows</span>
+<span class="s">    you to control the volume or pan of the instrument group with one</span>
+<span class="s">    command:</span>
+
+<span class="s">    (inst-pan! bar -1)     ;pan hard left.</span>
+<span class="s">    (inst-volume! bar 0.5) ;half the volume.</span>
+
+<span class="s">    For a stereo inst, you can control left and right pan or volume</span>
+<span class="s">    separately by passing an additional arg:</span>
+
+<span class="s">    (inst-pan! bar 1 -1)   ;ch1 right, ch2 left.</span>
+<span class="s">    (inst-volume! bar 0 1) ;mute ch1.</span>
+
+<span class="s">  * Each instrument has an fx-chain to which you can add any number of</span>
+<span class="s">    &#39;fx synths&#39; using the inst-fx function.</span>
+<span class="s">  &quot;</span>
+  <span class="p">{</span><span class="ss">:arglists</span> <span class="o">&#39;</span><span class="p">([</span><span class="nb">name </span><span class="nv">doc-string?</span> <span class="nv">params</span> <span class="nv">ugen-form</span><span class="p">])}</span>
+  <span class="p">[</span><span class="nv">i-name</span> <span class="o">&amp;</span> <span class="nv">inst-form</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">i-name</span> <span class="nv">params</span> <span class="nv">ugen-form</span><span class="p">]</span> <span class="p">(</span><span class="nf">synth-form</span> <span class="nv">i-name</span> <span class="nv">inst-form</span><span class="p">)</span>
+        <span class="nv">i-name</span>                    <span class="p">(</span><span class="nb">with-meta </span><span class="nv">i-name</span> <span class="p">(</span><span class="nb">merge </span><span class="p">(</span><span class="nb">meta </span><span class="nv">i-name</span><span class="p">)</span> <span class="p">{</span><span class="ss">:type</span> <span class="ss">::instrument</span><span class="p">}))]</span>
+    <span class="o">`</span><span class="p">(</span><span class="k">def </span><span class="o">~</span><span class="nv">i-name</span> <span class="p">(</span><span class="nf">inst</span> <span class="o">~</span><span class="nv">i-name</span> <span class="o">~</span><span class="nv">params</span> <span class="o">~</span><span class="nv">ugen-form</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

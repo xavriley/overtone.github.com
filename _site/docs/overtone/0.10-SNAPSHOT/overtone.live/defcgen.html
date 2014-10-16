@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>defcgen</h1>
+    <p class="doc">Define one or more related cgens (composite generators) with different rates.
+
+  A cgen has a name, docstring and 0 or more params which themselves have names
+  and optional info maps with the keys :default and :doc. Next you need to
+  describe a number of rated bodies which may reference the named params.
+  Finally, an optional :default may be specified which will define the default
+  rate for this cgen, or if ommitted the standard rate precedence is used.
+
+  An example cgen definition is as follows:
+
+  (defcgen pm-osc
+    "phase modulation sine oscillator pair."
+    [car-freq {:default 0.0 :doc "Carrier frequency"}
+     mod-freq {:default 0.0 :doc "Modulation frequency"}
+     pm-index {:default 0.0 :doc "Phase modulation index"}
+     mod-phase {:default 0.0 :doc "Modulation phase"}]
+    "Longer more detailed documentation..."
+    (:ar (sin-osc:ar car-freq (* pm-index (sin-osc:ar mod-freq mod-phase))))
+    (:kr (sin-osc:kr car-freq (* pm-index (sin-osc:kr mod-freq mod-phase))))
+    (:default :ar))</p>
+    <p>
+      File: overtone/sc/defcgen.clj
+      Line: 163
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">defcgen</span>
+  <span class="s">&quot;Define one or more related cgens (composite generators) with different rates.</span>
+
+<span class="s">  A cgen has a name, docstring and 0 or more params which themselves have names</span>
+<span class="s">  and optional info maps with the keys :default and :doc. Next you need to</span>
+<span class="s">  describe a number of rated bodies which may reference the named params.</span>
+<span class="s">  Finally, an optional :default may be specified which will define the default</span>
+<span class="s">  rate for this cgen, or if ommitted the standard rate precedence is used.</span>
+
+<span class="s">  An example cgen definition is as follows:</span>
+
+<span class="s">  (defcgen pm-osc</span>
+<span class="s">    \&quot;phase modulation sine oscillator pair.\&quot;</span>
+<span class="s">    [car-freq {:default 0.0 :doc \&quot;Carrier frequency\&quot;}</span>
+<span class="s">     mod-freq {:default 0.0 :doc \&quot;Modulation frequency\&quot;}</span>
+<span class="s">     pm-index {:default 0.0 :doc \&quot;Phase modulation index\&quot;}</span>
+<span class="s">     mod-phase {:default 0.0 :doc \&quot;Modulation phase\&quot;}]</span>
+<span class="s">    \&quot;Longer more detailed documentation...\&quot;</span>
+<span class="s">    (:ar (sin-osc:ar car-freq (* pm-index (sin-osc:ar mod-freq mod-phase))))</span>
+<span class="s">    (:kr (sin-osc:kr car-freq (* pm-index (sin-osc:kr mod-freq mod-phase))))</span>
+<span class="s">    (:default :ar))&quot;</span>
+  <span class="p">[</span><span class="nv">c-name</span> <span class="o">&amp;</span> <span class="nv">c-form</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">summary</span> <span class="nb">doc </span><span class="nv">params</span> <span class="nv">bodies</span> <span class="nv">default-rate</span><span class="p">]</span> <span class="p">(</span><span class="nf">cgen-form</span> <span class="nv">c-form</span><span class="p">)]</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">arglists</span>       <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">symbol </span><span class="p">(</span><span class="nb">name </span><span class="p">(</span><span class="ss">:name</span> <span class="nv">%</span><span class="p">)))</span> <span class="nv">params</span><span class="p">)))</span>
+          <span class="nv">arglists</span>       <span class="p">(</span><span class="nb">list </span><span class="ss">&#39;quote</span> <span class="nv">arglists</span><span class="p">)</span>
+          <span class="nv">rates</span>          <span class="p">(</span><span class="nb">into </span><span class="o">#</span><span class="p">{}</span> <span class="p">(</span><span class="nb">keys </span><span class="nv">bodies</span><span class="p">))</span>
+          <span class="nv">categories</span>     <span class="p">[[</span><span class="s">&quot;Composite Ugen&quot;</span><span class="p">]]</span>
+          <span class="nv">full-doc</span>       <span class="p">(</span><span class="nf">generate-full-cgen-doc</span> <span class="nv">c-name</span> <span class="nv">summary</span> <span class="nb">doc </span><span class="nv">categories</span> <span class="nv">default-rate</span> <span class="nv">params</span> <span class="nv">rates</span><span class="p">)</span>
+          <span class="nv">metadata</span>       <span class="p">{</span><span class="ss">:doc</span> <span class="nv">full-doc</span>
+                          <span class="ss">:arglists</span> <span class="nv">arglists</span>
+                          <span class="ss">:type</span> <span class="ss">::cgen</span><span class="p">}</span>
+
+          <span class="nv">default-c-name</span> <span class="p">(</span><span class="nb">with-meta </span><span class="nv">c-name</span> <span class="nv">metadata</span><span class="p">)</span>
+          <span class="nv">rated-defs</span>     <span class="p">(</span><span class="nb">reduce </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">defs</span> <span class="nv">rate</span><span class="p">]</span>
+                                   <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">body</span> <span class="p">(</span><span class="nb">get </span><span class="nv">bodies</span> <span class="nv">rate</span><span class="p">)</span>
+                                         <span class="nv">cgen</span> <span class="p">(</span><span class="nf">mk-cgen</span> <span class="nv">c-name</span> <span class="nv">summary</span> <span class="nb">doc </span><span class="nv">params</span> <span class="nv">body</span> <span class="nv">categories</span> <span class="nv">rate</span><span class="p">)]</span>
+                                     <span class="p">(</span><span class="nb">assoc </span><span class="nv">defs</span> <span class="nv">rate</span> <span class="nv">cgen</span><span class="p">)))</span>
+                                 <span class="p">{}</span>
+                                 <span class="nv">rates</span><span class="p">)</span>
+
+          <span class="nv">default-cgen</span>   <span class="p">(</span><span class="nf">mk-default-cgen</span> <span class="nv">rated-defs</span> <span class="nv">default-rate</span><span class="p">)</span>
+
+          <span class="nv">default-def</span>    <span class="o">`</span><span class="p">(</span><span class="k">def </span><span class="o">~</span><span class="nv">default-c-name</span> <span class="o">~</span><span class="nv">default-cgen</span><span class="p">)</span>
+          <span class="nv">cgen-defs</span>      <span class="p">(</span><span class="nb">list* </span><span class="nv">default-def</span>
+                                <span class="p">(</span><span class="nb">for </span><span class="p">[</span><span class="nv">rate</span> <span class="nv">rates</span><span class="p">]</span>
+                                  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">cgen</span>   <span class="p">(</span><span class="nb">get </span><span class="nv">rated-defs</span> <span class="nv">rate</span><span class="p">)</span>
+                                        <span class="nv">c-name</span> <span class="p">(</span><span class="nb">symbol </span><span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nb">name </span><span class="nv">c-name</span><span class="p">)</span> <span class="nv">rate</span><span class="p">))</span>
+                                        <span class="nv">c-name</span> <span class="p">(</span><span class="nb">with-meta </span><span class="nv">c-name</span> <span class="nv">metadata</span><span class="p">)]</span>
+                                    <span class="o">`</span><span class="p">(</span><span class="k">def </span><span class="o">~</span><span class="nv">c-name</span> <span class="o">~</span><span class="nv">cgen</span><span class="p">))))]</span>
+
+    <span class="o">`</span><span class="p">(</span><span class="k">do </span><span class="o">~@</span><span class="nv">cgen-defs</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

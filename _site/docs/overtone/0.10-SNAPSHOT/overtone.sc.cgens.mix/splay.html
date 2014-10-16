@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>splay</h1>
+    <p class="doc">
+  Spread input channels across a stereo field 
+
+  [in-array [], spread 1, level 1, center 0, level-comp? true]
+
+  in-array    - List of input channels to splay. 
+  spread      - The audio spread width. 
+  level       - Ampilitude level of each 
+                individual spread channel (only 
+                used if level-comp is false). 
+  center      - Center point of audio spread. 
+  level-comp? - Boolean switch to determine 
+                whether automatic level 
+                compensation should be used. 
+
+  Spread input channels across a stereo field, with control 
+  over the center point and spread width of the target 
+  field, and level compensation that lowers the volume for 
+  each additional input channel. 
+
+  Categories: Composite Ugen
+  Rates: [ :ar ]
+  Default rate: :ar</p>
+    <p>
+      File: overtone/sc/cgens/mix.clj
+      Line: 22
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="nf">defcgen</span> <span class="nv">splay</span>
+  <span class="s">&quot;Spread input channels across a stereo field&quot;</span>
+  <span class="p">[</span><span class="nv">in-array</span>    <span class="p">{</span><span class="ss">:default</span> <span class="p">[]</span> <span class="ss">:doc</span> <span class="s">&quot;List of input channels to splay.&quot;</span><span class="p">}</span>
+   <span class="nv">spread</span>      <span class="p">{</span><span class="ss">:default</span> <span class="mi">1</span> <span class="ss">:doc</span> <span class="s">&quot;The audio spread width.&quot;</span><span class="p">}</span>
+   <span class="nv">level</span>       <span class="p">{</span><span class="ss">:default</span> <span class="mi">1</span> <span class="ss">:doc</span> <span class="s">&quot;Ampilitude level of each individual spread channel (only used if level-comp is false).&quot;</span><span class="p">}</span>
+   <span class="nv">center</span>      <span class="p">{</span><span class="ss">:default</span> <span class="mi">0</span> <span class="ss">:doc</span> <span class="s">&quot;Center point of audio spread.&quot;</span><span class="p">}</span>
+   <span class="nv">level-comp?</span> <span class="p">{</span><span class="ss">:default</span> <span class="nv">true</span> <span class="ss">:doc</span> <span class="s">&quot;Boolean switch to determine whether automatic level compensation should be used.&quot;</span><span class="p">}]</span>
+  <span class="s">&quot;Spread input channels across a stereo field, with control over the center point</span>
+<span class="s">  and spread width of the target field, and level compensation that lowers the volume</span>
+<span class="s">  for each additional input channel.&quot;</span>
+  <span class="p">(</span><span class="ss">:ar</span> <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">n</span>         <span class="p">(</span><span class="nb">count </span><span class="nv">in-array</span><span class="p">)</span>
+             <span class="nv">level</span>     <span class="p">(</span><span class="k">if </span><span class="nv">level-comp?</span>
+                         <span class="p">(</span><span class="nb">* </span><span class="nv">level</span> <span class="p">(</span><span class="nf">Math/sqrt</span> <span class="p">(</span><span class="nb">/ </span><span class="mi">1</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">))))</span>
+                         <span class="nv">level</span><span class="p">)</span>
+             <span class="nv">positions</span> <span class="p">(</span><span class="nf">splay-pan</span> <span class="nv">n</span> <span class="nv">center</span> <span class="nv">spread</span><span class="p">)</span>
+             <span class="nv">pans</span>      <span class="p">(</span><span class="nf">pan2</span> <span class="nv">in-array</span> <span class="nv">positions</span> <span class="nv">level</span><span class="p">)]</span>
+         <span class="p">(</span><span class="nf">mix</span> <span class="nv">pans</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

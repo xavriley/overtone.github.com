@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>UGEN-CATEGORIES</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/categories.clj
+      Line: 3
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">UGEN-CATEGORIES</span>
+  <span class="p">{</span><span class="s">&quot;osc-n&quot;</span>          <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pack-fft&quot;</span>        <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;logistic&quot;</span>        <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Chaotic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pitch&quot;</span>           <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Pitch&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;MachineListening&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pan-b2&quot;</span>          <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Ambisonics&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;dust2&quot;</span>           <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;free-verb&quot;</span>       <span class="p">[[</span><span class="s">&quot;Reverbs&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pluck&quot;</span>           <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;tw-choose&quot;</span>       <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Select&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;lin-exp&quot;</span>         <span class="p">[[</span><span class="s">&quot;Maths&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;lin-rand&quot;</span>        <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Single-value&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;grain-buf&quot;</span>       <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Granular&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;send-trig&quot;</span>       <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-rand-comb&quot;</span>    <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;comb-n&quot;</span>          <span class="p">[[</span><span class="s">&quot;Delays&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;spec-flatness&quot;</span>   <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;done&quot;</span>            <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;var-saw&quot;</span>         <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;amplitude&quot;</span>       <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pause-self&quot;</span>      <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t2a&quot;</span>             <span class="p">[[</span><span class="s">&quot;Conversion&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;f-sin-osc&quot;</span>       <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-rect-comb&quot;</span>    <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;formant&quot;</span>         <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;abstract-out&quot;</span>    <span class="p">[[</span><span class="s">&quot;InOut&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;chaos-gen&quot;</span>       <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Chaotic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-mag-mul&quot;</span>      <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;tap&quot;</span>             <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;key-state&quot;</span>       <span class="p">[[</span><span class="s">&quot;User interaction&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;rand-id&quot;</span>         <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;n-rand&quot;</span>          <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Single-value&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;latch&quot;</span>           <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;delay-n&quot;</span>         <span class="p">[[</span><span class="s">&quot;Delays&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;info-u-gen-base&quot;</span> <span class="p">[[</span><span class="s">&quot;Info&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;dyn-klang&quot;</span>       <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pulse-divider&quot;</span>   <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;dwhite&quot;</span>          <span class="p">[[</span><span class="s">&quot;Demand&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-chain-u-gen&quot;</span>  <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;g-verb&quot;</span>          <span class="p">[[</span><span class="s">&quot;Reverbs&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;normalizer&quot;</span>      <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;timer&quot;</span>           <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;grain-sin&quot;</span>       <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Granular&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;lf-pulse&quot;</span>        <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-mag-squared&quot;</span>  <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;bi-pan-b2&quot;</span>       <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Ambisonics&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;zero-crossing&quot;</span>   <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Pitch&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;mantissa-mask&quot;</span>   <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;coin-gate&quot;</span>       <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;select-x&quot;</span>        <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Select&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;v-osc&quot;</span>           <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-rand-wipe&quot;</span>    <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;lf-noise0&quot;</span>       <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;x-line&quot;</span>          <span class="p">[[</span><span class="s">&quot;Envelopes&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-phase-shift&quot;</span>  <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;dyn-klank&quot;</span>       <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Linear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;loudness&quot;</span>        <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;p-sin-grain&quot;</span>     <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;warp1&quot;</span>           <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Granular&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;i-rand&quot;</span>          <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Single-value&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;saw&quot;</span>             <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;sin-osc&quot;</span>         <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;median&quot;</span>          <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-hainsworth-foote&quot;</span>  <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;buf-delay-n&quot;</span>          <span class="p">[[</span><span class="s">&quot;Delays&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t-delay&quot;</span>              <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Delays&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;v-osc3&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;buf-info-u-gen-base&quot;</span>  <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span> <span class="s">&quot;Info&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;slew&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pause-self-when-done&quot;</span> <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;demand&quot;</span>               <span class="p">[[</span><span class="s">&quot;Demand&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;ifft&quot;</span>                 <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;gendy1&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;i-env-gen&quot;</span>            <span class="p">[[</span><span class="s">&quot;Envelopes&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;peak-follower&quot;</span>        <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;amp-comp-a&quot;</span>           <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;in-rect&quot;</span>              <span class="p">[[</span><span class="s">&quot;Maths&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;free&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;sweep&quot;</span>                <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;compander-d&quot;</span>          <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;buf-rd&quot;</span>               <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;freq-shift&quot;</span>           <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Pitch&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;gendy2&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t2k&quot;</span>                  <span class="p">[[</span><span class="s">&quot;Conversion&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;spring&quot;</span>               <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;free-self&quot;</span>            <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;phasor&quot;</span>               <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;demand-env-gen&quot;</span>       <span class="p">[[</span><span class="s">&quot;Demand&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Envelopes&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;gendy3&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;degree-to-key&quot;</span>        <span class="p">[[</span><span class="s">&quot;Conversion&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t-exp-rand&quot;</span>           <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;delay1&quot;</span>               <span class="p">[[</span><span class="s">&quot;Delays&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;decode-b2&quot;</span>            <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Ambisonics&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;check-bad-values&quot;</span>     <span class="p">[[</span><span class="s">&quot;Info&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-rect-comb2&quot;</span>        <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pm-osc&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-mag-div&quot;</span>           <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;mouse-x&quot;</span>              <span class="p">[[</span><span class="s">&quot;User interaction&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;env-gen&quot;</span>              <span class="p">[[</span><span class="s">&quot;Envelopes&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;abstract-in&quot;</span>          <span class="p">[[</span><span class="s">&quot;InOut&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;onsets&quot;</span>               <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;hilbert&quot;</span>              <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;index-l&quot;</span>              <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;x-fade&quot;</span>               <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Select&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t-grains&quot;</span>             <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Granular&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;stepper&quot;</span>              <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;blip&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;convolution2l&quot;</span>        <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;free-verb2&quot;</span>           <span class="p">[[</span><span class="s">&quot;Reverbs&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;hilbert-fir&quot;</span>          <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;index&quot;</span>                <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;dust&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pan-b&quot;</span>                <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Ambisonics&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;select-x-focus&quot;</span>       <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Select&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;spec-centroid&quot;</span>        <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;crackle&quot;</span>              <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;du-gen&quot;</span>               <span class="p">[[</span><span class="s">&quot;Demand&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;beat-track&quot;</span>           <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-bin-wipe&quot;</span>          <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t-windex&quot;</span>             <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;fft&quot;</span>                  <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;line&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Envelopes&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;silent&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Single-value&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;scope-out&quot;</span>            <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;buf-wr&quot;</span>               <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;impulse&quot;</span>              <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;unpack1fft&quot;</span>           <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-bin-shift&quot;</span>         <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;lin-lin&quot;</span>              <span class="p">[[</span><span class="s">&quot;Maths&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;exp-rand&quot;</span>             <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Single-value&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;free-self-when-done&quot;</span>  <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;in-range&quot;</span>             <span class="p">[[</span><span class="s">&quot;Maths&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;c-osc&quot;</span>                <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;compander&quot;</span>            <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;disk-in&quot;</span>              <span class="p">[[</span><span class="s">&quot;InOut&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;trig1&quot;</span>                <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pitch-shift&quot;</span>          <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Pitch&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-jensen-andersen&quot;</span>   <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;white-noise&quot;</span>          <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;lf-saw&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pause&quot;</span>                <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;duty&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Demand&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-diffuser&quot;</span>          <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;sync-saw&quot;</span>             <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;rotate2&quot;</span>              <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Ambisonics&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Panners&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;record-buf&quot;</span>           <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;detect-silence&quot;</span>       <span class="p">[[</span><span class="s">&quot;Synth control&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;grain-in&quot;</span>             <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Granular&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;amp-comp&quot;</span>             <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Amplitude&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;ugen&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Unclassified&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-mag-freeze&quot;</span>        <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;filter&quot;</span>               <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Linear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;convolution&quot;</span>          <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t-ball&quot;</span>               <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;klang&quot;</span>                <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Linear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;toggle-ff&quot;</span>            <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-conformal-map&quot;</span>     <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;rand-seed&quot;</span>            <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;grain-fm&quot;</span>             <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Granular&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;unpack-fft&quot;</span>           <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pulse&quot;</span>                <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;mfcc&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;k2a&quot;</span>                  <span class="p">[[</span><span class="s">&quot;Conversion&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;play-buf&quot;</span>             <span class="p">[[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-bin-scramble&quot;</span>      <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;most-change&quot;</span>          <span class="p">[[</span><span class="s">&quot;Maths&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;mouse-button&quot;</span>         <span class="p">[[</span><span class="s">&quot;User interaction&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;a2k&quot;</span>                  <span class="p">[[</span><span class="s">&quot;Conversion&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;linen&quot;</span>                <span class="p">[[</span><span class="s">&quot;Envelopes&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;last-value&quot;</span>           <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;convolution2&quot;</span>         <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pulse-count&quot;</span>          <span class="p">[[</span><span class="s">&quot;Triggers&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;hasher&quot;</span>               <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-mag-smear&quot;</span>         <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;convolution3&quot;</span>         <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;select&quot;</span>               <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Select&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;buf-comb-n&quot;</span>           <span class="p">[[</span><span class="s">&quot;Delays&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;audio-in&quot;</span>             <span class="p">[[</span><span class="s">&quot;InOut&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-mag-above&quot;</span>         <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;spec-pcile&quot;</span>           <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;key-track&quot;</span>            <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span> <span class="s">&quot;Pitch&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;ti-rand&quot;</span>              <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;klank&quot;</span>                <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Linear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;running-sum&quot;</span>          <span class="p">[[</span><span class="s">&quot;Maths&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;pv-brick-wall&quot;</span>        <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;stereo-convolution2l&quot;</span> <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;t-rand&quot;</span>               <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Stochastic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;beat-track2&quot;</span>          <span class="p">[[</span><span class="s">&quot;Analysis&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;disk-out&quot;</span>             <span class="p">[[</span><span class="s">&quot;InOut&quot;</span><span class="p">]</span> <span class="p">[</span><span class="s">&quot;Buffer&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;panner&quot;</span>               <span class="p">[[</span><span class="s">&quot;Multichannel&quot;</span> <span class="s">&quot;Panners&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;dc&quot;</span>                   <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Single-value&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;fft-trigger&quot;</span>          <span class="p">[[</span><span class="s">&quot;FFT&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;sin-osc-fb&quot;</span>           <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;ball&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Filters&quot;</span> <span class="s">&quot;Nonlinear&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;osc&quot;</span>                  <span class="p">[[</span><span class="s">&quot;Generators&quot;</span> <span class="s">&quot;Deterministic&quot;</span><span class="p">]]</span>
+	 <span class="s">&quot;poll&quot;</span>                 <span class="p">[[</span><span class="s">&quot;Info&quot;</span><span class="p">]]})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

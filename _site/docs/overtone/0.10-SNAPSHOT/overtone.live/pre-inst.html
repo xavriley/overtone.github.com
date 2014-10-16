@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>pre-inst</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/studio/inst.clj
+      Line: 105
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">pre-inst</span>
+  <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">sname</span> <span class="nv">params</span> <span class="nv">param-proxies</span> <span class="nv">ugen-form</span><span class="p">]</span> <span class="p">(</span><span class="nf">normalize-synth-args</span> <span class="nv">args</span><span class="p">)]</span>
+    <span class="o">`</span><span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="o">~@</span><span class="nv">param-proxies</span><span class="p">]</span>
+       <span class="p">(</span><span class="nb">binding </span><span class="p">[</span><span class="nv">*ugens*</span>     <span class="p">[]</span>
+                 <span class="nv">*constants*</span> <span class="o">#</span><span class="p">{}]</span>
+         <span class="p">(</span><span class="nf">with-overloaded-ugens</span>
+           <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">form#</span>               <span class="o">~@</span><span class="nv">ugen-form</span>
+                 <span class="c1">;; form# can be a map, or a sequence of maps. We use</span>
+                 <span class="c1">;; `sequence?` because `coll?` applies to maps (which</span>
+                 <span class="c1">;; are not sequential) and `seq?` does not apply to</span>
+                 <span class="c1">;; vectors (which are sequential).</span>
+                 <span class="nv">n-chans#</span>            <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">sequential?</span> <span class="nv">form#</span><span class="p">)</span> <span class="p">(</span><span class="nb">count </span><span class="nv">form#</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
+                 <span class="nv">inst-bus#</span>           <span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="ss">:bus</span> <span class="p">(</span><span class="nb">get </span><span class="p">(</span><span class="ss">:instruments</span> <span class="o">@</span><span class="nv">studio*</span><span class="p">)</span> <span class="o">~</span><span class="nv">sname</span><span class="p">))</span>
+                                         <span class="p">(</span><span class="nf">audio-bus</span> <span class="nv">n-chans#</span><span class="p">))</span>
+                 <span class="p">[</span><span class="nv">ugens#</span> <span class="nv">constants#</span><span class="p">]</span> <span class="p">(</span><span class="nf">gather-ugens-and-constants</span> <span class="p">(</span><span class="nf">out</span> <span class="nv">inst-bus#</span> <span class="nv">form#</span><span class="p">))</span>
+                 <span class="nv">ugens#</span>              <span class="p">(</span><span class="nf">topological-sort-ugens</span> <span class="nv">ugens#</span><span class="p">)</span>
+                 <span class="nv">main-tree#</span>          <span class="p">(</span><span class="nb">set </span><span class="nv">ugens#</span><span class="p">)</span>
+                 <span class="nv">side-tree#</span>          <span class="p">(</span><span class="nb">filter </span><span class="o">#</span><span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nf">main-tree#</span> <span class="nv">%</span><span class="p">))</span> <span class="nv">*ugens*</span><span class="p">)</span>
+                 <span class="nv">ugens#</span>              <span class="p">(</span><span class="nb">concat </span><span class="nv">ugens#</span> <span class="nv">side-tree#</span><span class="p">)</span>
+                 <span class="nv">constants#</span>          <span class="p">(</span><span class="nb">into </span><span class="p">[]</span> <span class="p">(</span><span class="nb">set </span><span class="p">(</span><span class="nb">concat </span><span class="nv">constants#</span> <span class="nv">*constants*</span><span class="p">)))]</span>
+             <span class="p">[</span><span class="o">~</span><span class="nv">sname</span>
+              <span class="o">~</span><span class="nv">params</span>
+              <span class="nv">ugens#</span>
+              <span class="nv">constants#</span>
+              <span class="nv">n-chans#</span>
+              <span class="nv">inst-bus#</span><span class="p">]))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

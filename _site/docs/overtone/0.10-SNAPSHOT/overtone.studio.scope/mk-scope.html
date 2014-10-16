@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>mk-scope</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/studio/scope.clj
+      Line: 225
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn- </span><span class="nv">mk-scope</span>
+  <span class="p">[</span><span class="nv">thing</span> <span class="nv">kind</span> <span class="nv">keep-on-top</span> <span class="nv">width</span> <span class="nv">height</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">thing-id</span> <span class="p">(</span><span class="nf">to-sc-id</span> <span class="nv">thing</span><span class="p">)</span>
+        <span class="nv">scope-id</span> <span class="p">(</span><span class="nf">uuid</span><span class="p">)</span>
+        <span class="nb">name </span>    <span class="p">(</span><span class="nb">str </span><span class="nv">kind</span> <span class="s">&quot;: &quot;</span> <span class="nv">thing-id</span> <span class="s">&quot; &quot;</span> <span class="p">(</span><span class="nb">if-not </span><span class="p">(</span><span class="nf">empty?</span> <span class="p">(</span><span class="ss">:name</span> <span class="nv">thing</span><span class="p">))</span>
+                                               <span class="p">(</span><span class="nb">str </span><span class="s">&quot;[&quot;</span> <span class="p">(</span><span class="ss">:name</span> <span class="nv">thing</span><span class="p">)</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
+                                               <span class="s">&quot;&quot;</span><span class="p">))</span>
+        <span class="nv">panel</span>    <span class="p">(</span><span class="nf">scope-panel</span> <span class="nv">scope-id</span> <span class="nv">width</span> <span class="nv">height</span><span class="p">)</span>
+        <span class="nv">slider</span>   <span class="p">(</span><span class="nf">JSlider.</span> <span class="nv">JSlider/VERTICAL</span> <span class="mi">0</span> <span class="mi">99</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="nv">frame</span>    <span class="p">(</span><span class="nf">scope-frame</span> <span class="nv">panel</span> <span class="nv">slider</span> <span class="nb">name </span><span class="nv">keep-on-top</span> <span class="nv">width</span> <span class="nv">height</span><span class="p">)</span>
+        <span class="nv">x-array</span>  <span class="p">(</span><span class="nf">int-array</span> <span class="nv">width</span><span class="p">)</span>
+        <span class="nv">y-a</span>      <span class="p">(</span><span class="nf">int-array</span> <span class="nv">width</span><span class="p">)</span>
+        <span class="nv">y-b</span>      <span class="p">(</span><span class="nf">int-array</span> <span class="nv">width</span><span class="p">)</span>
+        <span class="nv">scope</span>    <span class="p">{</span><span class="ss">:id</span>         <span class="nv">scope-id</span>
+                  <span class="ss">:name</span>       <span class="nv">name</span>
+                  <span class="ss">:size</span>       <span class="mi">0</span>
+                  <span class="ss">:thing</span>      <span class="nv">thing</span>
+                  <span class="ss">:panel</span>      <span class="nv">panel</span>
+                  <span class="ss">:slider</span>     <span class="nv">slider</span>
+                  <span class="ss">:kind</span>       <span class="nv">kind</span>
+                  <span class="ss">:color</span>      <span class="p">(</span><span class="nf">Color.</span> <span class="mi">0</span> <span class="mi">130</span> <span class="mi">226</span><span class="p">)</span>
+                  <span class="ss">:background</span> <span class="p">(</span><span class="nf">Color.</span> <span class="mi">50</span> <span class="mi">50</span> <span class="mi">50</span><span class="p">)</span>
+                  <span class="ss">:frame</span>      <span class="nv">frame</span>
+                  <span class="ss">:width</span>      <span class="nv">width</span>
+                  <span class="ss">:height</span>     <span class="nv">height</span>
+                  <span class="ss">:x-array</span>    <span class="nv">x-array</span>
+                  <span class="ss">:y-arrays</span>   <span class="p">(</span><span class="nf">atom</span> <span class="p">[</span><span class="nv">y-a</span> <span class="nv">y-b</span><span class="p">])}</span>
+
+        <span class="nv">_</span>        <span class="p">(</span><span class="nf">reset-data-arrays</span> <span class="nv">scope</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nf">.addWindowListener</span> <span class="nv">frame</span>
+                        <span class="p">(</span><span class="nf">reify</span> <span class="nv">WindowListener</span>
+                          <span class="p">(</span><span class="nf">windowActivated</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])</span>
+                          <span class="p">(</span><span class="nf">windowClosing</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">]</span>
+                            <span class="p">(</span><span class="nf">scope-close</span> <span class="p">(</span><span class="nb">get </span><span class="o">@</span><span class="nv">scopes*</span> <span class="nv">scope-id</span><span class="p">)))</span>
+                          <span class="p">(</span><span class="nf">windowDeactivated</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])</span>
+                          <span class="p">(</span><span class="nf">windowDeiconified</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])</span>
+                          <span class="p">(</span><span class="nf">windowIconified</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])</span>
+                          <span class="p">(</span><span class="nf">windowOpened</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])</span>
+                          <span class="p">(</span><span class="nf">windowClosed</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])))</span>
+    <span class="p">(</span><span class="nb">comment </span><span class="nv">.addComponentListener</span> <span class="nv">frame</span>
+             <span class="p">(</span><span class="nf">reify</span> <span class="nv">ComponentListener</span>
+               <span class="p">(</span><span class="nf">componentHidden</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])</span>
+               <span class="p">(</span><span class="nf">componentMoved</span>  <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])</span>
+               <span class="p">(</span><span class="nf">componentResized</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">]</span>
+                 <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">w</span> <span class="p">(</span><span class="nf">.getWidth</span> <span class="nv">frame</span><span class="p">)</span>
+                       <span class="nv">h</span> <span class="p">(</span><span class="nf">.getHeight</span> <span class="nv">frame</span><span class="p">)</span>
+                       <span class="nv">xs</span> <span class="p">(</span><span class="nf">int-array</span> <span class="nv">w</span><span class="p">)</span>
+                       <span class="nv">ya</span> <span class="p">(</span><span class="nf">int-array</span> <span class="nv">w</span><span class="p">)</span>
+                       <span class="nv">yb</span> <span class="p">(</span><span class="nf">int-array</span> <span class="nv">w</span><span class="p">)]</span>
+                   <span class="p">(</span><span class="nf">dosync</span>
+                    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">s</span> <span class="p">(</span><span class="nb">get </span><span class="p">(</span><span class="nb">ensure </span><span class="nv">scopes*</span><span class="p">)</span> <span class="nv">scope-id</span><span class="p">)</span>
+                          <span class="nv">s</span> <span class="p">(</span><span class="nb">assoc </span><span class="nv">s</span>
+                              <span class="ss">:width</span> <span class="nv">w</span>
+                              <span class="ss">:height</span> <span class="nv">h</span>
+                              <span class="ss">:x-array</span> <span class="nv">xs</span>
+                              <span class="ss">:y-arrays</span> <span class="p">(</span><span class="nf">atom</span> <span class="p">[</span><span class="nv">ya</span> <span class="nv">yb</span><span class="p">]))]</span>
+                      <span class="p">(</span><span class="nb">alter </span><span class="nv">scopes*</span> <span class="nb">assoc </span><span class="nv">scope-id</span> <span class="nv">s</span><span class="p">)))))</span>
+               <span class="p">(</span><span class="nf">componentShown</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">e</span><span class="p">])))</span>
+
+    <span class="p">(</span><span class="nf">case</span> <span class="nv">kind</span>
+      <span class="ss">:control-bus</span> <span class="p">(</span><span class="nf">scope-bus</span> <span class="nv">scope</span> <span class="nv">true</span><span class="p">)</span>
+      <span class="ss">:bus</span> <span class="p">(</span><span class="nf">scope-bus</span> <span class="nv">scope</span> <span class="nv">false</span><span class="p">)</span>
+      <span class="ss">:audio-bus</span> <span class="p">(</span><span class="nf">scope-bus</span> <span class="nv">scope</span> <span class="nv">false</span><span class="p">)</span>
+      <span class="ss">:bus-freq</span> <span class="p">(</span><span class="nf">scope-bus-freq</span> <span class="nv">scope</span><span class="p">)</span>
+      <span class="ss">:buf</span> <span class="p">(</span><span class="nf">scope-buf</span> <span class="nv">scope</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

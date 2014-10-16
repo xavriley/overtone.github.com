@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/random.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+
+      <span class="c1">;; TODO: discover why this is commented out and either uncomment or remove</span>
+      <span class="c1">;; Rand : UGen {</span>
+      <span class="c1">;; 	// uniform distribution</span>
+      <span class="c1">;; 	*new { arg lo = 0.0, hi = 1.0;</span>
+      <span class="c1">;; 		^this.multiNew(&#39;scalar&#39;, lo, hi)</span>
+      <span class="c1">;; 	}</span>
+      <span class="c1">;; }</span>
+
+      <span class="c1">;;{:name &quot;Rand&quot;</span>
+      <span class="c1">;; :args [{:name &quot;lo&quot;, :default 0.0}</span>
+      <span class="c1">;;        {:name &quot;hi&quot;, :default 1.0}]</span>
+      <span class="c1">;; :rates #{:ir}}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RandSeed&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Trigger signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;seed&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">56789</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Seed value&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:fixed-outs</span> <span class="mi">0</span>
+       <span class="ss">:doc</span> <span class="s">&quot;When the trigger signal changes from nonpositive to</span>
+<span class="s">             positive, the synth&#39;s random generator seed is reset to the</span>
+<span class="s">             given value. All synths that use the same random number</span>
+<span class="s">             generator reproduce the same sequence of numbers again.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RandID&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;seed&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Seed id&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:fixed-outs</span> <span class="mi">0</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Choose which random number generator to use for this</span>
+<span class="s">             synth. All synths that use the same generator reproduce the</span>
+<span class="s">             same sequence of numbers when the same seed is set again.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;IRand&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum value of generated integer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">127.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum value of generated integer&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a single random integer value in uniform</span>
+<span class="s">             distribution from lo to hi&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TRand&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Trigger signal&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a random float value in uniform distribution from</span>
+<span class="s">             lo to hi each time the trig signal changes from nonpositive</span>
+<span class="s">             to positive values&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TIRand&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum value of generated integer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">127</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum value of generated integer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Trigger signal&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a random integer value in uniform distribution</span>
+<span class="s">             from lo to hi each time the trig signal changes from</span>
+<span class="s">             nonpositive to positive values&quot;</span><span class="p">}</span>
+
+      <span class="c1">;; TODO: discover why this is commented out and either uncomment or remove</span>
+      <span class="c1">;; LinRand : UGen {</span>
+      <span class="c1">;; 	// linear distribution</span>
+      <span class="c1">;; 	// if minmax &lt;= 0 then skewed towards lo.</span>
+      <span class="c1">;; 	// else skewed towards hi.</span>
+      <span class="c1">;; 	*new { arg lo = 0.0, hi = 1.0, minmax = 0;</span>
+      <span class="c1">;; 		^this.multiNew(&#39;scalar&#39;, lo, hi, minmax)</span>
+      <span class="c1">;; 	}</span>
+      <span class="c1">;; }</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NRand&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;n&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Distribution choice&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a single random float value in a sum of n uniform</span>
+<span class="s">             distributions from lo to hi.</span>
+
+<span class="s">             n = 1 : uniform distribution - same as Rand</span>
+
+<span class="s">             n = 2 : triangular distribution</span>
+
+<span class="s">             n = 3 : smooth hump</span>
+
+<span class="s">             As n increases, distribution converges towards gaussian&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ExpRand&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.01</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum value of generated float&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a single random float value in an exponential</span>
+<span class="s">             distributions from lo to hi.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TExpRand&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.01</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Trigger signal&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a random float value in exponential distribution</span>
+<span class="s">             from lo to hi each time the trig signal changes from</span>
+<span class="s">             nonpositive to positive values lo and hi must both have the</span>
+<span class="s">             same sign and be non-zero.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;CoinGate&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;prob&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Value between 0 and 1 determines probability of</span>
+<span class="s">                     either possibilities&quot;</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Trigger signal&quot;</span><span class="p">}]</span>
+
+             <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;When it receives a trigger, it tosses a coin, and either</span>
+<span class="s">             passes the trigger or doesn&#39;t.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LinRand&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum value of generated float&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;minmax&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Skew direction (towards lo if negative otherwise</span>
+<span class="s">                     hi)&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates a single random float value in linear</span>
+<span class="s">             distribution from lo to hi, skewed towards lo if minmax &lt;</span>
+<span class="s">             0, otherwise skewed towards hi.&quot;</span> <span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

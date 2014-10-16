@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>
+  
+  Overtone
+</title>
+
+<link rel="stylesheet" type="text/css" href="{ site.url }/js/fancybox/jquery.fancybox-1.3.0.css"/>
+<link rel="stylesheet" href="{ site.url }/style/syntax.css" type="text/css"/>
+<link rel="stylesheet/less" href="{ site.url }/style/overtone.less" type="text/css"/>
+
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="{ site.url }/js/fancybox/jquery.fancybox-1.3.0.pack.js"></script>
+<script type="text/javascript" src="{ site.url }/js/less-1.0.41.min.js"></script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("a.fancy").fancybox();
+});
+</script>
+
+</head>
+
+<body>
+<a href="http://github.com/overtone/overtone"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+<div id="container">
+  <div id="header">
+    <img id="logo" src="media/logo.png" />
+    <ul id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a></li>
+      <li><a href="https://github.com/overtone/overtone/">Source</a></li>
+      <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a></li>
+    </ul>
+  </div>
+
+  <div id="content">
+    <h2 id="project_blog">Project Blog</h2>
+<h4><a href='/2010/09/04/session-and-instrument.html'>Session And Instrument</a></h4><div class='post'>
+    <p>This post is about the inst branch of Overtone that I’m working on. The goal is to split up some of the functionality of the currenty synth and defsynth functions. Instead we will have a low-level synth interface, and a higher level instrument interface. Instruments are automatically added to the session when they are defined, and they will return back a player function. Calling an instrument function triggers the underlying synth.</p>
+
+<ul>
+<li>
+<p>synthdef</p>
+</li>
+
+<li>
+<p>create raw synthdef object</p>
+</li>
+
+<li>
+<p>synth</p>
+</li>
+
+<li>
+<p>macro to let-bind operators to ugen functions</p>
+</li>
+
+<li>
+<p>anonymous if no name symbol present</p>
+</li>
+
+<li>
+<p>auto-load onto synth server</p>
+</li>
+
+<li>
+<p>return callable map with sdef and trigger function</p>
+</li>
+
+<li>
+<p>by default all synths play in the SYNTH-GROUP</p>
+</li>
+
+<li>
+<p>defsynth</p>
+</li>
+
+<li>
+<p>(def foo (synth …))</p>
+</li>
+
+<li>
+<p>play</p>
+</li>
+
+<li>
+<p>uses synth underneath, loads and triggers immediately when ready</p>
+</li>
+
+<li>
+<p>inst (rument)</p>
+</li>
+
+<li>
+<p>calls synth to define and load the synth</p>
+</li>
+
+<li>
+<p>register itself with current session</p>
+</li>
+
+<li>
+<p>creates a group to contain synth instance nodes</p>
+</li>
+
+<li>
+<p>automatically adds pan and output ugens with existing rules</p>
+</li>
+
+<li>
+<p>definst</p>
+</li>
+
+<li>
+<p>(def foo (inst …))</p>
+</li>
+</ul>
+<div class='highlight'><pre><code class='clojure'>  <span class='c1'>; View a full sample waveform</span>
+  <span class='p'>(</span><span class='k'>def </span><span class='nv'>s</span> <span class='p'>(</span><span class='nf'>load-sample</span> <span class='s'>&quot;/home/rosejn/studio/samples/kit/boom.wav&quot;</span><span class='p'>))</span>
+  <span class='p'>(</span><span class='nf'>scope-buf</span> <span class='nv'>s</span><span class='p'>)</span>
+
+  <span class='c1'>; view a live waveform</span>
+  <span class='p'>(</span><span class='k'>def </span><span class='nv'>b</span> <span class='p'>(</span><span class='nf'>buffer</span> <span class='mi'>2048</span><span class='p'>))</span>
+  <span class='p'>(</span><span class='nf'>defsynth</span> <span class='nv'>foo</span> <span class='p'>[</span><span class='nv'>out-bus</span> <span class='mi'>20</span><span class='p'>]</span> <span class='p'>(</span><span class='nf'>out</span> <span class='nv'>out-bus</span> <span class='p'>(</span><span class='nf'>sin-osc</span> <span class='mi'>400</span><span class='p'>)))</span>
+  <span class='p'>(</span><span class='nf'>foo</span><span class='p'>)</span>           <span class='c1'>; output a sine wave onto bus 20</span>
+  <span class='p'>(</span><span class='nf'>bus-&gt;buf</span> <span class='mi'>20</span> <span class='nv'>b</span><span class='p'>)</span> <span class='c1'>; record signal from bus 20 into buffer b, looping</span>
+  <span class='p'>(</span><span class='nf'>scope-buf</span> <span class='nv'>b</span><span class='p'>)</span>   
+  <span class='p'>(</span><span class='nf'>scope-on</span><span class='p'>)</span>      <span class='c1'>; enjoy</span>
+  <span class='c1'>;...</span>
+  <span class='p'>(</span><span class='nf'>scope-off</span><span class='p'>)</span>     <span class='c1'>; stop live updates</span>
+</code></pre></div>
+    <em>Posted on 04 September 2010.</em>
+  </div><h4><a href='/2010/04/05/oscilloscope-and-curve-editor.html'>Oscilloscope And Curve Editor</a></h4><div class='post'>
+    <p>We’ve made some big steps lately so I figured it was time for a short update. Fabian’s great work on the native bindings for the SuperCollider synthesis server now allow us to boot the audio server in the same process as the JVM. This means we can share buffers of audio data with the DSP engine with minimal communications overhead, allowing for real-time visualization and soon manipulation of audio waveform data.</p>
+
+<p>The new (oscillo-)scope renders the contents of a buffer. It can animate in real-time with an adjustable fps, but their is no zooming or waveform manipulation yet. It’s already usable for checking out waveforms and learning, but hopefully there are still some good opportunities for optimizing this widget to get a bit cleaner, real-time waveform without jitter. (I haven’t tried out either the concurrent garbage collector or the real-time JVM, both of which could be interesting.)</p>
+<div class='highlight'><pre><code class='clojure'>  <span class='c1'>; View a full sample waveform</span>
+  <span class='p'>(</span><span class='k'>def </span><span class='nv'>s</span> <span class='p'>(</span><span class='nf'>load-sample</span> <span class='s'>&quot;/home/rosejn/studio/samples/kit/boom.wav&quot;</span><span class='p'>))</span>
+  <span class='p'>(</span><span class='nf'>scope-buf</span> <span class='nv'>s</span><span class='p'>)</span>
+
+  <span class='c1'>; view a live waveform</span>
+  <span class='p'>(</span><span class='k'>def </span><span class='nv'>b</span> <span class='p'>(</span><span class='nf'>buffer</span> <span class='mi'>2048</span><span class='p'>))</span>
+  <span class='p'>(</span><span class='nf'>defsynth</span> <span class='nv'>foo</span> <span class='p'>[</span><span class='nv'>out-bus</span> <span class='mi'>20</span><span class='p'>]</span> <span class='p'>(</span><span class='nf'>out</span> <span class='nv'>out-bus</span> <span class='p'>(</span><span class='nf'>sin-osc</span> <span class='mi'>400</span><span class='p'>)))</span>
+  <span class='p'>(</span><span class='nf'>foo</span><span class='p'>)</span>           <span class='c1'>; output a sine wave onto bus 20</span>
+  <span class='p'>(</span><span class='nf'>bus-&gt;buf</span> <span class='mi'>20</span> <span class='nv'>b</span><span class='p'>)</span> <span class='c1'>; record signal from bus 20 into buffer b, looping</span>
+  <span class='p'>(</span><span class='nf'>scope-buf</span> <span class='nv'>b</span><span class='p'>)</span>   
+  <span class='p'>(</span><span class='nf'>scope-on</span><span class='p'>)</span>      <span class='c1'>; enjoy</span>
+  <span class='c1'>;...</span>
+  <span class='p'>(</span><span class='nf'>scope-off</span><span class='p'>)</span>     <span class='c1'>; stop live updates</span>
+</code></pre></div>
+<p>Shown in the oscilloscope is a kick drum sample.</p>
+
+<p><a class='fancy' href='media/new-curve-editor-big.png'>
+  <img src='media/new-curve-editor-small.png' />
+</a></p>
+
+<p>Below the oscilloscope is the new curve editor. This is the result of a late night hacking session last night, so there is plenty more work to do, but this will allow us to visualize and manipulate the control points for envelope and automation curves.</p>
+
+<p>The color chooser in the toolbar on the side emits a <strong>:color-changed</strong> event when the color is changed. For most stuff you can probably just use the <strong>live-color</strong> function though. Here’s how you can change the color of the curve editor interactively:</p>
+<div class='highlight'><pre><code class='clojure'>  <span class='p'>(</span><span class='nf'>live-color</span> <span class='o'>#</span><span class='p'>(</span><span class='nf'>curve-color</span> <span class='nv'>%</span><span class='p'>))</span>
+  <span class='c1'>;... change color ...</span>
+  <span class='p'>(</span><span class='nf'>stop-color</span><span class='p'>)</span>                       <span class='c1'>; remove the handler</span>
+</code></pre></div>
+<p>I’ve been thinking about how to generate a little theme configuration panel that lets you see all of the colors used by the application, adjust them interactively, and then save out into a named theme setting. This will be one of the building blocks.</p>
+
+<p>Our goal for this first draft of an actual Overtone application is to create a tool that is good for designing and playing a single instrument. This includes a basic live-coding editor, a repl, the oscilloscope, the curve editor, and a few generic controls to trigger synths and control parameters. Oh, and some basic midi hooks to make it easy to use a keyboard or a monome to trigger synths. We are probably a month or two away from the first alpha release.</p>
+    <em>Posted on 05 April 2010.</em>
+  </div><h4><a href='/2010/02/20/audio-visual-progress.html'>Audio Visual Progress</a></h4><div class='post'>
+    <p>The audio synthesis API that communicates with SuperCollider is operational. You can define a synthesizer, load it and then trigger it and send it control messages to adjust parameters. Here’s a short example of creating and playing a simple synth on the repl.</p>
+<div class='highlight'><pre><code class='clojure'><span class='p'>(</span><span class='nf'>use</span> <span class='ss'>&#39;overtone.live</span><span class='p'>)</span>
+
+<span class='c1'>; import the UGen function library</span>
+<span class='c1'>; we do it this way because we need to override a bunch of built-in clojure</span>
+<span class='c1'>; functions, including +, -, *, / and other common functions.  Doing it like</span>
+<span class='c1'>; this saves you from having to exclude all this in your namespace definition.</span>
+<span class='p'>(</span><span class='nf'>refer-ugens</span><span class='p'>)</span>
+
+<span class='c1'>; boot the synth server</span>
+<span class='p'>(</span><span class='nf'>boot</span><span class='p'>)</span>
+
+<span class='c1'>; here is a random, echoing, ping synth</span>
+<span class='p'>(</span><span class='nf'>defsynth</span> <span class='nv'>chop-saw</span> <span class='p'>[</span><span class='nv'>freq</span> <span class='mi'>440</span> <span class='nv'>depth</span> <span class='mi'>5</span><span class='p'>]</span>                                                                                     
+  <span class='p'>(</span><span class='nf'>comb-n</span> <span class='p'>(</span><span class='nb'>* </span><span class='p'>(</span><span class='nf'>env-gen</span> <span class='p'>(</span><span class='nf'>perc</span> <span class='mf'>0.1</span> <span class='mf'>0.4</span><span class='p'>)</span> <span class='p'>(</span><span class='nf'>lf-pulse</span><span class='ss'>:kr</span> <span class='mi'>2</span><span class='p'>))</span> 
+             <span class='p'>(</span><span class='nf'>rlpf</span> <span class='p'>(</span><span class='nf'>saw</span> <span class='p'>(</span><span class='nb'>+ </span><span class='nv'>freq</span> <span class='p'>(</span><span class='nb'>* </span><span class='nv'>depth</span> 
+                                <span class='p'>(</span><span class='nf'>lf-saw</span><span class='ss'>:kr</span> <span class='p'>(</span><span class='nf'>lf-pulse</span><span class='ss'>:kr</span> <span class='mf'>0.1</span> <span class='mf'>0.2</span><span class='p'>)))))</span> 
+                   <span class='nv'>freq</span> <span class='mf'>0.6</span><span class='p'>))))</span>
+
+<span class='c1'>; play it</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span><span class='p'>)</span>
+
+<span class='c1'>; kill the synth instance based on the last returned node id</span>
+<span class='p'>(</span><span class='nf'>kill</span> <span class='nv'>*1</span><span class='p'>)</span> 
+
+<span class='c1'>; play it with different settings</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='mi'>440</span> <span class='mi'>20</span><span class='p'>)</span>
+
+<span class='c1'>; and control them on the fly</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:ctl</span> <span class='ss'>:freq</span> <span class='mi'>880</span> <span class='ss'>:depth</span> <span class='mi'>10</span><span class='p'>)</span>
+
+<span class='c1'>; make some more</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:freq</span> <span class='mi'>440</span><span class='p'>)</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:freq</span> <span class='mi'>220</span><span class='p'>)</span>
+<span class='p'>(</span><span class='nf'>chop-saw</span> <span class='ss'>:freq</span> <span class='mi'>110</span><span class='p'>)</span>
+
+<span class='c1'>; clear all running synths</span>
+<span class='p'>(</span><span class='nf'>reset</span><span class='p'>)</span>
+
+<span class='c1'>; quit the synth server</span>
+<span class='p'>(</span><span class='nf'>quit</span><span class='p'>)</span>
+</code></pre></div>
+<p>A graph based editor (connecting nodes with edges) is coming to life now. This will allow you to define synthesizers and control patches in a basic graphical programming environment. Here’s a screenshot showing some of the widgets implemented in the first prototype (click to zoom):</p>
+
+<p><a class='fancy' href='media/overflow.png'><img src='media/overflow-small.png' /></a></p>
+
+<p>Overtone can be used as a library from Clojure code or on the repl, but there is also the beginnings of a standalone application. It currently boots the server and it has a repl that can evaluate code, but it will soon get a text editor and the flow editor.</p>
+    <em>Posted on 20 February 2010.</em>
+  </div><h4><a href='/blog/2009/11/15/it-makes-noise.html'>It Makes Noise</a></h4><div class='post'>
+    <p>Overtone lives!</p>
+<div class='highlight'><pre><code class='clojure'><span class='p'>(</span><span class='nf'>use</span> <span class='ss'>&#39;overtone.sc</span><span class='p'>)</span>
+
+<span class='p'>(</span><span class='nf'>boot</span><span class='p'>)</span>
+<span class='p'>(</span><span class='nf'>hit</span> <span class='p'>(</span><span class='nf'>now</span><span class='p'>)</span> <span class='s'>&quot;kick&quot;</span><span class='p'>)</span>
+<span class='p'>(</span><span class='nf'>quit</span><span class='p'>)</span>
+</code></pre></div>
+    <em>Posted on 15 November 2009.</em>
+  </div>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>gendy3:ar</h1>
+    <p class="doc">
+  [ampdist 1.0, durdist 1.0, adparam 1.0, ddparam 1.0, freq 440.0, ampscale 0.5, durscale 0.5, init-cps 12, knum 12]
+
+  ampdist  - Choice of probability distribution 
+             for the next perturbation of the 
+             amplitude of a control point. The 
+             distributions are (adapted from the 
+             GENDYN program in Formalized Music): 
+             0- LINEAR,1- CAUCHY, 2- LOGIST, 3- 
+             HYPERBCOS, 4- ARCSINE, 5- EXPON, 6- 
+             SINUS, Where the sinus (Xenakis' 
+             name) is in this implementation taken 
+             as sampling from a third party 
+             oscillator. 
+  durdist  - Choice of distribution for the 
+             perturbation of the current inter 
+             control point duration. 
+  adparam  - A parameter for the shape of the 
+             amplitude probability distribution, 
+             requires values in the range 0.0001 
+             to 1 (there are safety checks in the 
+             code so don't worry too much if you 
+             want to modulate!) 
+  ddparam  - A parameter for the shape of the 
+             duration probability distribution, 
+             requires values in the range 0.0001 
+             to 1 
+  freq     - Oscillation frquency. 
+  ampscale - Normally 0.0 to 1.0, multiplier for 
+             the distribution's delta value for 
+             amplitude. An ampscale of 1.0 allows 
+             the full range of -1 to 1 for a 
+             change of amplitude. 
+  durscale - Normally 0.0 to 1.0, multiplier for 
+             the distribution's delta value for 
+             duration. An ampscale of 1.0 allows 
+             the full range of -1 to 1 for a 
+             change of duration. 
+  init-cps - Initialise the number of control 
+             points in the memory. Xenakis 
+             specifies 12. There would be this 
+             number of control points per cycle of 
+             the oscillator, though the 
+             oscillator's period will constantly 
+             change due to the duration 
+             distribution. 
+  knum     - Current number of utilised control 
+             points, allows modulation. 
+
+  See Gendy1 help file for background. This variant of 
+  GENDYN normalises the durations in each period to force 
+  oscillation at the desired pitch. The breakpoints still 
+  get perturbed as in Gendy1. There is some glitching in the 
+  oscillator caused by the stochastic effects: control 
+  points as they vary cause big local jumps of amplitude. 
+  Put ampscale and durscale low to minimise this. All 
+  parameters can be modulated at control rate except for 
+  initCPs which is used only at initialisation. 
+
+  Categories: Generators -> Stochastic
+  Rates: [ :ar, :kr ]
+  Default rate: :ar</p>
+    <p>
+      File: 
+      Line: 
+    </p>
+    <div class="highlight"><pre><code class="clojure">      
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

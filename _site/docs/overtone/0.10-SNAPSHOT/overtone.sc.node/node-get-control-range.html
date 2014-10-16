@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>node-get-control-range</h1>
+    <p class="doc">Get a range of n controls starting at a given name or index.
+  Returns a vector of values.</p>
+    <p>
+      File: overtone/sc/node.clj
+      Line: 518
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">node-get-control-range</span>
+  <span class="s">&quot;Get a range of n controls starting at a given name or index.</span>
+<span class="s">  Returns a vector of values.&quot;</span>
+  <span class="p">[</span><span class="nb">node </span><span class="nv">name-index</span> <span class="nv">n</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">ensure-connected!</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">ensure-node-active!</span> <span class="nb">node </span><span class="s">&quot;reading a range of node values&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">res</span>   <span class="p">(</span><span class="nf">recv</span> <span class="s">&quot;/n_setn&quot;</span><span class="p">)</span>
+        <span class="nv">cvals</span> <span class="p">(</span><span class="k">do </span><span class="p">(</span><span class="nf">snd</span> <span class="s">&quot;/s_getn&quot;</span> <span class="p">(</span><span class="nf">to-sc-id</span> <span class="nv">node</span><span class="p">)</span> <span class="p">(</span><span class="nf">to-str</span> <span class="nv">name-index</span><span class="p">)</span> <span class="nv">n</span><span class="p">)</span>
+                  <span class="p">(</span><span class="ss">:args</span> <span class="p">(</span><span class="nf">deref!</span> <span class="nv">res</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;attempting to get &quot;</span> <span class="nv">n</span> <span class="s">&quot; control values from arguement &quot;</span> <span class="nv">name-index</span> <span class="s">&quot; for node &quot;</span> <span class="p">(</span><span class="nb">with-out-str </span><span class="p">(</span><span class="nb">pr </span><span class="nv">node</span><span class="p">))))))]</span>
+    <span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">drop </span><span class="mi">3</span> <span class="nv">cvals</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

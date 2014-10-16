@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/fft2.clj
+      Line: 6
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_ConformalMap&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;buffer number of buffer to act on, passed in</span>
+<span class="s">                     through a chain (see examples below).&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;areal&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;real part of a.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;aimag&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;imaginary part of a.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Applies the conformal mapping z -&gt; (z-a)/(1-za*) to the</span>
+<span class="s">             phase vocoder bins z with a given by the real and imag</span>
+<span class="s">             inputs to the UGen.</span>
+
+<span class="s">             i.e., makes a transformation of the complex plane so the</span>
+<span class="s">             output is full of phase vocoder artifacts but may be</span>
+<span class="s">             musically fun. Usually keep |a|&lt;1 but you can of course try</span>
+<span class="s">             bigger values to make it really noisy. a=0 should give back</span>
+<span class="s">             the input mostly unperturbed.</span>
+
+<span class="s">             See http://mathworld.wolfram.com/ConformalMapping.html&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Convolution&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;processing target&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;kernel&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;processing kernel.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;framesize&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">512.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;size of FFT frame, must be a power of two&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-power-of-2?</span> <span class="mi">2</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Strict convolution of two continuously changing</span>
+<span class="s">             inputs. Also see convolution2 for a cheaper CPU cost</span>
+<span class="s">             alternative for the case of a fixed kernel which can be</span>
+<span class="s">             changed with a trigger message.</span>
+
+<span class="s">             See Steven W Smith, The Scientist and Engineer&#39;s Guide to</span>
+<span class="s">             Digital Signal Processing: chapter 18:</span>
+
+<span class="s">             http:// www.dspguide.com/ch18.htm&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Convolution2&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;processing target&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;kernel&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;buffer index for the fixed kernel, may be modulated</span>
+<span class="s">                     in combination with the trigger&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;update the kernel on a change from &lt;= 0 to &gt; 0&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;framesize&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">512.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;size of FFT frame, must be a power of</span>
+<span class="s">                     two. Convolution uses twice this number internally,</span>
+<span class="s">                     maximum value you can give this argument is 2^16 =</span>
+<span class="s">                     65536. Note that it gets progressively more</span>
+<span class="s">                     expensive to run for higher powers! 512, 1024,</span>
+<span class="s">                     2048, 4096 standard.&quot;</span> <span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-power-of-2?</span> <span class="mi">3</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Strict convolution with fixed kernel which can be updated</span>
+<span class="s">             using a trigger signal.</span>
+
+<span class="s">             See Steven W Smith, The Scientist and Engineer&#39;s Guide to</span>
+<span class="s">             Digital Signal Processing: chapter 18:</span>
+
+<span class="s">             http:// www.dspguide.com/ch18.htm &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Convolution2L&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;processing target&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;kernel&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;buffer index for the fixed kernel, may be modulated</span>
+<span class="s">                     in combination with the trigger&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;update the kernel on a change from &lt;= 0 to &gt; 0&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;framesize&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">512.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;size of FFT frame, must be a power of</span>
+<span class="s">                     two. Convolution uses twice this number internally,</span>
+<span class="s">                     maximum value you can give this argument is</span>
+<span class="s">                     2^16=65536. Note that it gets progressively more</span>
+<span class="s">                     expensive to run for higher powers! 512, 1024,</span>
+<span class="s">                     2048, 4096 standard.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;crossfade&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The number of periods over which a crossfade is</span>
+<span class="s">                     made. The default is 1. This must be an integer.&quot;</span> <span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-power-of-2?</span> <span class="mi">3</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Strict convolution with fixed kernel which can be updated</span>
+<span class="s">             using a trigger signal. There is a linear crossfade between</span>
+<span class="s">             the buffers upon change.</span>
+
+<span class="s">             See Steven W Smith, The Scientist and Engineer&#39;s Guide to</span>
+<span class="s">             Digital Signal Processing: chapter 18:</span>
+
+<span class="s">             http://www.dspguide.com/ch18.htm &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;StereoConvolution2L&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;processing target&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;kernel-l&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;buffer index for the fixed kernel of the left</span>
+<span class="s">                     channel, may be modulated in combination with the</span>
+<span class="s">                     trigger&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;kernel-r&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;buffer index for the fixed kernel of the right</span>
+<span class="s">                     channel, may be modulated in combination with the</span>
+<span class="s">                     trigger&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;update the kernel on a change from &lt;= 0 to &gt; 0&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;framesize&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">512.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;size of FFT frame, must be a power of</span>
+<span class="s">                     two. Convolution uses twice this number internally,</span>
+<span class="s">                     maximum value you can give this argument is</span>
+<span class="s">                     2^16=65536. Note that it gets progressively more</span>
+<span class="s">                     expensive to run for higher powers! 512, 1024,</span>
+<span class="s">                     2048, 4096 standard.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;crossfade&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The number of periods over which a crossfade is</span>
+<span class="s">                     made. This must be an integer.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:num-outs</span> <span class="mi">2</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-power-of-2?</span> <span class="mi">4</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Strict convolution with fixed kernel which can be updated</span>
+<span class="s">             using a trigger signal. There is a linear crossfade between</span>
+<span class="s">             the buffers upon change.  Like convolution2L, but convolves</span>
+<span class="s">             with two buffers and outputs a stereo signal. This saves</span>
+<span class="s">             one FFT transformation per period, as compared to using two</span>
+<span class="s">             copies of convolution2L.</span>
+
+<span class="s">             Useful applications could include stereo reverberation or</span>
+<span class="s">             HRTF convolution.</span>
+
+<span class="s">             See Steven W Smith, The Scientist and Engineer&#39;s Guide to</span>
+<span class="s">             Digital Signal Processing: chapter 18:</span>
+
+<span class="s">             http://www.dspguide.com/ch18.htm&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Convolution3&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;processing target&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;kernel&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;buffer index for the fixed kernel, may be modulated</span>
+<span class="s">                     in combination with the trigger&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;update the kernel on a change from &lt;= 0 to &gt; 0&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;framesize&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">512.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;size of FFT frame, does not have to be a power of</span>
+<span class="s">                     two.&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-power-of-2?</span> <span class="mi">3</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Strict convolution with fixed kernel which can be updated</span>
+<span class="s">             using a trigger signal. The convolution is performed in the</span>
+<span class="s">             time domain, which is highly inefficient, and probably only</span>
+<span class="s">             useful for either very short kernel sizes, or for control</span>
+<span class="s">             rate signals. &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_JensenAndersen&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;FFT buffer to read from.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;propsc&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.25</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Proportion of spectral centroid feature.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;prophfe&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.25</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Proportion of high frequency energy feature.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;prophfc&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.25</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Proportion of high frequency content feature.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;propsf&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.25</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Proportion of spectral flux feature.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;threshold&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Threshold level for allowing a detection&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wait-time&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.04</span>
+               <span class="ss">:doc</span> <span class="s">&quot;If triggered, minimum wait until a further frame</span>
+<span class="s">                     can cause another spot (useful to stop multiple</span>
+<span class="s">                     detects on heavy signals)&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;FFT feature detector for onset detection based on work</span>
+<span class="s">             described in:</span>
+
+<span class="s">             Jensen,K. &amp; Andersen, T. H. (2003). Real-time Beat</span>
+<span class="s">             Estimation Using Feature Extraction.  In Proceedings of the</span>
+<span class="s">             Computer Music Modeling and Retrieval Symposium, Lecture</span>
+<span class="s">             Notes in Computer Science. Springer Verlag.</span>
+
+<span class="s">             First order derivatives of the features are</span>
+<span class="s">             taken. Threshold may need to be set low to pick up on</span>
+<span class="s">             changes. &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_HainsworthFoote&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;FFT buffer to read from&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;proph&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;What strength of detection signal from Hainsworth metric to use.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;propf&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;What strength of detection signal from Foote metric</span>
+<span class="s">                     to use. The Foote metric is normalised to [0.0,1.0]&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;threshold&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Threshold hold level for allowing a detection&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wait-time&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.04</span>
+               <span class="ss">:doc</span> <span class="s">&quot;If triggered, minimum wait until a further frame</span>
+<span class="s">                     can cause another spot (useful to stop multiple</span>
+<span class="s">                     detects on heavy signals)&quot;</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;FFT onset detector based on work described in:</span>
+
+<span class="s">              Hainsworth, S. (2003) Techniques for the Automated</span>
+<span class="s">              Analysis of Musical Audio. PhD, University of Cambridge</span>
+<span class="s">              engineering dept. See especially p128. The Hainsworth</span>
+<span class="s">              metric is a modification of the Kullback Liebler distance.</span>
+
+<span class="s">              The onset detector has general ability to spot spectral</span>
+<span class="s">              change, so may have some ability to track chord changes</span>
+<span class="s">              aside from obvious transient jolts, but there&#39;s no</span>
+<span class="s">              guarantee it won&#39;t be confused by frequency modulation</span>
+<span class="s">              artifacts.</span>
+
+<span class="s">              Hainsworth metric on it&#39;s own gives good results but Foote</span>
+<span class="s">              might be useful in some situations: experimental.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RunningSum&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;numsamp&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">40.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;How many samples to take the running sum</span>
+<span class="s">                     over (initialisation time only, not modulatable.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A running sum over a user specified number of samples,</span>
+<span class="s">             useful for running RMS power windowing.&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

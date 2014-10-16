@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>UNARY-OPS</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/special_ops.clj
+      Line: 7
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">UNARY-OPS</span>
+  <span class="p">{</span><span class="s">&quot;neg&quot;</span> <span class="mi">0</span>         <span class="c1">; inversion</span>
+   <span class="s">&quot;not-pos?&quot;</span> <span class="mi">1</span>    <span class="c1">; 0 when a &lt; 0, +1 when a &gt; 0, 1 when a is 0</span>
+   <span class="c1">;;&quot;is-nil&quot; 2    ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;not-nil&quot; 3   ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;bitNot&quot; 4    ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="s">&quot;abs&quot;</span> <span class="mi">5</span>         <span class="c1">; absolute value</span>
+   <span class="c1">;;&quot;asFloat&quot; 6   ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;asInt&quot;   7   ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="s">&quot;ceil&quot;</span> <span class="mi">8</span>        <span class="c1">; next higher integer</span>
+   <span class="s">&quot;floor&quot;</span> <span class="mi">9</span>       <span class="c1">; next lower integer</span>
+   <span class="s">&quot;frac&quot;</span> <span class="mi">10</span>       <span class="c1">; fractional part</span>
+   <span class="s">&quot;sign&quot;</span> <span class="mi">11</span>       <span class="c1">; -1 when a &lt; 0, +1 when a &gt; 0, 0 when a is 0</span>
+   <span class="s">&quot;squared&quot;</span> <span class="mi">12</span>    <span class="c1">; a*a</span>
+   <span class="s">&quot;cubed&quot;</span> <span class="mi">13</span>      <span class="c1">; a*a*a</span>
+   <span class="s">&quot;sqrt&quot;</span> <span class="mi">14</span>       <span class="c1">; square root</span>
+   <span class="s">&quot;exp&quot;</span> <span class="mi">15</span>        <span class="c1">; exponential</span>
+   <span class="s">&quot;reciprocal&quot;</span> <span class="mi">16</span> <span class="c1">; reciprocal</span>
+   <span class="s">&quot;midicps&quot;</span> <span class="mi">17</span>    <span class="c1">; MIDI note number to cycles per second</span>
+   <span class="s">&quot;cpsmidi&quot;</span> <span class="mi">18</span>    <span class="c1">; cycles per second to MIDI note number</span>
+   <span class="s">&quot;midiratio&quot;</span> <span class="mi">19</span>  <span class="c1">; convert an interval in MIDI notes into a frequency ratio</span>
+   <span class="s">&quot;ratiomidi&quot;</span> <span class="mi">20</span>  <span class="c1">; convert a frequency ratio to an interval in MIDI notes</span>
+   <span class="s">&quot;dbamp&quot;</span> <span class="mi">21</span>      <span class="c1">; decibels to linear amplitude</span>
+   <span class="s">&quot;ampdb&quot;</span> <span class="mi">22</span>      <span class="c1">; linear amplitude to decibels</span>
+   <span class="s">&quot;octcps&quot;</span> <span class="mi">23</span>     <span class="c1">; decimal octaves to cycles per second</span>
+   <span class="s">&quot;cpsoct&quot;</span> <span class="mi">24</span>     <span class="c1">; cycles per second to decimal octaves</span>
+   <span class="s">&quot;log&quot;</span> <span class="mi">25</span>        <span class="c1">; natural logarithm</span>
+   <span class="s">&quot;log2&quot;</span> <span class="mi">26</span>       <span class="c1">; base 2 logarithm</span>
+   <span class="s">&quot;log10&quot;</span> <span class="mi">27</span>      <span class="c1">; base 10 logarithm</span>
+   <span class="s">&quot;sin&quot;</span> <span class="mi">28</span>        <span class="c1">; sine</span>
+   <span class="s">&quot;cos&quot;</span> <span class="mi">29</span>        <span class="c1">; cosine</span>
+   <span class="s">&quot;tan&quot;</span> <span class="mi">30</span>        <span class="c1">; tangent</span>
+   <span class="s">&quot;asin&quot;</span> <span class="mi">31</span>       <span class="c1">; arcsine</span>
+   <span class="s">&quot;acos&quot;</span> <span class="mi">32</span>       <span class="c1">; arccosine</span>
+   <span class="s">&quot;atan&quot;</span> <span class="mi">33</span>       <span class="c1">; arctangent</span>
+   <span class="s">&quot;sinh&quot;</span> <span class="mi">34</span>       <span class="c1">; hyperbolic sine</span>
+   <span class="s">&quot;cosh&quot;</span> <span class="mi">35</span>       <span class="c1">; hyperbolic cosine</span>
+   <span class="s">&quot;tanh&quot;</span> <span class="mi">36</span>       <span class="c1">; hyperbolic tangent</span>
+   <span class="c1">;;&quot;rand&quot; 37     ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;rand2&quot; 38    ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;linrand&quot; 39  ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;bilinrand&quot; 40; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;sum3rand&quot; 41 ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="s">&quot;distort&quot;</span> <span class="mi">42</span>    <span class="c1">; distortion</span>
+   <span class="s">&quot;softclip&quot;</span> <span class="mi">43</span>   <span class="c1">; distortion</span>
+   <span class="c1">;;&quot;coin&quot; 44     ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;digit-val&quot; 45; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;silence&quot; 46  ; outputs 0 - no need to include it as we already have the silent ugen</span>
+   <span class="c1">;;&quot;thru&quot; 47     ; outputs what was received - not useful</span>
+   <span class="s">&quot;rectWindow&quot;</span> <span class="mi">48</span> <span class="c1">; rectangular window</span>
+   <span class="s">&quot;hanWindow&quot;</span> <span class="mi">49</span>  <span class="c1">; hanning window</span>
+   <span class="s">&quot;welWindow&quot;</span> <span class="mi">50</span>  <span class="c1">; welch window</span>
+   <span class="s">&quot;triWindow&quot;</span> <span class="mi">51</span>  <span class="c1">; triangle window</span>
+   <span class="c1">;;&quot;ramp&quot; 52     ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;scurve&quot; 53   ; Defined in UnaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="p">})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

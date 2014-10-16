@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>
+  
+  Overtone //
+  
+  Overtone
+</title>
+
+<link rel="stylesheet" type="text/css" href="{ site.url }/js/fancybox/jquery.fancybox-1.3.0.css"/>
+<link rel="stylesheet" href="{ site.url }/style/syntax.css" type="text/css"/>
+<link rel="stylesheet/less" href="{ site.url }/style/overtone.less" type="text/css"/>
+
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="{ site.url }/js/fancybox/jquery.fancybox-1.3.0.pack.js"></script>
+<script type="text/javascript" src="{ site.url }/js/less-1.0.41.min.js"></script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("a.fancy").fancybox();
+});
+</script>
+
+</head>
+
+<body>
+<a href="http://github.com/overtone/overtone"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+<div id="container">
+  <div id="header">
+    <img id="logo" src="media/logo.png" />
+    <ul id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a></li>
+      <li><a href="https://github.com/overtone/overtone/">Source</a></li>
+      <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a></li>
+    </ul>
+  </div>
+
+  <div id="content">
+    <h2 id="roadmap">Roadmap</h2>
+
+<ul>
+<li>
+<p>Live-code editor</p>
+
+<p>A text editor ala <a href="http://processing.org">processing</a> tuned for live-coding and synth design.</p>
+
+<ul>
+<li><a href="https://scenegraph.dev.java.net/">scenegraph</a></li>
+
+<li><a href="http://jvi.sourceforge.net/">jvi</a></li>
+
+<li><a href="http://code.google.com/p/jsyntaxpane/">jsyntax-pane</a></li>
+</ul>
+</li>
+
+<li>
+<p>overflow node editor</p>
+
+<p>A visual programming surface similar to Max/MSP or PD. You connect processing nodes in a data-flow graph to design SuperCollider synths and instrument controllers. Synths designed in Clojure code can also be visualized on the surface.</p>
+
+<ul>
+<li><a href="http://platform.netbeans.org/graph/">netbeans visual</a></li>
+</ul>
+</li>
+
+<li>
+<p>diagnostic panel</p>
+
+<p>A basic status panel showing the processing rate, cpu usage, connectivity to audio servers, network usage, etc</p>
+
+<ul>
+<li><a href="https://scenegraph.dev.java.net/">scenegraph</a></li>
+
+<li>swing</li>
+</ul>
+</li>
+
+<li>
+<p>jackd auto-start and connect in linux</p>
+
+<p>Do whatever is necessary to automatically connect with jack when using linux.</p>
+
+<ul>
+<li><a href="http://github.com/Chouser/clojure-jna">clojure-jna</a></li>
+</ul>
+</li>
+
+<li>
+<p>include libscsynth in jar file and boot server in process</p>
+
+<p>Link directly with the SuperCollider library and start the server in the same process as the JVM so we can have lower latency osc communication, and direct access to buffers of audio data for real-time visualization.</p>
+
+<ul>
+<li><a href="http://github.com/Chouser/clojure-jna">clojure-jna</a></li>
+
+<li><a href="http://supercollider.sourceforge.net/">SuperCollider</a></li>
+</ul>
+</li>
+
+<li>
+<p>synth browser</p>
+
+<p>Start with a simple Swing tree browser to select synths in your local collection. Later develop a custom browser widget on top of a graph database that integrates P2P search and browsing.</p>
+</li>
+
+<li>
+<p>studio controls</p>
+
+<p>A library of controls that can be composed to create instruments, effects controllers, interfaces to musical programs, and more. Check out the <a href="/blog.html">blog</a> to see a screenshot.</p>
+
+<ul>
+<li><a href="https://scenegraph.dev.java.net/">scenegraph</a></li>
+</ul>
+</li>
+
+<li>
+<p>audio waveform visualization</p>
+
+<p>Take arrays of audio sample data from the synthesizer and display them on a surface. Maybe start with simple Java drawing, but eventually we’ll want to use OpenGL for this so we can have fade effects. This could also get some extra features like zooming, highlighting regions, and manipulating control points to create envelope curves. It would be nice to create a library of filters that could be applied to an audio buffer or a selection with a right click. A stripped down sample viewer and editor I guess.</p>
+</li>
+
+<li>
+<p>synth, instrument and effect database</p>
+
+<p>A graph database will hold all of the instruments, effects, generators, and whatever else people want to store, search, browse, and share over the P2P network.</p>
+</li>
+
+<li>
+<p>P2P searching and browsing</p>
+
+<p>Browse other peoples collections over the network. Integrate distributed search and exploration into the instrument browser widget.</p>
+
+<ul>
+<li>gdbn</li>
+</ul>
+</li>
+
+<li>
+<p>session chat</p>
+
+<p>A basic text chat panel that lets the members of a session send messages. It would be interesting to let code and controls integrate with the chat widget to do things like automatically send messages related to musical signals.</p>
+
+<p>-gdbn, <a href="http://www.jgroups.org/">jgroups</a>?</p>
+</li>
+
+<li>
+<p>session collaboration</p>
+
+<p>Inspired by NetPD, we want to join into collaborative jamming sessions where people can live-code, live-patch, and play instruments together. Each player will have their own synth server generating audio locally, and commands from each player will be broadcast to all the other players. You will see what each other is manipulating in close to real-time. We can experiment to see if it makes sense to quantize control updates to the rhythm or shift updates by a bar.</p>
+</li>
+
+<li>
+<p>networked audio chat</p>
+
+<ul>
+<li><a href="http://jspeex.sourceforge.net/">jspeex</a></li>
+</ul>
+</li>
+</ul>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

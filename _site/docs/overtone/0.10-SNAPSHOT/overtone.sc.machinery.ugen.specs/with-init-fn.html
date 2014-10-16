@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>with-init-fn</h1>
+    <p class="doc">Creates the final argument initialization function which is applied to
+  arguments at runtime to do things like re-ordering and automatic filling in
+  of arguments. Typically appending input arrays as the last argument and
+  filling in the number of in or out channels for those ugens that need it.
+
+  If an init function is already present it will get called after doing the
+  mapping and mode transformations.</p>
+    <p>
+      File: overtone/sc/machinery/ugen/specs.clj
+      Line: 398
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn- </span><span class="nv">with-init-fn</span>
+  <span class="s">&quot;Creates the final argument initialization function which is applied to</span>
+<span class="s">  arguments at runtime to do things like re-ordering and automatic filling in</span>
+<span class="s">  of arguments. Typically appending input arrays as the last argument and</span>
+<span class="s">  filling in the number of in or out channels for those ugens that need it.</span>
+
+<span class="s">  If an init function is already present it will get called after doing the</span>
+<span class="s">  mapping and mode transformations.&quot;</span>
+  <span class="p">[</span><span class="nv">spec</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">defaulter</span>        <span class="p">(</span><span class="nb">partial </span><span class="nv">add-default-args</span> <span class="nv">spec</span><span class="p">)</span>
+        <span class="nv">mapper</span>           <span class="p">(</span><span class="nb">partial </span><span class="nv">map-ugen-args</span> <span class="nv">spec</span><span class="p">)</span>
+        <span class="nv">init-fn</span>          <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">contains? </span><span class="nv">spec</span> <span class="ss">:init</span><span class="p">)</span>
+                           <span class="p">(</span><span class="ss">:init</span> <span class="nv">spec</span><span class="p">)</span>
+                           <span class="nv">placebo-ugen-init-fn</span><span class="p">)</span>
+        <span class="nv">initer</span>           <span class="p">(</span><span class="nb">partial </span><span class="nv">with-ugen-metadata-init</span> <span class="nv">spec</span> <span class="nv">init-fn</span><span class="p">)</span>
+        <span class="nv">n-outputer</span>       <span class="p">(</span><span class="nb">partial </span><span class="nv">with-num-outs-mode</span> <span class="nv">spec</span><span class="p">)</span>
+        <span class="nv">floater</span>          <span class="p">(</span><span class="nb">partial </span><span class="nv">with-floated-args</span> <span class="nv">spec</span><span class="p">)</span>
+        <span class="nv">appender</span>         <span class="p">(</span><span class="nb">partial </span><span class="nv">append-seq-args</span> <span class="nv">spec</span><span class="p">)</span>
+        <span class="nv">auto-rater</span>       <span class="p">(</span><span class="nb">partial </span><span class="nv">auto-rate-setter</span> <span class="nv">spec</span><span class="p">)</span>
+        <span class="nv">rate-checker</span>     <span class="p">(</span><span class="nb">partial </span><span class="nv">check-arg-rates</span> <span class="nv">spec</span><span class="p">)</span>
+        <span class="nv">checker-fn</span>       <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">contains? </span><span class="nv">spec</span> <span class="ss">:check</span><span class="p">)</span>
+                           <span class="p">(</span><span class="ss">:check</span> <span class="nv">spec</span><span class="p">)</span>
+                           <span class="nv">placebo-ugen-checker-fn</span><span class="p">)</span>
+        <span class="nv">nil-arg-checker</span>  <span class="p">(</span><span class="nb">partial </span><span class="nv">with-ugen-checker-fn</span> <span class="nv">spec</span> <span class="nv">nil-arg-checker-fn</span><span class="p">)</span>
+        <span class="nv">bespoke-checker</span>  <span class="p">(</span><span class="nb">partial </span><span class="nv">with-ugen-checker-fn</span> <span class="nv">spec</span> <span class="nv">checker-fn</span><span class="p">)</span>
+        <span class="nv">sanity-checker</span>   <span class="p">(</span><span class="nb">partial </span><span class="nv">with-ugen-checker-fn</span> <span class="nv">spec</span> <span class="nv">sanity-checker-fn</span><span class="p">)</span>
+        <span class="nv">arg-name-checker</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">with-ugen-checker-fn</span> <span class="nv">spec</span> <span class="nv">arg-name-checker-fn</span><span class="p">)]</span>
+
+    <span class="p">(</span><span class="nb">assoc </span><span class="nv">spec</span> <span class="ss">:init</span>
+
+           <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">ugen</span><span class="p">]</span>
+             <span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="nv">ugen</span>
+                  <span class="p">(</span><span class="nf">with-debugging</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">print-args-pre-processing</span> <span class="nv">spec</span><span class="p">))</span>
+                  <span class="nv">defaulter</span>
+                  <span class="nv">mapper</span>
+                  <span class="nv">initer</span>
+                  <span class="nv">n-outputer</span>
+                  <span class="nv">floater</span>
+                  <span class="nv">appender</span>
+                  <span class="nv">auto-rater</span>
+                  <span class="nv">nil-arg-checker</span>
+                  <span class="nv">bespoke-checker</span>
+                  <span class="nv">associative-&gt;id</span>
+                  <span class="nv">rate-checker</span>
+                  <span class="nv">sanity-checker</span>
+                  <span class="nv">arg-name-checker</span>
+                  <span class="p">(</span><span class="nf">with-debugging</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">print-args-post-processing</span> <span class="nv">spec</span><span class="p">)))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

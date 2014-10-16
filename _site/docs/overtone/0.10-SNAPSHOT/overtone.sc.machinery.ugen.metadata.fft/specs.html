@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/fft.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FFT&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The buffer where a frame will be held. Its size</span>
+<span class="s">                      must be a power of two. local-buf is useful here,</span>
+<span class="s">                      because processes should not share data between</span>
+<span class="s">                      synths. (Note: most PV UGens operate on this data</span>
+<span class="s">                      in place. Use buffer-2n if you wish to create an</span>
+<span class="s">                      external buffer.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the signal to be analyzed. The signal&#39;s rate</span>
+<span class="s">                     determines the rate at which the input is read.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hop&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the amount of offset from one FFT analysis frame to</span>
+<span class="s">                     the next, measured in multiples of the analysis</span>
+<span class="s">                     frame size. This can range between zero and one,</span>
+<span class="s">                     and the default is 0.5 (meaning each frame has a</span>
+<span class="s">                     50% overlap with the preceding/following frames).&quot;</span>                     <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wintype&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;defines how the data is windowed: RECT is for</span>
+<span class="s">                     rectangular windowing, simple but typically not</span>
+<span class="s">                     recommended; SINE (the default) is for Sine</span>
+<span class="s">                     windowing, typically recommended for phase-vocoder</span>
+<span class="s">                     work; HANN is for Hann windowing, typically</span>
+<span class="s">                     recommended for analysis work.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;active&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;is a simple control allowing FFT analysis to be</span>
+<span class="s">                     active (&gt;0) or inactive (&lt;=0). This is mainly</span>
+<span class="s">                     useful for signal analysis processes which are only</span>
+<span class="s">                     intended to analyse at specific times rather than</span>
+<span class="s">                     continuously&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;winsize&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the windowed audio frames are usually the same size</span>
+<span class="s">                     as the buffer. If you wish the FFT to be</span>
+<span class="s">                     zero-padded then you can specify a window size</span>
+<span class="s">                     smaller than the actual buffer size (e.g. window</span>
+<span class="s">                     size 1024 with buffer size 2048). Both values must</span>
+<span class="s">                     still be a power of two. Leave this at its default</span>
+<span class="s">                     of zero for no zero-padding.&quot;</span> <span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-buffer-pow2?</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-power-of-2-or-zero?</span> <span class="mi">5</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;fast fourier transform, converts input data from the time</span>
+<span class="s">             to the frequency domain and stores the result in a</span>
+<span class="s">             buffer (audio waveform -&gt; graph equalizer bands)</span>
+
+<span class="s">             Output is -1 except when an FFT frame is ready, when the</span>
+<span class="s">             output is the buffer index. This creates a special kind of</span>
+<span class="s">             slower pseudo-rate (built on top of control rate) which all</span>
+<span class="s">             the pv-ugens understand.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;IFFT&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The FFT chain signal coming originally from an FFT</span>
+<span class="s">                     UGen, perhaps via other PV UGens.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wintype&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;defines how the data is windowed: RECT is for</span>
+<span class="s">                     rectangular windowing, simple but typically not</span>
+<span class="s">                     recommended; SINE (the default) is for Sine</span>
+<span class="s">                     windowing, typically recommended for phase-vocoder</span>
+<span class="s">                     work; HANN is for Hann windowing, typically</span>
+<span class="s">                     recommended for analysis work.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;winsize&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;can be used to account for zero-padding, in the</span>
+<span class="s">                     same way as the FFT UGen.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;inverse fast fourier transform, converts buffer data from</span>
+<span class="s">             frequency domain to time domain</span>
+
+<span class="s">             The IFFT UGen converts the FFT data in-place (in the</span>
+<span class="s">             original FFT buffer) and overlap-adds the result to produce</span>
+<span class="s">             a continuous signal at its output.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagAbove&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;threshold&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;magnitude threshold.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;passes only bins whose magnitude is above a threshold&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagBelow&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagAbove&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;passes only bins whose magnitude is below a threshold&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagClip&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagAbove&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;clips bin magnitudes to a maximum threshold&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_LocalMax&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagAbove&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;passes only bins whose magnitude is above a threshold and</span>
+<span class="s">             above their nearest neighbors&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagSmear&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bins&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;number of bins to average on each side of bin. As</span>
+<span class="s">                     this number rises, so will CPU usage.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;average a bin&#39;s magnitude with its neighbors&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_BinShift&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;stretch&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;scale bin location by factor.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;shift&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;add an offset to bin position.&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;shift and scale the positions of the bins. Can be used as a</span>
+<span class="s">             very crude frequency shifter/scaler.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagShift&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_BinShift&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;shift and stretch the positions of only the magnitude of</span>
+<span class="s">             the bins. Can be used as a very crude frequency</span>
+<span class="s">             shifter/scaler.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagSquared&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;squares the magnitudes and renormalizes to previous</span>
+<span class="s">             peak. This makes weak bins weaker.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagNoise&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagSquared&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;magnitudes are multiplied with noise&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_PhaseShift90&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagSquared&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;shift phase of all bins by 90 degrees&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_PhaseShift270&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagSquared&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;shift phase of all bins by 270 degrees&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Conj&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagSquared&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;converts the FFT frames to their complex</span>
+<span class="s">             conjugate (i.e. reverses the sign of their imaginary</span>
+<span class="s">             part). This is not usually a useful audio effect in itself,</span>
+<span class="s">             but may be a component of other analysis or transformation</span>
+<span class="s">             processes...&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_PhaseShift&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;shift&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;phase shift in radians&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;shift phase of all bins&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_BrickWall&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wipe&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;can range between -1 and +1. if wipe == 0 then</span>
+<span class="s">                     there is no effect; if wipe &gt; 0 then it acts like a</span>
+<span class="s">                     high pass filter, clearing bins from the bottom up;</span>
+<span class="s">                     if wipe &lt; 0 then it acts like a low pass filter,</span>
+<span class="s">                     clearing bins from the top down.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;clears bins above or below a cutoff point&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_BinWipe&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer A&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer B&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wipe&quot;</span>, <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;can range between -1 and +1; if wipe == 0 then the</span>
+<span class="s">                     output is the same as inA; if wipe &gt; 0 then it</span>
+<span class="s">                     begins replacing with bins from inB from the bottom</span>
+<span class="s">                     up;if wipe &lt; 0 then it begins replacing with bins</span>
+<span class="s">                     from inB from the top down.&quot;</span> <span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;copies low bins from one input and the high bins of the</span>
+<span class="s">             other&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagMul&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer A&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer B&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;multiplies magnitudes of two inputs and keeps the phases of</span>
+<span class="s">             the first input&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_CopyPhase&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagMul&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;combines magnitudes of first input and phases of the second</span>
+<span class="s">             input&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Copy&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagMul&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;source buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;destination buffer&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;copies the spectral frame in bufferA to bufferB at that</span>
+<span class="s">             point in the chain of PV UGens. This allows for parallel</span>
+<span class="s">             processing of spectral data without the need for multiple</span>
+<span class="s">             FFT UGens, and to copy out data at that point in the chain</span>
+<span class="s">             for other purposes. bufferA and bufferB must be the same</span>
+<span class="s">             size.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Max&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagMul&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;output copies bins with the maximum magnitude of the two</span>
+<span class="s">             inputs&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Min&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagMul&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;output copies bins with the minimum magnitude of the two</span>
+<span class="s">             inputs&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Mul&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagMul&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;complex multiplication:</span>
+
+<span class="s">             (RealA * RealB) - (ImagA * ImagB)</span>
+
+<span class="s">             (ImagA * RealB) + (RealA * ImagB)&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Div&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagMul&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;complex division&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Add&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;PV_MagMul&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;complex addition: RealA + RealB, ImagA + ImagB&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagDiv&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer A.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer B.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;zeroed&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0001</span>
+               <span class="ss">:doc</span> <span class="s">&quot;number to use when bins are zeroed out,</span>
+<span class="s">                     i.e. causing division by zero&quot;</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;divides magnitudes of two inputs and keeps the phases of</span>
+<span class="s">             the first input&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_RandComb&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wipe&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;clears bins from input in a random order as wipe</span>
+<span class="s">                     goes from 0 to 1.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a trigger selects a new random ordering.&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;randomly clear bins&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_RectComb&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot; fft buffer.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-teeth&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;number of teeth in the comb.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;starting phase of comb pulse.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;pulse width of comb.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;makes a series of gaps in a spectrum&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_RectComb2&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer A.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer B.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-teeth&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;number of teeth in the comb.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;starting phase of comb pulse.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;pulse width of comb.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;alternates blocks of bins between the two inputs&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_RandWipe&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer A.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer B.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wipe&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;copies bins from bufferB in a random order as wipe</span>
+<span class="s">                     goes from 0 to 1.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a trigger selects a new random ordering.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;cross fades between two sounds by copying bins in a random</span>
+<span class="s">             order&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Diffuser&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a trigger selects a new set of random values.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;adds a different constant random phase shift to each</span>
+<span class="s">             bin. The trigger will select a new set of random phases.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagFreeze&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freeze&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;if freeze &gt; 0 then magnitudes are frozen at current levels.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;freezes magnitudes at current levels when freeze &gt; 0&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_BinScramble&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;fft buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wipe&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;scrambles more bins as wipe moves from zero to one.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.2</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a value from zero to one, indicating the maximum</span>
+<span class="s">                     randomized distance of a bin from its original</span>
+<span class="s">                     location in the spectrum.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a trigger selects a new random ordering.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;randomizes the order of the bins. The trigger will select a</span>
+<span class="s">             new random ordering.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FFTTrigger&quot;</span>,
+            <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+                    <span class="ss">:doc</span> <span class="s">&quot;a buffer to condition for FFT use&quot;</span><span class="p">}</span>
+
+                   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hop&quot;</span>,
+                    <span class="ss">:default</span> <span class="mf">0.5</span>
+                    <span class="ss">:doc</span> <span class="s">&quot;the hop size for timing triggers&quot;</span><span class="p">}</span>
+
+                   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;polar&quot;</span>,
+                    <span class="ss">:default</span> <span class="mf">0.0</span>
+                    <span class="ss">:doc</span> <span class="s">&quot;a flag. If 0.0, the buffer will be prepared</span>
+<span class="s">                          for complex data, if &gt; 0.0, polar data is set</span>
+<span class="s">                          up.&quot;</span> <span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Outputs the necessary signal for FFT chains, without doing</span>
+<span class="s">             an FFT on a signal&quot;</span><span class="p">}</span> <span class="p">])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

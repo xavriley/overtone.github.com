@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>parse-cgen-bodies</h1>
+    <p class="doc">Parse each of the defcgen's body throwing exceptions when the form isn't well-formed.
+  Returns the default rate and a map of rates to associated bodies</p>
+    <p>
+      File: overtone/sc/defcgen.clj
+      Line: 30
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn- </span><span class="nv">parse-cgen-bodies</span>
+  <span class="s">&quot;Parse each of the defcgen&#39;s body throwing exceptions when the form isn&#39;t well-formed.</span>
+<span class="s">  Returns the default rate and a map of rates to associated bodies&quot;</span>
+  <span class="p">[</span><span class="nv">bodies</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nf">empty?</span> <span class="nv">bodies</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;defcgen was expecting one or more bodies implementing the various rates this cgen will support i.e. (:ar (sin-osc 440))&quot;</span><span class="p">))))</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">rate</span> <span class="nv">bodies</span><span class="p">]</span>
+        <span class="p">(</span><span class="k">loop </span><span class="p">[</span><span class="nv">default-rate</span> <span class="nv">nil</span>
+               <span class="nv">parsed</span>       <span class="p">{}</span>
+               <span class="nv">to-parse</span>     <span class="nv">bodies</span><span class="p">]</span>
+          <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">empty?</span> <span class="nv">to-parse</span><span class="p">)</span>
+            <span class="p">[</span><span class="nv">default-rate</span> <span class="nv">parsed</span><span class="p">]</span>
+            <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">body</span> <span class="p">(</span><span class="nb">first </span><span class="nv">to-parse</span><span class="p">)]</span>
+              <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="ss">:default</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">))</span>
+                <span class="p">(</span><span class="nf">recur</span> <span class="p">(</span><span class="nb">second </span><span class="nv">body</span><span class="p">)</span> <span class="nv">parsed</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">to-parse</span><span class="p">))</span>
+                <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">2</span> <span class="p">(</span><span class="nb">count </span><span class="nv">body</span><span class="p">))</span>
+                  <span class="p">(</span><span class="nb">if-not </span><span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nb">= </span><span class="ss">:ar</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">))</span>
+                              <span class="p">(</span><span class="nb">= </span><span class="ss">:ir</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">))</span>
+                              <span class="p">(</span><span class="nb">= </span><span class="ss">:kr</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">))</span>
+                              <span class="p">(</span><span class="nb">= </span><span class="ss">:dr</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">)))</span>
+                    <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;defcgen was expecting on of the following keywords as the first item in each cgen body form: :ar, :ir, :kr, :dr or :default. Found &quot;</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">))))</span>
+                    <span class="p">(</span><span class="nf">recur</span> <span class="nv">default-rate</span> <span class="p">(</span><span class="nb">assoc </span><span class="nv">parsed</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">)</span> <span class="p">(</span><span class="nb">second </span><span class="nv">body</span><span class="p">))</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">to-parse</span><span class="p">)))</span>
+                  <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;defcgen was expecting each of the bodies to have two elements - a rate and an implementation form&quot;</span><span class="p">))))))))</span>
+        <span class="nv">default-rate</span>  <span class="p">(</span><span class="k">if </span><span class="nv">rate</span>
+                        <span class="nv">rate</span>
+                        <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">count </span><span class="nv">bodies</span><span class="p">))</span>
+                          <span class="p">(</span><span class="nb">ffirst </span><span class="nv">bodies</span><span class="p">)</span>
+                          <span class="p">(</span><span class="nf">default-ugen-rate</span> <span class="p">(</span><span class="nb">keys </span><span class="nv">bodies</span><span class="p">))))]</span>
+    <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nb">get </span><span class="nv">bodies</span> <span class="nv">default-rate</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;defcgen&#39;s default rate needs to have an implementation. Please supply an implementation for rate: &quot;</span> <span class="nv">default-rate</span><span class="p">))))</span>
+    <span class="p">[</span><span class="nv">default-rate</span> <span class="nv">bodies</span><span class="p">]))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

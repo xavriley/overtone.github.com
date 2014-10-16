@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/grain.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GrainSin&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the number of channels to output. If 1, mono is</span>
+<span class="s">                  returned and pan is ignored.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a kr or ar trigger to start a new grain. If ar, grains</span>
+<span class="s">                  after the start of the synth are sample accurate.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;size of the grain.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the input to granulate&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pan&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Determines where to pan the output. If num-channels =</span>
+<span class="s">                  1, no panning is done; if num-channels = 2, panning is</span>
+<span class="s">                  similar to Pan2; if numChannels &gt; 2, pannins is the</span>
+<span class="s">                  same as PanAz.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;envbufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">-1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the buffer number containing a singal to use for the</span>
+<span class="s">                  grain envelope. -1 uses a built-in Hanning envelope.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-grains&quot;</span>
+            <span class="ss">:default</span> <span class="mi">512</span>
+            <span class="ss">:doc</span> <span class="s">&quot; the maximum number of overlapping grains that can be</span>
+<span class="s">                   used at a given time. This value is set at the UGens</span>
+<span class="s">                   init time and can&#39;t be modified. This can be set</span>
+<span class="s">                   lower for more efficient use of memory.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Granular synthesis with sine tones&quot;</span><span class="p">}</span>
+
+   <span class="c1">;; GrainFM : MultiOutUGen {</span>
+   <span class="c1">;;  *ar { arg numChannels = 1, trigger = 0, dur = 1, carfreq = 440, modfreq = 200, index = 1,</span>
+   <span class="c1">;;      pan = 0, envbufnum = -1, mul = 1, add = 0;</span>
+   <span class="c1">;;    ^this.multiNew(&#39;audio&#39;, numChannels, trigger, dur, carfreq, modfreq, index, pan, envbufnum)</span>
+   <span class="c1">;;      .madd(mul, add);</span>
+   <span class="c1">;;    }</span>
+
+   <span class="c1">;;  init { arg argNumChannels ... theInputs;</span>
+   <span class="c1">;;    inputs = theInputs;</span>
+   <span class="c1">;;    ^this.initOutputs(argNumChannels, rate);</span>
+   <span class="c1">;;  }</span>
+
+   <span class="c1">;;  argNamesInputsOffset { ^2 }</span>
+   <span class="c1">;;  }</span>
+
+   <span class="c1">;; GrainBuf : MultiOutUGen {</span>
+   <span class="c1">;;  *ar { arg numChannels = 1, trigger = 0, dur = 1, sndbuf, rate = 1, pos = 0, interp = 2,</span>
+   <span class="c1">;;      pan = 0, envbufnum = -1, mul = 1, add = 0;</span>
+   <span class="c1">;;    ^this.multiNew(&#39;audio&#39;, numChannels, trigger, dur, sndbuf, rate, pos, interp, pan,</span>
+   <span class="c1">;;      envbufnum).madd(mul, add);</span>
+   <span class="c1">;;    }</span>
+
+   <span class="c1">;;  init { arg argNumChannels ... theInputs;</span>
+   <span class="c1">;;    inputs = theInputs;</span>
+   <span class="c1">;;    ^this.initOutputs(argNumChannels, rate);</span>
+   <span class="c1">;;  }</span>
+   <span class="c1">;;  argNamesInputsOffset { ^2 }</span>
+   <span class="c1">;;  }</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GrainIn&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the number of channels to output. If 1, mono is</span>
+<span class="s">                  returned and pan is ignored.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a kr or ar trigger to start a new grain. If ar, grains</span>
+<span class="s">                  after the start of the synth are sample accurate.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;size of the grain.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="ss">:none</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the input to granulate&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pan&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Determines where to pan the output. If num-channels =</span>
+<span class="s">                  1, no panning is done; if num-channels = 2, panning is</span>
+<span class="s">                  similar to Pan2; if num-channels &gt; 2, pannins is the</span>
+<span class="s">                  same as PanAz.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;envbufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">-1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the buffer number containing a singal to use for the</span>
+<span class="s">                  grain envelope. -1 uses a built-in Hanning envelope.&quot;</span>                  <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-grains&quot;</span>
+            <span class="ss">:default</span> <span class="mi">512</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the maximum number of overlapping grains that can be</span>
+<span class="s">                  used at a given time. This value is set at the UGens</span>
+<span class="s">                  init time and can&#39;t be modified. This can be set lower</span>
+<span class="s">                  for more efficient use of memory.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Granulate an input signal&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Warp1&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the number of channels in the soundfile used in</span>
+<span class="s">                  bufnum.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the buffer number of a mono soundfile.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pointer&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the position in the buffer.  The value should be</span>
+<span class="s">                  between 0 and 1, with 0 being the begining of the</span>
+<span class="s">                  buffer, and 1 the end.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq-scale&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the amount of frequency shift. 1.0 is normal, 0.5 is</span>
+<span class="s">                  one octave down, 2.0 is one octave up. Negative values</span>
+<span class="s">                  play the soundfile backwards.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;window-size&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the size of each grain window.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;envbufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">-1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the buffer number containing a singal to use for the</span>
+<span class="s">                  grain envelope. -1 uses a built-in Hanning envelope.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;overlaps&quot;</span>
+            <span class="ss">:default</span> <span class="mi">8</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the number of overlaping windows.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;window-rand-ratio&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the amount of randomness to the windowing function.</span>
+<span class="s">                  Must be between 0 (no randomness) to 1.0 (probably to</span>
+<span class="s">                  random actually)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;interp&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the interpolation method used for pitchshifting</span>
+<span class="s">                  grains. 1 = no interpolation. 2 = linear. 4 = cubic</span>
+<span class="s">                  interpolation (more computationally intensive).&quot;</span> <span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A granular time stretcher and pitchshifter.</span>
+
+<span class="s">          Inspired by Chad Kirby&#39;s SuperCollider2 Warp1 class, which was</span>
+<span class="s">          inspired by Richard Karpen&#39;s sndwarp for CSound.&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

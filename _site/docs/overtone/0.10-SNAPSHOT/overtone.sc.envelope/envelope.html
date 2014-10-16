@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>envelope</h1>
+    <p class="doc">Create an envelope curve description array suitable for the env-gen ugen.
+   Requires a list of levels (the points that the envelope will pass
+   through and a list of durations (the duration in time of the lines
+   between each point).
+
+   Optionally a curve or list of curves may be specified. A single
+   curve (as a keyword or float) will be repeated for all segments. A
+   list of keywords or floats will be cycled through for all segments.
+
+   Options are:
+
+   * :step              - flat segments
+   * :linear            - linear segments, the default
+   * :exponential       - natural exponential growth and decay. In this
+                          case, the levels must all be nonzero and the have
+                          the same sign.
+   * :sine              - sinusoidal S shaped segments.
+   * :welch             - sinusoidal segments shaped like the sides of a
+                          Welch window.
+   * :squared           - Squared segments
+   * :cubed             - Cubed segments
+   * a float            - a curvature value to be repeated for all segments.
+                          Positive numbers curve the segment up whilst
+                          negative numbers curve the segment down.
+   * a list of keywords - individual values for each segment. To be cycled
+     and or floats        through for all segments.
+
+
+   If a release-node is specified (an integer index) the envelope will sustain
+   at the release node until released which occurs when the gate input of the
+   env-gen is set to zero.
+
+   If a loop-node is specified (an integer index) the output will loop
+   through those nodes starting at the loop node to the node immediately
+   preceeding the release node, before back to the loop node, and so
+   on. Note that the envelope only transitions to the release node when
+   released. The loop is escaped when a gate signal is sent, which
+   results in the output transitioning to the release node.</p>
+    <p>
+      File: overtone/sc/envelope.clj
+      Line: 80
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">envelope</span>
+  <span class="s">&quot;Create an envelope curve description array suitable for the env-gen ugen.</span>
+<span class="s">   Requires a list of levels (the points that the envelope will pass</span>
+<span class="s">   through and a list of durations (the duration in time of the lines</span>
+<span class="s">   between each point).</span>
+
+<span class="s">   Optionally a curve or list of curves may be specified. A single</span>
+<span class="s">   curve (as a keyword or float) will be repeated for all segments. A</span>
+<span class="s">   list of keywords or floats will be cycled through for all segments.</span>
+
+<span class="s">   Options are:</span>
+
+<span class="s">   * :step              - flat segments</span>
+<span class="s">   * :linear            - linear segments, the default</span>
+<span class="s">   * :exponential       - natural exponential growth and decay. In this</span>
+<span class="s">                          case, the levels must all be nonzero and the have</span>
+<span class="s">                          the same sign.</span>
+<span class="s">   * :sine              - sinusoidal S shaped segments.</span>
+<span class="s">   * :welch             - sinusoidal segments shaped like the sides of a</span>
+<span class="s">                          Welch window.</span>
+<span class="s">   * :squared           - Squared segments</span>
+<span class="s">   * :cubed             - Cubed segments</span>
+<span class="s">   * a float            - a curvature value to be repeated for all segments.</span>
+<span class="s">                          Positive numbers curve the segment up whilst</span>
+<span class="s">                          negative numbers curve the segment down.</span>
+<span class="s">   * a list of keywords - individual values for each segment. To be cycled</span>
+<span class="s">     and or floats        through for all segments.</span>
+
+
+<span class="s">   If a release-node is specified (an integer index) the envelope will sustain</span>
+<span class="s">   at the release node until released which occurs when the gate input of the</span>
+<span class="s">   env-gen is set to zero.</span>
+
+<span class="s">   If a loop-node is specified (an integer index) the output will loop</span>
+<span class="s">   through those nodes starting at the loop node to the node immediately</span>
+<span class="s">   preceeding the release node, before back to the loop node, and so</span>
+<span class="s">   on. Note that the envelope only transitions to the release node when</span>
+<span class="s">   released. The loop is escaped when a gate signal is sent, which</span>
+<span class="s">   results in the output transitioning to the release node.&quot;</span>
+
+  <span class="c1">;;See prAsArray in supercollider/SCClassLibrary/Common/Audio/Env.sc</span>
+  <span class="p">([</span><span class="nv">levels</span> <span class="nv">durations</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">envelope</span> <span class="nv">levels</span> <span class="nv">durations</span> <span class="ss">:linear</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">levels</span> <span class="nv">durations</span> <span class="nv">curves</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">envelope</span> <span class="nv">levels</span> <span class="nv">durations</span> <span class="nv">curves</span> <span class="mi">-99</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">levels</span> <span class="nv">durations</span> <span class="nv">curves</span> <span class="nv">release-node</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">envelope</span> <span class="nv">levels</span> <span class="nv">durations</span> <span class="nv">curves</span> <span class="nv">release-node</span> <span class="mi">-99</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">levels</span> <span class="nv">durations</span> <span class="nv">curves</span> <span class="nv">release-node</span> <span class="nv">loop-node</span><span class="p">]</span>
+     <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">curves</span>    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">sequential?</span> <span class="nv">curves</span><span class="p">)</span>
+                       <span class="nv">curves</span>
+                       <span class="p">[</span><span class="nv">curves</span><span class="p">])</span>
+           <span class="nv">shape-ids</span> <span class="p">(</span><span class="nf">curves-&gt;shape-ids</span> <span class="nv">curves</span><span class="p">)</span>
+           <span class="nv">curve-ids</span> <span class="p">(</span><span class="nf">curves-&gt;curve-ids</span> <span class="nv">curves</span><span class="p">)]</span>
+       <span class="p">(</span><span class="nb">apply </span><span class="nv">vector</span>
+              <span class="p">(</span><span class="nb">concat </span><span class="p">[(</span><span class="nb">first </span><span class="nv">levels</span><span class="p">)</span> <span class="p">(</span><span class="nb">count </span><span class="nv">durations</span><span class="p">)</span> <span class="nv">release-node</span> <span class="nv">loop-node</span><span class="p">]</span>
+                      <span class="p">(</span><span class="nb">interleave </span><span class="p">(</span><span class="nb">rest </span><span class="nv">levels</span><span class="p">)</span> <span class="nv">durations</span> <span class="nv">shape-ids</span> <span class="nv">curve-ids</span><span class="p">))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

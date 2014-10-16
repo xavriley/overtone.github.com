@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>strum-strings</h1>
+    <p class="doc">strum a chord on the instrument in a direction (:up or :down) with
+   a strum duration of strum-time at t.  If the-chord is a vector, use
+   it directly for fret indexes.</p>
+    <p>
+      File: overtone/synth/stringed.clj
+      Line: 143
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">strum-strings</span>
+  <span class="s">&quot;strum a chord on the instrument in a direction (:up or :down) with</span>
+<span class="s">   a strum duration of strum-time at t.  If the-chord is a vector, use</span>
+<span class="s">   it directly for fret indexes.&quot;</span>
+  <span class="p">([</span><span class="nv">chord-fret-map</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">the-chord</span> <span class="nv">direction</span> <span class="nv">strum-time</span> <span class="nv">t</span><span class="p">]</span>
+     <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">num-strings</span> <span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nf">chord-fret-map</span> <span class="ss">:A</span><span class="p">))</span>
+           <span class="c1">;; ex: [-1 3 2 0 1 0]</span>
+           <span class="nv">chord-frets</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">vector? </span><span class="nv">the-chord</span><span class="p">)</span>
+                         <span class="c1">;; treat the-chord as a series of frets</span>
+                         <span class="c1">;; and gracefully handle odd sized vectors</span>
+                         <span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">take </span><span class="nv">num-strings</span>
+                                    <span class="p">(</span><span class="nb">into </span><span class="nv">the-chord</span>
+                                          <span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">repeat </span><span class="nv">num-strings</span> <span class="mi">-1</span><span class="p">)))))</span>
+                         <span class="c1">;; else use the-chord as an index</span>
+                         <span class="p">(</span><span class="nf">chord-fret-map</span> <span class="nv">the-chord</span><span class="p">))</span>
+           <span class="c1">;; account for unplayed strings for delta time calc. Code</span>
+           <span class="c1">;; gets a bit complicated to deal with the case where</span>
+           <span class="c1">;; strings are muted and don&#39;t count towards the</span>
+           <span class="c1">;; strum-time.</span>
+           <span class="c1">;; ex: (0 0 1 2 3 4)</span>
+           <span class="nv">fret-times</span> <span class="p">(</span><span class="nb">map </span><span class="nv">first</span>
+                           <span class="p">(</span><span class="nb">rest </span><span class="p">(</span><span class="nf">reductions</span>
+                                  <span class="o">#</span><span class="p">(</span><span class="nb">vector </span><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt;= </span><span class="p">(</span><span class="nb">second </span><span class="nv">%1</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+                                             <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nb">first </span><span class="nv">%1</span><span class="p">))</span>
+                                             <span class="p">(</span><span class="nb">first </span><span class="nv">%1</span><span class="p">))</span>
+                                           <span class="nv">%2</span><span class="p">)</span>
+                                  <span class="p">[</span><span class="mi">0</span> <span class="mi">-1</span><span class="p">]</span>
+                                  <span class="nv">chord-frets</span><span class="p">)))]</span>
+       <span class="p">(</span><span class="nb">dotimes </span><span class="p">[</span><span class="nv">i</span> <span class="nv">num-strings</span><span class="p">]</span>
+         <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">j</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">direction</span> <span class="ss">:up</span><span class="p">)</span> <span class="p">(</span><span class="nb">- </span><span class="nv">num-strings</span> <span class="mi">1</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">i</span><span class="p">)</span>
+               <span class="nv">max-t</span> <span class="p">(</span><span class="nb">apply max </span><span class="nv">fret-times</span><span class="p">)</span>
+               <span class="nv">dt</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">max-t</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="p">(</span><span class="nb">* </span><span class="mi">1000</span> <span class="p">(</span><span class="nb">/ </span><span class="nv">strum-time</span> <span class="nv">max-t</span><span class="p">))</span>
+                    <span class="mi">0</span><span class="p">)</span>
+               <span class="nv">fret-delta</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">direction</span> <span class="ss">:up</span><span class="p">)</span>
+                            <span class="p">(</span><span class="nb">- </span><span class="nv">max-t</span> <span class="p">(</span><span class="nb">nth </span><span class="nv">fret-times</span> <span class="nv">j</span><span class="p">))</span>
+                            <span class="p">(</span><span class="nb">nth </span><span class="nv">fret-times</span> <span class="nv">i</span><span class="p">))]</span>
+           <span class="p">(</span><span class="nf">pick-string</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">j</span>
+                        <span class="p">(</span><span class="nb">nth </span><span class="nv">chord-frets</span> <span class="nv">j</span><span class="p">)</span>
+                        <span class="p">(</span><span class="nb">+ </span><span class="nv">t</span> <span class="p">(</span><span class="nb">* </span><span class="nv">fret-delta</span> <span class="nv">dt</span><span class="p">)))))))</span>
+  <span class="p">([</span><span class="nv">chord-fret-map</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">the-chord</span> <span class="nv">direction</span> <span class="nv">strum-time</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">strum-strings</span> <span class="nv">chord-fret-map</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">the-chord</span>
+                    <span class="nv">direction</span> <span class="nv">strum-time</span> <span class="p">(</span><span class="nf">now+</span><span class="p">)))</span>
+  <span class="p">([</span><span class="nv">chord-fret-map</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">the-chord</span> <span class="nv">direction</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">strum-strings</span> <span class="nv">chord-fret-map</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">the-chord</span>
+                    <span class="nv">direction</span> <span class="mf">0.05</span> <span class="p">(</span><span class="nf">now+</span><span class="p">)))</span>
+  <span class="p">([</span><span class="nv">chord-fret-map</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">the-chord</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">strum-strings</span> <span class="nv">chord-fret-map</span> <span class="nv">the-strings</span> <span class="nv">the-inst</span> <span class="nv">the-chord</span>
+                    <span class="ss">:down</span> <span class="mf">0.05</span> <span class="p">(</span><span class="nf">now+</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

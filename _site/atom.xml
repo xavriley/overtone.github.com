@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>Project Overtone: programming music</title>
+  <link href="http://rosejn.github.com/overtone/atom.xml" rel="self"/>
+  <link href="http://github.com/rosejn/overtone/"/>
+  <updated>2014-10-16T14:38:13+01:00</updated>
+  <id>http://rosejn.github.com/overtone</id>
+  <author>
+    <name>Jeff Rose</name>
+    <email>rosejn@gmail.com</email>
+  </author>
+
+  
+  <entry>
+    <title>Session And Instrument</title>
+    <link href="http://rosejn.github.com/overtone//2010/09/04/session-and-instrument.html"/>
+    <updated>2010-09-04T00:00:00+01:00</updated>
+    <id>overtone-post-/2010/09/04/session-and-instrument</id>
+    <content type="html">&lt;p&gt;This post is about the inst branch of Overtone that I’m working on. The goal is to split up some of the functionality of the currenty synth and defsynth functions. Instead we will have a low-level synth interface, and a higher level instrument interface. Instruments are automatically added to the session when they are defined, and they will return back a player function. Calling an instrument function triggers the underlying synth.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;synthdef&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;create raw synthdef object&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;synth&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;macro to let-bind operators to ugen functions&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;anonymous if no name symbol present&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;auto-load onto synth server&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;return callable map with sdef and trigger function&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;by default all synths play in the SYNTH-GROUP&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;defsynth&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;(def foo (synth …))&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;play&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;uses synth underneath, loads and triggers immediately when ready&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;inst (rument)&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;calls synth to define and load the synth&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;register itself with current session&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;creates a group to contain synth instance nodes&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;automatically adds pan and output ugens with existing rules&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;definst&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;(def foo (inst …))&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;clojure&#39;&gt;  &lt;span class=&#39;c1&#39;&gt;; View a full sample waveform&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;def &lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;s&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;load-sample&lt;/span&gt; &lt;span class=&#39;s&#39;&gt;&amp;quot;/home/rosejn/studio/samples/kit/boom.wav&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-buf&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;s&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+  &lt;span class=&#39;c1&#39;&gt;; view a live waveform&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;def &lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;b&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;buffer&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;2048&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;defsynth&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;foo&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;out-bus&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;20&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;]&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;out&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;out-bus&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;sin-osc&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;400&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)))&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;foo&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;           &lt;span class=&#39;c1&#39;&gt;; output a sine wave onto bus 20&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;bus-&amp;gt;buf&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;20&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;b&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;c1&#39;&gt;; record signal from bus 20 into buffer b, looping&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-buf&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;b&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;   
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-on&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;      &lt;span class=&#39;c1&#39;&gt;; enjoy&lt;/span&gt;
+  &lt;span class=&#39;c1&#39;&gt;;...&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-off&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;     &lt;span class=&#39;c1&#39;&gt;; stop live updates&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Oscilloscope And Curve Editor</title>
+    <link href="http://rosejn.github.com/overtone//2010/04/05/oscilloscope-and-curve-editor.html"/>
+    <updated>2010-04-05T00:00:00+01:00</updated>
+    <id>overtone-post-/2010/04/05/oscilloscope-and-curve-editor</id>
+    <content type="html">&lt;p&gt;We’ve made some big steps lately so I figured it was time for a short update. Fabian’s great work on the native bindings for the SuperCollider synthesis server now allow us to boot the audio server in the same process as the JVM. This means we can share buffers of audio data with the DSP engine with minimal communications overhead, allowing for real-time visualization and soon manipulation of audio waveform data.&lt;/p&gt;
+
+&lt;p&gt;The new (oscillo-)scope renders the contents of a buffer. It can animate in real-time with an adjustable fps, but their is no zooming or waveform manipulation yet. It’s already usable for checking out waveforms and learning, but hopefully there are still some good opportunities for optimizing this widget to get a bit cleaner, real-time waveform without jitter. (I haven’t tried out either the concurrent garbage collector or the real-time JVM, both of which could be interesting.)&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;clojure&#39;&gt;  &lt;span class=&#39;c1&#39;&gt;; View a full sample waveform&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;def &lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;s&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;load-sample&lt;/span&gt; &lt;span class=&#39;s&#39;&gt;&amp;quot;/home/rosejn/studio/samples/kit/boom.wav&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-buf&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;s&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+  &lt;span class=&#39;c1&#39;&gt;; view a live waveform&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;def &lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;b&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;buffer&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;2048&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;defsynth&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;foo&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;out-bus&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;20&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;]&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;out&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;out-bus&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;sin-osc&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;400&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)))&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;foo&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;           &lt;span class=&#39;c1&#39;&gt;; output a sine wave onto bus 20&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;bus-&amp;gt;buf&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;20&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;b&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;c1&#39;&gt;; record signal from bus 20 into buffer b, looping&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-buf&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;b&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;   
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-on&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;      &lt;span class=&#39;c1&#39;&gt;; enjoy&lt;/span&gt;
+  &lt;span class=&#39;c1&#39;&gt;;...&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;scope-off&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;     &lt;span class=&#39;c1&#39;&gt;; stop live updates&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Shown in the oscilloscope is a kick drum sample.&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&#39;fancy&#39; href=&#39;media/new-curve-editor-big.png&#39;&gt;
+  &lt;img src=&#39;media/new-curve-editor-small.png&#39; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Below the oscilloscope is the new curve editor. This is the result of a late night hacking session last night, so there is plenty more work to do, but this will allow us to visualize and manipulate the control points for envelope and automation curves.&lt;/p&gt;
+
+&lt;p&gt;The color chooser in the toolbar on the side emits a &lt;strong&gt;:color-changed&lt;/strong&gt; event when the color is changed. For most stuff you can probably just use the &lt;strong&gt;live-color&lt;/strong&gt; function though. Here’s how you can change the color of the curve editor interactively:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;clojure&#39;&gt;  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;live-color&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;#&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;curve-color&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt;
+  &lt;span class=&#39;c1&#39;&gt;;... change color ...&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;stop-color&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;                       &lt;span class=&#39;c1&#39;&gt;; remove the handler&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I’ve been thinking about how to generate a little theme configuration panel that lets you see all of the colors used by the application, adjust them interactively, and then save out into a named theme setting. This will be one of the building blocks.&lt;/p&gt;
+
+&lt;p&gt;Our goal for this first draft of an actual Overtone application is to create a tool that is good for designing and playing a single instrument. This includes a basic live-coding editor, a repl, the oscilloscope, the curve editor, and a few generic controls to trigger synths and control parameters. Oh, and some basic midi hooks to make it easy to use a keyboard or a monome to trigger synths. We are probably a month or two away from the first alpha release.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Audio Visual Progress</title>
+    <link href="http://rosejn.github.com/overtone//2010/02/20/audio-visual-progress.html"/>
+    <updated>2010-02-20T00:00:00+00:00</updated>
+    <id>overtone-post-/2010/02/20/audio-visual-progress</id>
+    <content type="html">&lt;p&gt;The audio synthesis API that communicates with SuperCollider is operational. You can define a synthesizer, load it and then trigger it and send it control messages to adjust parameters. Here’s a short example of creating and playing a simple synth on the repl.&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;clojure&#39;&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;use&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;&amp;#39;overtone.live&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; import the UGen function library&lt;/span&gt;
+&lt;span class=&#39;c1&#39;&gt;; we do it this way because we need to override a bunch of built-in clojure&lt;/span&gt;
+&lt;span class=&#39;c1&#39;&gt;; functions, including +, -, *, / and other common functions.  Doing it like&lt;/span&gt;
+&lt;span class=&#39;c1&#39;&gt;; this saves you from having to exclude all this in your namespace definition.&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;refer-ugens&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; boot the synth server&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;boot&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; here is a random, echoing, ping synth&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;defsynth&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;chop-saw&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;freq&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;440&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;depth&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;]&lt;/span&gt;                                                                                     
+  &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;comb-n&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nb&#39;&gt;* &lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;env-gen&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;perc&lt;/span&gt; &lt;span class=&#39;mf&#39;&gt;0.1&lt;/span&gt; &lt;span class=&#39;mf&#39;&gt;0.4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;lf-pulse&lt;/span&gt;&lt;span class=&#39;ss&#39;&gt;:kr&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt; 
+             &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;rlpf&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;saw&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nb&#39;&gt;+ &lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;freq&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nb&#39;&gt;* &lt;/span&gt;&lt;span class=&#39;nv&#39;&gt;depth&lt;/span&gt; 
+                                &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;lf-saw&lt;/span&gt;&lt;span class=&#39;ss&#39;&gt;:kr&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;lf-pulse&lt;/span&gt;&lt;span class=&#39;ss&#39;&gt;:kr&lt;/span&gt; &lt;span class=&#39;mf&#39;&gt;0.1&lt;/span&gt; &lt;span class=&#39;mf&#39;&gt;0.2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)))))&lt;/span&gt; 
+                   &lt;span class=&#39;nv&#39;&gt;freq&lt;/span&gt; &lt;span class=&#39;mf&#39;&gt;0.6&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))))&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; play it&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;chop-saw&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; kill the synth instance based on the last returned node id&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;kill&lt;/span&gt; &lt;span class=&#39;nv&#39;&gt;*1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; 
+
+&lt;span class=&#39;c1&#39;&gt;; play it with different settings&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;chop-saw&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;440&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;20&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; and control them on the fly&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;chop-saw&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;:ctl&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;:freq&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;880&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;:depth&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;10&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; make some more&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;chop-saw&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;:freq&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;440&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;chop-saw&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;:freq&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;220&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;chop-saw&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;:freq&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;110&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; clear all running synths&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;reset&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;; quit the synth server&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;quit&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;A graph based editor (connecting nodes with edges) is coming to life now. This will allow you to define synthesizers and control patches in a basic graphical programming environment. Here’s a screenshot showing some of the widgets implemented in the first prototype (click to zoom):&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&#39;fancy&#39; href=&#39;media/overflow.png&#39;&gt;&lt;img src=&#39;media/overflow-small.png&#39; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Overtone can be used as a library from Clojure code or on the repl, but there is also the beginnings of a standalone application. It currently boots the server and it has a repl that can evaluate code, but it will soon get a text editor and the flow editor.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>It Makes Noise</title>
+    <link href="http://rosejn.github.com/overtone//blog/2009/11/15/it-makes-noise.html"/>
+    <updated>2009-11-15T00:00:00+00:00</updated>
+    <id>overtone-post-/blog/2009/11/15/it-makes-noise</id>
+    <content type="html">&lt;p&gt;Overtone lives!&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;clojure&#39;&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;use&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;&amp;#39;overtone.sc&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;boot&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;hit&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;now&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;s&#39;&gt;&amp;quot;kick&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nf&#39;&gt;quit&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+  </entry>
+  
+
+</feed>

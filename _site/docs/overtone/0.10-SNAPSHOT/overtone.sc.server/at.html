@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>at</h1>
+    <p class="doc">Schedule server communication - specify that communication messages
+   execute on the server at a specific time in the future:
+
+   ;; control synth foo to change :freq to 150
+   ;; one second from now:
+   (at (+ (now) 1000) (ctl foo :freq 150))
+
+   Only affects code that communicates with the server using OSC
+   messaging i.e. synth triggering and control. All code in the body of
+   the at macro is executed immediately. Any OSC messages which are
+   triggered as a result of executing the body are not immediately sent
+   but are instead captured and then sent in a single OSC bundle with
+   the specified timestamp once the body has completed. The server then
+   stores these bundles and executes them at the specified time. This
+   allows you to schedule the triggering and control of synths for
+   specific times.
+
+   The bundling is thread-local, so you don't have to worry about
+   accidentally scheduling packets into a bundle started on another
+   thread.
+
+   Be careful not to confuse at with apply-at and apply-by which
+   directly affect Clojure code.
+
+   Warning, all liveness and 'node blocking when not ready' checks are
+   disabled within the context of this macro. This means that it will
+   fail silently if a server node you wish to control either has been
+   since terminated or not had time to be initialised.</p>
+    <p>
+      File: overtone/sc/server.clj
+      Line: 52
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">at</span>
+  <span class="s">&quot;Schedule server communication - specify that communication messages</span>
+<span class="s">   execute on the server at a specific time in the future:</span>
+
+<span class="s">   ;; control synth foo to change :freq to 150</span>
+<span class="s">   ;; one second from now:</span>
+<span class="s">   (at (+ (now) 1000) (ctl foo :freq 150))</span>
+
+<span class="s">   Only affects code that communicates with the server using OSC</span>
+<span class="s">   messaging i.e. synth triggering and control. All code in the body of</span>
+<span class="s">   the at macro is executed immediately. Any OSC messages which are</span>
+<span class="s">   triggered as a result of executing the body are not immediately sent</span>
+<span class="s">   but are instead captured and then sent in a single OSC bundle with</span>
+<span class="s">   the specified timestamp once the body has completed. The server then</span>
+<span class="s">   stores these bundles and executes them at the specified time. This</span>
+<span class="s">   allows you to schedule the triggering and control of synths for</span>
+<span class="s">   specific times.</span>
+
+<span class="s">   The bundling is thread-local, so you don&#39;t have to worry about</span>
+<span class="s">   accidentally scheduling packets into a bundle started on another</span>
+<span class="s">   thread.</span>
+
+<span class="s">   Be careful not to confuse at with apply-at and apply-by which</span>
+<span class="s">   directly affect Clojure code.</span>
+
+<span class="s">   Warning, all liveness and &#39;node blocking when not ready&#39; checks are</span>
+<span class="s">   disabled within the context of this macro. This means that it will</span>
+<span class="s">   fail silently if a server node you wish to control either has been</span>
+<span class="s">   since terminated or not had time to be initialised.&quot;</span>
+  <span class="p">[</span><span class="nv">time-ms</span> <span class="o">&amp;</span> <span class="nv">body</span><span class="p">]</span>
+  <span class="o">`</span><span class="p">(</span><span class="nf">with-inactive-modification-error</span> <span class="ss">:silent</span>
+     <span class="p">(</span><span class="nf">without-node-blocking</span>
+           <span class="p">(</span><span class="nf">in-unested-osc-bundle</span> <span class="o">@</span><span class="nv">server-osc-peer*</span> <span class="o">~</span><span class="nv">time-ms</span> <span class="p">(</span><span class="k">do </span><span class="o">~@</span><span class="nv">body</span><span class="p">)))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

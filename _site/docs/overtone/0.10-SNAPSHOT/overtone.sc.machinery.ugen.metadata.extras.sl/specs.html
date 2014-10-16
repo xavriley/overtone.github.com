@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/extras/sl.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Breakcore&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Breakcore simulator&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;capturein&quot;</span>
+             <span class="ss">:default</span> <span class="ss">:none</span>
+             <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;capturetrigger&quot;</span>
+             <span class="ss">:default</span> <span class="ss">:none</span>
+             <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;duration&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This is noisy.</span>
+<span class="s">    (This UGen (C and SuperCollider code) was written on Feb 7 2005 in one hour in front of a live audience as part of the TOPLAP live coding jam at transmediale, Maria am Ostbahnhof, Berlin.</span>
+<span class="s">    I haven&#39;t tried to clear it up after the event, only adding this notice; make what you can of it!)&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Brusselator&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Prigogine oscillator&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;If &gt; 0.0, restart with new initial conditions sampled from initx, inity&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Update rate for a sample step&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;mu&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant.  Set mu &gt; (gamma*2 + 1.0) for the more fun limit cycle regions.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gamma&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;initx&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;inity&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for y&quot;</span><span class="p">}]</span>
+   <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+   <span class="ss">:doc</span> <span class="s">&quot;Euler ODE solver implementation of the Brusselator equations (http://en.wikipedia.org/wiki/Brusselator.)</span>
+
+
+<span class="s">   x&#39; = x^2*y - (mu+1*x + gamma y&#39;)</span>
+
+
+<span class="s">   y&#39; = -x^2*y + mu*x</span>
+
+
+<span class="s">   All inputs can have .kr rate UGens plugged in.</span>
+
+
+<span class="s">   Nonlinear oscillators can blow up, treat with caution. This one is relatively stable however, converging to a fixed point, or a limit cycle, in the upper positive quadrant for some reasonable values. Just be careful if mu gets much bigger than gamma (though making it larger is necessary to get some chaotic oscillation behaviour) you can retrigger to get back to normal, and keep the rate lower to avoid Euler integration blow-ups. You may just need to scale and push down around zero to avoid a DC offset. Fixed point is at (x,y = (gamma, mu/gamma))&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DoubleWell&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Forced DoubleWell Oscillator&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Restart with new initial conditions sampled from initx, inity&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ratex&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Update rate for x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ratey&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span>
+            <span class="ss">:doc</span>  <span class="s">&quot;Update rate for y&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;f&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;w&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.001</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delta&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;initx&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;inity&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for y&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Runge-Kutta ODE solver implementation of the chaotic Forced Double Well Oscillator (see Strogatz, Steven H. (1994) Nonlinear Dynamics and Chaos. Addison-Wesley, Reading, MA. pp441-7.)</span>
+
+
+<span class="s">    D2x + delta*Dx - x + x^3 = F*cos(w*t)</span>
+
+
+<span class="s">    All inputs can have .kr rate UGens plugged in.&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DoubleWell2&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Forced Double Well Oscillator&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Restart with new initial conditions sampled from initx, inity&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ratex&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Update rate for x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ratey&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Update rate for y&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;f&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;w&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.001</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delta&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;initx&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;inity&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for y&quot;</span><span class="p">}]</span>
+
+   <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+   <span class="ss">:doc</span> <span class="s">&quot;Improved Euler ODE solver implementation of the chaotic Forced Double Well Oscillator (see Strogatz, Steven H. (1994) Nonlinear Dynamics and Chaos. Addison-Wesley, Reading, MA. pp441-7)</span>
+
+
+<span class="s">   D2x + delta*Dx - x + x^3 = F*cos(w*t)</span>
+
+
+<span class="s">   y = Dx</span>
+
+
+<span class="s">   All input can have .kr rate UGens plugged in&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DoubleWell3&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Forced Double Well Oscillator&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Restart with new initial conditions sampled from initx, inity&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Update rate for x and y&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;f&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Forcing term, an arbitrary audio rate input&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delta&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.25</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;initx&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;inity&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Reset value for y&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Runge-Kutta ODE solver implementation of the chaotic Forced Double Well Oscillator (see Strogatz, Steven H. (1994) Nonlinear Dynamics and Chaos. Addison-Wesley, Reading, MA. pp441-7).</span>
+
+
+<span class="s">    D2x + delta*Dx - x + x^3 = F</span>
+
+
+<span class="s">    y = Dx</span>
+
+
+<span class="s">    All inputs can have .kr rate UGens plugged in. F is itself an arbitrary audio rate UGen input forcing term&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GravityGrid&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Dynamical System Simulation (Newtonian gravitational force)&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Restart the moving mass at a random position within the square (k-rate input)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Amount of position update per sample (k-rate)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;newx&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;kr input to be sampled for new x positions for the moving mass on reset&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;newy&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;kr input to be sampled for new y positions for the moving mass on reset&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="ss">:none</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Bufnum for a buffer containing weights for the different outer masses indexed as 0-3 and 5-8 and central moving mass 4. Passing -1 means that the weights are not used (are flat.)&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Eight fixed masses around a boundary apply Newtonian gravitational force dynamics to a central moving mass which cannot escape the [-1, 1] grid in x or y. The position of the moving mass is sonified as an oscillator by its distance from the centre.  This is a relatively expensive oscillator to run.</span>
+
+
+<span class="s">    Note: This original GravityGrid contains an erroneous folding function, and gravity which is more attractive as the distance increases! Which however, adds interesting distortions to the sound. See GravityGrid2 for a cleaned up version. This one is retained for backwards compatibility.&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GravityGrid2&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Dynamical System Simulation (Newtonian gravitational force)&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Restart the moving mass at a random position within the square (k-rate input)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Amount of position update per sample (k-rate)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;newx&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;kr input to be sampled for new x positions for the moving mass on reset&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;newy&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;kr input to be sampled for new y positions for the moving mass on reset&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="ss">:none</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Bufnum for a buffer containing weights and positions for the fixed influencing masses. In the format entry [0] is the number of masses, then 3 components (x, y, mass multiplier for each mass in turn (see below). You can dynamically change this buffer as long as the data contents stay consistent- i.e. if you change suddenly to having twice as many masses, make sure you&#39;ve provided x,y and weight values for them!&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span>  <span class="s">&quot;Eight fixed masses around a boundary apply Newtonian gravitational force dynamics to a central moving mass which cannot escape the [-1, 1] grid in x or y. The position of the moving mass is sonified as an oscillator by its distance from the centre.  This is a relatively expensive oscillator to run.&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>muladd-specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/filter.clj
+      Line: 8
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">muladd-specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Resonz&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;resonant frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bwr&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;bandwidth ratio (reciprocal of Q).</span>
+<span class="s">                  rq = bandwidth / centerFreq&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A Note on Constant-Gain Digital Resonators,\&quot; Computer Music</span>
+<span class="s">          Journal, vol 18, no. 4, pp. 8-10, Winter 1994.\&quot; Computer</span>
+<span class="s">          Music Journal, vol 18, no. 4, pp. 8-10, Winter 1994.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;OnePole&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;coef&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;feedback coefficient. Should be between -1 and +1&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A one pole filter. Implements the formula:</span>
+
+<span class="s">          out(i) = ((1 - abs(coef)) * in(i)) + (coef * out(i-1))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;OneZero&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;coef&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;feed forward coefficient. +0.5 makes a two point</span>
+<span class="s">                  averaging filter (see also lpz1), -0.5 makes a</span>
+<span class="s">                  differentiator (see also hpz1), +1 makes a single</span>
+<span class="s">                  sample delay (see also delay1), -1 makes an inverted</span>
+<span class="s">                  single sample delay.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A one zero filter. Implements the formula :</span>
+
+<span class="s">          out(i) = ((1 - abs(coef)) * in(i)) + (coef * in(i-1))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TwoPole&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;frequency of pole angle&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;radius&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.8</span>
+            <span class="ss">:doc</span> <span class="s">&quot;radius of pole. Should be between 0 and +1&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;a two pole filter. This provides lower level access to setting</span>
+<span class="s">          of pole location.</span>
+
+<span class="s">          For general purposes Resonz is better.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TwoZero&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;frequency of zero angle&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;radius&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.8</span>
+            <span class="ss">:doc</span> <span class="s">&quot;radius of zero&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;a two zero filter&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;APF&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;radius&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.8</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Integrator&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;coef&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;leak coefficient&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;leaky integrator. Integrates an input signal with a leak. The</span>
+<span class="s">          formula implemented is:</span>
+
+<span class="s">          out(0) = in(0) + (coef * out(-1))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Decay&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;triggered exponential decay.&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;decay-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB decay time in seconds&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This is essentially the same as integrator except that</span>
+<span class="s">          instead of supplying the coefficient directly, it is</span>
+<span class="s">          calculated from a 60 dB decay time. This is the time required</span>
+<span class="s">          for the integrator to lose 99.9 % of its value or -60dB. This</span>
+<span class="s">          is useful for exponential decaying envelopes triggered by</span>
+<span class="s">          impulses.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Decay2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;attack-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.01</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB attack time in seconds.&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;decay-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB decay time in seconds.&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;triggered exponential attack and exponential decay. Decay has</span>
+<span class="s">          a very sharp attack and can produce clicks. Decay2 rounds off</span>
+<span class="s">          the attack by subtracting one Decay from another. (decay in</span>
+<span class="s">          attack-time decay-time) equivalent to: (- (decay in</span>
+<span class="s">          attack-time decay-time) (decay in attack-time decay-time))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lag&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;exponential lag, useful for smoothing out control</span>
+<span class="s">          signals. This is essentially the same as OnePole except that</span>
+<span class="s">          instead of supplying the coefficient directly, it is</span>
+<span class="s">          calculated from a 60 dB lag time. This is the time required</span>
+<span class="s">          for the filter to converge to within 0.01 % of a value.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lag2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;equivalent to (lag (lag in time) time), resulting in a</span>
+<span class="s">          smoother transition. This saves on CPU as you only have to</span>
+<span class="s">          calculate the decay factor once instead of twice. See lag for</span>
+<span class="s">          more details.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lag3&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;lag3 is equivalent to (lag (lag (lag in time) time) time),</span>
+<span class="s">          thus resulting in a smoother transition. This saves on CPU as</span>
+<span class="s">          you only have to calculate the decay factor once instead of</span>
+<span class="s">          three times. See Lag for more details.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Ramp&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;similar to lag but with a linear rather than exponential lag,</span>
+<span class="s">          useful for smoothing out control signals&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LagUD&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time-up&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds for the upgoing signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time-down&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds for the downgoing signal&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;the same as Lag except that you can supply a different 60 dB</span>
+<span class="s">          time for when the signal goes up, from when the signal goes down&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lag2UD&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time-up&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds for the upgoing signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time-down&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds for the downgoing signal&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;equivalent to (lag-ud (lag-ud in up-t down-t) up-t down-t)</span>
+<span class="s">          thus resulting in a smoother transition. This saves on CPU as</span>
+<span class="s">          you only have to calculate the decay factor once instead of</span>
+<span class="s">          twice. See Lag for more details.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lag3UD&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time-up&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds for the upgoing signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag-time-down&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB lag time in seconds for the downgoing signal&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;equivalent to</span>
+
+<span class="s">         (lag-ud (lag-ud (lag-ud (in up-t down-t) up-t down-t) up-t, down-t)</span>
+
+<span class="s">         thus resulting in a smoother transition. This saves on CPU as</span>
+<span class="s">         you only have to calculate the decay factor once instead of</span>
+<span class="s">         three times.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LeakDC&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;coef&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.995</span>
+            <span class="ss">:doc</span> <span class="s">&quot;leak coefficient. A value of 1 indicates no leakage</span>
+<span class="s">                  and 0 indicates high leakage - essentially the rate at</span>
+<span class="s">                  which the offset will return back to 0&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;removes a DC offset from signal. For example, a square wave</span>
+<span class="s">          contains prolonged sections of the cycle which are at +1 and</span>
+<span class="s">          -1 (the top and bottom of the square sections). If you were to</span>
+<span class="s">          pass this wave through leak-dc, then these top parts would</span>
+<span class="s">          taper back towards 0 with a greater slope as you move coef</span>
+<span class="s">          from 1 to 0..</span>
+
+<span class="s">          Good starting point coef values are to 0.995 for audio rate and 0.9</span>
+<span class="s">          for control rate&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RLPF&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;resonant low pass filter&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;cutoff frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq. A lower</span>
+<span class="s">                  rq results in more resonance.&quot;</span> <span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A resonant low pass filter is a standard subtractive synthesis</span>
+<span class="s">          tool which removes frequencies above a defined cut-off</span>
+<span class="s">          point. This typically has the effect of making bright sounds</span>
+<span class="s">          duller. However, in addition to this behaviour, the resonant</span>
+<span class="s">          low pass filter also emphasises/resonates the frequencies</span>
+<span class="s">          around the cutoff point. The amount of emphasis is</span>
+<span class="s">          controlled by the rq param with a lower rq resulting in</span>
+<span class="s">          greater resonance. High amounts of resonance (rq ~0) can</span>
+<span class="s">          create a whistling sound around the cutoff frequency.</span>
+
+<span class="s">          Using a low pass filter allows you to have fine-grained</span>
+<span class="s">          control of the level of brightness/dullness to tune your</span>
+<span class="s">          timbre in addition to allowing you to modulate the effect in</span>
+<span class="s">          real time thus creating movement in the sound.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RHPF&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;resonant high pass filter&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;cutoff frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq. A lower</span>
+<span class="s">                  rq results in more resonance&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="ss">:doc</span> <span class="s">&quot;A resonant high pass filter lets through the frequencies above</span>
+<span class="s">          the cutoff point and successfully dampens the frequencies below</span>
+<span class="s">          the cutoff point. This effectively removes the fundamental</span>
+<span class="s">          frequency of the sound, leaving only the fizz harmonic</span>
+<span class="s">          overtones. However, in addition to this behaviour, the</span>
+<span class="s">          resonant high pass filter also emphasises/resonates the</span>
+<span class="s">          frequencies around the cutoff point. The amount of emphasis</span>
+<span class="s">          is controlled by the rq param with a lower rq resulting in</span>
+<span class="s">          greater resonance. High amounts of resonance (rq ~0) can</span>
+<span class="s">          create a whistling sound around the cutoff frequency.</span>
+
+<span class="s">          High pass filters are rarely used in the creation of</span>
+<span class="s">          instruments and are predominantly used to create effervescent</span>
+<span class="s">          sound effects of bright timbres that can be laid over the top</span>
+<span class="s">          of another low pass sound to increase the harmonic content.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LPF&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;second order Butterworth low pass filter&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;cutoff frequency&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A low pass filter is a standard subtractive synthesis tool</span>
+<span class="s">          which removes frequencies above a defined cut-off point. This</span>
+<span class="s">          typically has the effect of making bright sounds</span>
+<span class="s">          duller. Using a low pass filter allows you to have fine-grained</span>
+<span class="s">          control of the level of brightness/dullness to tune your</span>
+<span class="s">          timbre in addition to allowing you to modulate the effect in</span>
+<span class="s">          real time thus creating movement in the sound.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;HPF&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;second order high pass filter&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;cutoff frequency&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A high pass filter lets through the frequencies above the</span>
+<span class="s">          cutoff point and successfully dampens the frequencies below the</span>
+<span class="s">          cutoff point. This effectively removes the fundamental</span>
+<span class="s">          frequency of the sound, leaving only the fizz harmonic</span>
+<span class="s">          overtones.</span>
+
+<span class="s">          High pass filters are rarely used in the creation of</span>
+<span class="s">          instruments and are predominantly used to create effervexcent</span>
+<span class="s">          sound effects of bright timbres that can be laid over the top</span>
+<span class="s">          of another low pass sound to increase the harmonic content.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BPF&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;second order Butterworth bandpass filter&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;centre frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A band pass filter permits the frequencies around a specified</span>
+<span class="s">          centre frequency to pass unaltered through the filter while</span>
+<span class="s">          the frequencies either side are attenuated. The frequencies</span>
+<span class="s">          that pass through are known as the bandwidth or the band pass</span>
+<span class="s">          of the filter.</span>
+
+<span class="s">          Used to create timbres consisting of fizzy harmonics, lo-fi</span>
+<span class="s">          qualities or very thin sounds that may form the basis of sound</span>
+<span class="s">          effects.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BRF&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;second order Butterworth band reject filter&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;centre frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Band reject filters, also known as notch filters, attenuate a</span>
+<span class="s">          selected range of frequencies effectively creating a notch in</span>
+<span class="s">          the sound.</span>
+
+<span class="s">          This type of filter is handy for scooping out frequencies,</span>
+<span class="s">          thinning out a sound while leaving the fundamental intact,</span>
+<span class="s">          making them useful for creating timbres that contain a</span>
+<span class="s">          discernable pitch but do not have a high level of harmonic</span>
+<span class="s">          content.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;MidEQ&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;center frequency of the band in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the reciprocal of Q.  bandwidth / cutoffFreq&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;db&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;amount of boost (db &gt; 0) or attenuation (db &lt; 0) of</span>
+<span class="s">                  the frequency band&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;attenuates or boosts a frequency band&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LPZ1&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;two point average filter. Implements the formula:</span>
+
+<span class="s">          out(i) = 0.5 * (in(i) + in(i-1))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LPZ2&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;two zero fixed lowpass. Implements the formula:</span>
+
+<span class="s">          out(i) = 0.25 * (in(i) + (2*in(i-1)) + in(i-2))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;HPZ1&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;two point difference filter. Implements the formula:</span>
+
+<span class="s">          out(i) = 0.5 * (in(i) - in(i-1))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;HPZ2&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;two zero fixed highpass. Implements the formula:</span>
+
+<span class="s">          out(i) = 0.25 * (in(i) - (2*in(i-1)) + in(i-2))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Slope&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to measure&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Measures the rate of change per second of a signal. Formula implemented is:</span>
+
+<span class="s">          out[i] = (in[i] - in[i-1]) * sampling_rate&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BPZ2&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;two zero fixed midpass which cuts out 0 Hz and the Nyquist</span>
+<span class="s">          frequency. Implements the formula:</span>
+
+<span class="s">          out(i) = 0.5 * (in(i) - in(i-2))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BRZ2&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;two zero fixed midcut which cuts out frequencies around 1/2 of</span>
+<span class="s">          the Nyquist frequency. Implements the formula:</span>
+
+<span class="s">          out(i) = 0.5 * (in(i) + in(i-2))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Median&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;length&quot;</span>
+            <span class="ss">:default</span> <span class="mf">3.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;number of input points in which to find the</span>
+<span class="s">                  median. Must be an odd number from 1 to 31. If length</span>
+<span class="s">                  is 1 then Median has no effect.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal to be processed&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the median of the last length input points. This non</span>
+<span class="s">          linear filter is good at reducing impulse noise from a</span>
+<span class="s">          signal.&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Slew&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;up&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;maximum upward slope&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dn&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;maximum downward slope&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Smooth the curve by limiting the slope of the input signal to</span>
+<span class="s">          up and dn&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FOS&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;first coefficient&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;second coefficient&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;third coefficient&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;first order filter section. Formula is equivalent to:</span>
+
+<span class="s">          out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (b1 * out(i-1))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SOS&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;1st coefficient&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;2nd coefficient&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;3rd coefficient&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;4th coefficient&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;5th coefficient&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;second order filter section (biquad). Formula is equivalent</span>
+<span class="s">          to:</span>
+
+<span class="s">          out(i) = (a0 * in(i)) +</span>
+<span class="s">                   (a1 * in(i-1)) +</span>
+<span class="s">                   (a2 * in(i-2)) +</span>
+<span class="s">                   (b1 * out(i-1)) +</span>
+<span class="s">                   (b2 * out(i-2))&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Ringz&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;resonant frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;decay-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the 60 dB decay time of the filter&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Ringz is the same as Resonz, except that instead of a</span>
+<span class="s">          resonance parameter, the bandwidth is specified in a 60dB ring</span>
+<span class="s">          decay time. One Ringz is equivalent to one component of the</span>
+<span class="s">          klank ugen&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Formlet&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;input signal to be processed&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mf">440.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;resonant frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;attack-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB attack time in seconds&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;decay-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;60 dB decay time in seconds&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;a resonant filter whose impulse response is like that of a</span>
+<span class="s">          sine wave with a Decay2 envelope over it. The great advantage</span>
+<span class="s">          to this filter over FOF is that there is no limit to the</span>
+<span class="s">          number of overlapping grains since the grain is just the</span>
+<span class="s">          impulse response of the filter. Note that if attacktime ==</span>
+<span class="s">          decaytime then the signal cancels out and if attacktime &gt;</span>
+<span class="s">          decaytime then the impulse response is inverted.&quot;</span>
+    <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>
