@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>on-trigger</h1>
+    <p class="doc">Registers a standard on-event handler with key which will call
+   handler when matching triggers are recieved. Triggers are created
+   with the send-trig ugen. Handler should be a fn which takes one
+   argument - the latest trigger value. Triggers registered with the
+   same key as another trigger or standard handler will remove and
+   replace the old handler.
+
+   Consider using trig-id to create a unique trigger id
+
+    ;; create new id
+    (def uid (trig-id))
+
+    ;; define a synth which uses send-trig
+    (defsynth foo
+              [t-id 0]
+              (send-trig (impulse 10) t-id (sin-osc)))
+
+    ;; register a handler fn
+    (on-trigger uid
+                (fn [val] (println "trig val:" val))
+                ::debug)
+
+    ;; create a new instance of synth foo with trigger id as a
+    ;; param
+    (foo uid)
+
+    ;;Trigger handler can be removed with:
+    (remove-event-handler ::debug)</p>
+    <p>
+      File: overtone/sc/trig.clj
+      Line: 27
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">on-trigger</span>
+  <span class="s">&quot;Registers a standard on-event handler with key which will call</span>
+<span class="s">   handler when matching triggers are recieved. Triggers are created</span>
+<span class="s">   with the send-trig ugen. Handler should be a fn which takes one</span>
+<span class="s">   argument - the latest trigger value. Triggers registered with the</span>
+<span class="s">   same key as another trigger or standard handler will remove and</span>
+<span class="s">   replace the old handler.</span>
+
+<span class="s">   Consider using trig-id to create a unique trigger id</span>
+
+<span class="s">    ;; create new id</span>
+<span class="s">    (def uid (trig-id))</span>
+
+<span class="s">    ;; define a synth which uses send-trig</span>
+<span class="s">    (defsynth foo</span>
+<span class="s">              [t-id 0]</span>
+<span class="s">              (send-trig (impulse 10) t-id (sin-osc)))</span>
+
+<span class="s">    ;; register a handler fn</span>
+<span class="s">    (on-trigger uid</span>
+<span class="s">                (fn [val] (println \&quot;trig val:\&quot; val))</span>
+<span class="s">                ::debug)</span>
+
+<span class="s">    ;; create a new instance of synth foo with trigger id as a</span>
+<span class="s">    ;; param</span>
+<span class="s">    (foo uid)</span>
+
+<span class="s">    ;;Trigger handler can be removed with:</span>
+<span class="s">    (remove-event-handler ::debug)&quot;</span>
+  <span class="p">([</span><span class="nv">trig-id</span> <span class="nv">handler</span> <span class="nv">key</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">add-handler</span> <span class="nv">on-event</span> <span class="p">[</span><span class="ss">:overtone</span> <span class="ss">:trigger</span> <span class="nv">trig-id</span><span class="p">]</span> <span class="nv">handler</span> <span class="nv">key</span><span class="p">))</span>
+  <span class="p">([</span><span class="nb">node </span><span class="nv">trig-id</span> <span class="nv">handler</span> <span class="nv">key</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">add-handler</span> <span class="nv">on-event</span> <span class="p">[</span><span class="ss">:overtone</span> <span class="ss">:trigger</span> <span class="p">(</span><span class="nf">to-sc-id</span> <span class="nv">node</span><span class="p">)</span> <span class="nv">trig-id</span><span class="p">]</span> <span class="nv">handler</span> <span class="nv">key</span><span class="p">)))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

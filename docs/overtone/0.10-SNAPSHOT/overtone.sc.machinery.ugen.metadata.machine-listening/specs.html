@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/machine_listening.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BeatTrack&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;Autocorrelation based beat tracker&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input to track, already passed through an FFT</span>
+<span class="s">                     UGen; the expected size of FFT is 1024 for 44100</span>
+<span class="s">                     and 48000 sampling rate, and 2048 for double</span>
+<span class="s">                     those. No other sampling rates are supported. &quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lock&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;If this argument is greater than 0.5, the tracker</span>
+<span class="s">                     will lock at its current periodicity and continue</span>
+<span class="s">                     from the current phase. Whilst it updates the</span>
+<span class="s">                     model&#39;s phase and period, this is not reflected in</span>
+<span class="s">                     the output until lock goes back below 0.5.  &quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:num-outs</span> <span class="mi">4</span>
+    <span class="ss">:doc</span> <span class="s">&quot;The underlying model assumes 4/4, but it should work on any</span>
+<span class="s">          isochronous beat structure, though there are biases to 100-120</span>
+<span class="s">          bpm; a fast 7/8 may not be tracked in that sense. There are</span>
+<span class="s">          four k-rate outputs, being ticks at quarter, eighth and</span>
+<span class="s">          sixteenth level from the determined beat, and the current</span>
+<span class="s">          detected tempo. Note that the sixteenth note output won&#39;t</span>
+<span class="s">          necessarily make much sense if the music being tracked has</span>
+<span class="s">          swing; it is provided just as a convenience.</span>
+
+<span class="s">          This beat tracker determines the beat, biased to the midtempo</span>
+<span class="s">          range by weighting functions. It does not determine the</span>
+<span class="s">          measure level, only a tactus. It is also slow reacting, using</span>
+<span class="s">          a 6 second temporal window for its autocorrelation</span>
+<span class="s">          maneouvres. Don&#39;t expect human musician level predictive</span>
+<span class="s">          tracking.</span>
+
+<span class="s">          On the other hand, it is tireless, relatively general (though</span>
+<span class="s">          obviously best at transient 4/4 heavy material without much</span>
+<span class="s">          expressive tempo variation), and can form the basis of</span>
+<span class="s">          computer processing that is decidedly faster than human.&quot;</span><span class="p">}</span>
+
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Loudness&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input to track, which has been pre-analysed by</span>
+<span class="s">                  the FFT UGen&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;smask&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.25</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Spectral masking param: lower bins mask higher bin</span>
+<span class="s">                  power within ERB bands, with a power falloff (leaky</span>
+<span class="s">                  integration multiplier) of smask per bin&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;tmask&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Temporal masking param: the phon level let through in</span>
+<span class="s">                  an ERB band is the maximum of the new measurement, and</span>
+<span class="s">                  the previous minus tmask phons&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A perceptual loudness function which outputs loudness in</span>
+<span class="s">          sones; this is a variant of an MP3 perceptual model, summing</span>
+<span class="s">          excitation in ERB bands. It models simple spectral and</span>
+<span class="s">          temporal masking, with equal loudness contour correction in</span>
+<span class="s">          ERB bands to obtain phons (relative dB), then a phon to sone</span>
+<span class="s">          transform. The final output is typically in the range of 0 to</span>
+<span class="s">          64 sones, though higher values can occur with specific</span>
+<span class="s">          synthesised stimuli.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Onsets&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;an FFT chain&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;threshold&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the detection threshold, typically between 0 and 1,</span>
+<span class="s">                  although in rare cases you may find values outside</span>
+<span class="s">                  this range useful&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;odftype&quot;</span>
+            <span class="ss">:default</span> <span class="mi">3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the function used to analyse the signal. Options:</span>
+<span class="s">                  nPOWER, MAGSUM, COMPLEX, RCOMPLEX (default), PHASE,</span>
+<span class="s">                  WPHASE and MKL. Default is RCOMPLEX.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;relaxtime&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;specifies the time (in seconds) for the normalisation</span>
+<span class="s">                  to forget about a recent onset. If you find too much</span>
+<span class="s">                  re-triggering (e.g. as a note dies away unevenly) then</span>
+<span class="s">                  you might wish to increase this value.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;floor&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;is a lower limit, connected to the idea of how quiet</span>
+<span class="s">                  the sound is expected to get without becoming</span>
+<span class="s">                  indistinguishable from noise. For some</span>
+<span class="s">                  cleanly-recorded classical music with wide dynamic</span>
+<span class="s">                  variations, I found it helpful to go down as far as</span>
+<span class="s">                  0.000001.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;mingap&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">10</span>
+            <span class="ss">:doc</span> <span class="s">&quot;specifies a minimum gap (in FFT frames) between onset</span>
+<span class="s">                  detections, a brute-force way to prevent too many</span>
+<span class="s">                  doubled detections.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;medianspan&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">11.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot; specifies the size (in FFT frames) of the median</span>
+<span class="s">                   window used for smoothing the detection function</span>
+<span class="s">                   before triggering.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;whtype&quot;</span>, <span class="ss">:default</span> <span class="mi">1</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rawodf&quot;</span>, <span class="ss">:default</span> <span class="mi">0</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;An onset detector for musical audio signals - detects the</span>
+<span class="s">          beginning of notes/drumbeats/etc. Outputs a control-rate</span>
+<span class="s">          trigger signal which is 1 when an onset is detected, and 0</span>
+<span class="s">          otherwise.</span>
+
+<span class="s">          For the FFT chain, you should typically use a frame size of</span>
+<span class="s">          512 or 1024 (at 44.1 kHz sampling rate) and 50% hop</span>
+<span class="s">          size (which is the default setting in SC). For different</span>
+<span class="s">          sampling rates choose an FFT size to cover a similar</span>
+<span class="s">          time-span (around 10 to 20 ms).</span>
+
+<span class="s">          The onset detection should work well for a general range of</span>
+<span class="s">          monophonic and polyphonic audio signals. The onset detection</span>
+<span class="s">          is purely based on signal analysis and does not make use of</span>
+<span class="s">          any top-down inferences such as tempo.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;KeyTrack&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input to track. This must have been pre-analysed</span>
+<span class="s">                  by a 4096 size FFT.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;keydecay&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">2.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Number of seconds for the influence of a window on the</span>
+<span class="s">                  final key decision to decay by 40dB (to 0.01 its</span>
+<span class="s">                  original value)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;chromaleak&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Each frame, the chroma values are set to the previous</span>
+<span class="s">                  value multiplied by the chromadecay. 0.0 will start</span>
+<span class="s">                  each frame afresh with no memory.&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A (12TET major/minor) key tracker based on a pitch class</span>
+<span class="s">          profile of energy across FFT bins and matching this to</span>
+<span class="s">          templates for major and minor scales in all transpositions. It</span>
+<span class="s">          assumes a 440 Hz concert A reference. Output is 0-11 C major</span>
+<span class="s">          to B major, 12-23 C minor to B minor&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;MFCC&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input to track, which has been pre-analysed by</span>
+<span class="s">                  the FFT UGen&quot;</span><span class="p">}</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;numcoeff&quot;</span>,
+            <span class="ss">:default</span> <span class="mi">13</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Number of coefficients, defaults to 13, maximum of 42&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:num-outs</span> <span class="ss">:variable</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Generates a set of MFCCs; these are obtained from a band-based</span>
+<span class="s">          frequency representation (using the Mel scale by default), and</span>
+<span class="s">          then a discrete cosine transform (DCT). The DCT is an</span>
+<span class="s">          efficient approximation for principal components analysis, so</span>
+<span class="s">          that it allows a compression, or reduction of dimensionality,</span>
+<span class="s">          of the data, in this case reducing 42 band readings to a</span>
+<span class="s">          smaller set of MFCCs. A small number of features (the</span>
+<span class="s">          coefficients) end up describing the spectrum. The MFCCs are</span>
+<span class="s">          commonly used as timbral descriptors.</span>
+
+<span class="s">          Output values are somewhat normalised for the range 0.0 to</span>
+<span class="s">          1.0, but there are no guarantees on exact conformance to</span>
+<span class="s">          this. Commonly, the first coefficient will be the highest</span>
+<span class="s">          value. &quot;</span>
+    <span class="c1">;;       :init (fn [rate args spec]</span>
+    <span class="c1">;;               {:args args</span>
+    <span class="c1">;;                :num-outs (args 1)})</span>
+    <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BeatTrack2&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;busindex&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input to track, already analysed into N</span>
+<span class="s">                  features, passed in via a control bus number from</span>
+<span class="s">                  which to retrieve consecutive streams. &quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;numfeatures&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;How many features (ie how many control buses) are</span>
+<span class="s">                  provided&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;windowsize&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">2.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Size of the temporal window desired (2.0 to 3.0</span>
+<span class="s">                  seconds models the human temporal window). You might</span>
+<span class="s">                  use longer values for stability of estimate at the</span>
+<span class="s">                  expense of reactiveness.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phaseaccuracy&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.02</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Relates to how many different phases to test. At the</span>
+<span class="s">                  default, 50 different phases spaced by phaseaccuracy</span>
+<span class="s">                  seconds would be tried out for 60bpm; 16 would be</span>
+<span class="s">                  trialed for 180 bpm. Larger phaseaccuracy means more</span>
+<span class="s">                  tests and more CPU cost.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lock&quot;</span>, <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;If this argument is greater than 0.5, the tracker will</span>
+<span class="s">                  lock at its current periodicity and continue from the</span>
+<span class="s">                  current phase. Whilst it updates the model&#39;s phase and</span>
+<span class="s">                  period, this is not reflected in the output until lock</span>
+<span class="s">                  goes back below 0.5.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;weightingscheme&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">-2.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Use (-2.5) for flat weighting of tempi, (-1.5) for</span>
+<span class="s">                  compensation weighting based on the number of events</span>
+<span class="s">                  tested (because different periods allow different</span>
+<span class="s">                  numbers of events within the temporal window) or</span>
+<span class="s">                  otherwise a bufnum from 0 upwards for passing an array</span>
+<span class="s">                  of 120 individual tempo weights; tempi go from 60 to</span>
+<span class="s">                  179 bpm in steps of one bpm, so you must have a buffer</span>
+<span class="s">                  of 120 values.  &quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>,
+    <span class="ss">:num-outs</span> <span class="mi">6</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Template matching beat tracker.</span>
+
+<span class="s">          This beat tracker is based on exhaustively testing particular</span>
+<span class="s">          template patterns against feature streams; the testing takes</span>
+<span class="s">          place every 0.5 seconds. The two basic templates are a</span>
+<span class="s">          straight (groove=0) and a swung triplet (groove=1) pattern of</span>
+<span class="s">          16th notes; this pattern is tried out at scalings</span>
+<span class="s">          corresponding to the tempi from 60 to 180 bpm. This is the</span>
+<span class="s">          cross-corellation method of beat tracking. A majority vote is</span>
+<span class="s">          taken on the best tempo detected, but this must be confirmed</span>
+<span class="s">          by a consistency check after a phase estimate. Such a</span>
+<span class="s">          consistency check helps to avoid wild fluctuating estimates,</span>
+<span class="s">          but is at the expense of an additional half second delay. The</span>
+<span class="s">          latency of the beat tracker with default settings is thus at</span>
+<span class="s">          least 2.5 seconds; because of block-based amortisation of</span>
+<span class="s">          calculation, it is actually around 2.8 seconds latency for a</span>
+<span class="s">          2.0 second temporal window.</span>
+
+<span class="s">          This beat tracker is designed to be flexible for user needs;</span>
+<span class="s">          you can try out different window sizes, tempo weights and</span>
+<span class="s">          combinations of features. However, there are no guarantees on</span>
+<span class="s">          stability and effectiveness, and you will need to explore such</span>
+<span class="s">          parameters for a particular situation.  &quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SpecFlatness&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;An FFT chain&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Given an FFT chain this calculates the Spectral Flatness</span>
+<span class="s">          measure, defined as a power spectrum&#39;s geometric mean divided</span>
+<span class="s">          by its arithmetic mean. This gives a measure which ranges from</span>
+<span class="s">          approx 0 for a pure sinusoid, to approx 1 for white noise.</span>
+
+<span class="s">          The measure is calculated linearly. For some applications you</span>
+<span class="s">          may wish to convert the value to a decibel scale - an example</span>
+<span class="s">          of such conversion is shown below.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SpecPcile&quot;</span>,
+    <span class="ss">:summary</span> <span class="s">&quot;Find a percentile of FFT magnitude spectrum&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;An FFT chain&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;fraction&quot;</span>,
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;percentage of the spectral energy you which to find</span>
+<span class="s">                  the frequency for&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;interpolate&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Interpolation toggle - 0 off 1 on.&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Given an FFT chain this calculates the cumulative distribution</span>
+<span class="s">          of the frequency spectrum, and outputs the frequency value</span>
+<span class="s">          which corresponds to the desired percentile.</span>
+
+<span class="s">          For example, to find the frequency at which 90% of the</span>
+<span class="s">          spectral energy lies below that frequency, you want the</span>
+<span class="s">          90-percentile, which means the value of fraction should be</span>
+<span class="s">          0.9. The 90-percentile or 95-percentile is often used as a</span>
+<span class="s">          measure of spectral roll-off.</span>
+
+<span class="s">          The optional third argument interpolate specifies whether</span>
+<span class="s">          interpolation should be used to try and make the percentile</span>
+<span class="s">          frequency estimate more accurate, at the cost of a little</span>
+<span class="s">          higher CPU usage. Set it to 1 to enable this.&quot;</span> <span class="p">}</span>
+
+   <span class="c1">;; SpecCentroid : UGen</span>
+   <span class="c1">;; {</span>
+   <span class="c1">;;   *kr { | buffer |</span>
+   <span class="c1">;;     ^this.multiNew(&#39;control&#39;, buffer)</span>
+   <span class="c1">;;   }</span>
+   <span class="c1">;; }</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SpecCentroid&quot;</span>,
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chain&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;An FFT chain&quot;</span><span class="p">}]</span>,
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Given an FFT chain, this measures the spectral centroid, which</span>
+<span class="s">          is the weighted mean frequency, or the centre of mass of the</span>
+<span class="s">          spectrum. (DC is ignored.)</span>
+
+<span class="s">          This can be a useful indicator of the perceptual brightness of</span>
+<span class="s">          a signal.&quot;</span> <span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

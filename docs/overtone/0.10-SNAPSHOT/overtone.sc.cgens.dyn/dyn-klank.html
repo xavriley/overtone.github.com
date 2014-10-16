@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>dyn-klank</h1>
+    <p class="doc">
+  bank of frequency resonators, params can change after 
+  starting 
+
+  [specs :none, input :none, freq-scale 1.0, freq-offset 0.0, decay-scale 1.0]
+
+  specs       - An array of three arrays: 
+                frequencies, amplitudes and ring 
+                times: 1) an array of filter 
+                frequencies, 2) an array of filter 
+                amplitudes, or nil. If nil, then 
+                amplitudes default to 1.0, 3) an 
+                array of 60 dB decay times for the 
+                filters, or nil. If nil, then 
+                decay defaults to 1.0. 
+  input       - Input source. 
+  freq-scale  - A scale factor multiplied by all 
+                frequencies at initialization 
+                time. 
+  freq-offset - An offset added to all frequencies 
+                at initialization time. 
+  decay-scale - A scale factor multiplied by all 
+                ring times at initialization time. 
+
+  A bank of frequency resonators which can be used to 
+  simulate the resonant modes of an object. Each mode is 
+  given a ring time, which is the time for the mode to decay 
+  by 60 dB. Unlike klank, the frequencies in dyn-klank can 
+  be changed after it has been started. 
+
+  Categories: Composite Ugen
+  Rates: [ :ar, :kr ]
+  Default rate: :ar</p>
+    <p>
+      File: overtone/sc/cgens/dyn.clj
+      Line: 43
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="nf">defcgen</span> <span class="nv">dyn-klank</span>
+  <span class="s">&quot;bank of frequency resonators, params can change after starting&quot;</span>
+  <span class="p">[</span><span class="nv">specs</span>       <span class="p">{</span><span class="ss">:doc</span> <span class="s">&quot;An array of three arrays: frequencies, amplitudes</span>
+<span class="s">                     and ring times: 1) an array of filter frequencies, 2)</span>
+<span class="s">                     an array of filter amplitudes, or nil. If nil, then</span>
+<span class="s">                     amplitudes default to 1.0, 3) an array of 60 dB decay</span>
+<span class="s">                     times for the filters, or nil. If nil, then decay</span>
+<span class="s">                     defaults to 1.0.&quot;</span><span class="p">}</span>
+   <span class="nv">input</span>       <span class="p">{</span><span class="ss">:doc</span> <span class="s">&quot;input source.&quot;</span><span class="p">}</span>
+   <span class="nv">freq-scale</span>  <span class="p">{</span><span class="ss">:doc</span> <span class="s">&quot;a scale factor multiplied by all frequencies at initialization time.&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}</span>
+   <span class="nv">freq-offset</span> <span class="p">{</span><span class="ss">:doc</span> <span class="s">&quot;an offset added to all frequencies at initialization time.&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}</span>
+   <span class="nv">decay-scale</span> <span class="p">{</span><span class="ss">:doc</span> <span class="s">&quot;a scale factor multiplied by all ring times at initialization time.&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span><span class="p">}]</span>
+  <span class="s">&quot;A bank of frequency resonators which can be used to simulate the resonant modes of an object.</span>
+<span class="s">   Each mode is given a ring time, which is the time for the mode to decay by 60 dB.</span>
+<span class="s">   Unlike klank, the frequencies in dyn-klank can be changed after it has been started.&quot;</span>
+
+  <span class="p">(</span><span class="ss">:ar</span> <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">rings</span><span class="p">]</span> <span class="p">(</span><span class="nf">init-dyn-klank</span> <span class="nv">specs</span><span class="p">)]</span>
+         <span class="p">(</span><span class="nf">sum</span> <span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="k">fn </span><span class="p">[[</span><span class="nv">f</span> <span class="nv">a</span> <span class="nv">r</span><span class="p">]]</span> <span class="p">(</span><span class="nb">* </span><span class="nv">a</span> <span class="p">(</span><span class="nf">ringz</span><span class="ss">:ar</span> <span class="nv">input</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">freq-offset</span> <span class="p">(</span><span class="nb">* </span><span class="nv">freq-scale</span> <span class="nv">f</span><span class="p">))</span> <span class="p">(</span><span class="nb">* </span><span class="nv">r</span> <span class="nv">decay-scale</span><span class="p">))))</span>
+                   <span class="p">(</span><span class="nb">map vector </span><span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">rings</span><span class="p">)))))</span>
+
+  <span class="p">(</span><span class="ss">:kr</span> <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">rings</span><span class="p">]</span> <span class="p">(</span><span class="nf">init-dyn-klank</span> <span class="nv">specs</span><span class="p">)]</span>
+         <span class="p">(</span><span class="nf">sum</span> <span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="k">fn </span><span class="p">[[</span><span class="nv">f</span> <span class="nv">a</span> <span class="nv">r</span><span class="p">]]</span> <span class="p">(</span><span class="nb">* </span><span class="nv">a</span> <span class="p">(</span><span class="nf">ringz</span><span class="ss">:kr</span> <span class="nv">input</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">freq-offset</span> <span class="p">(</span><span class="nb">* </span><span class="nv">freq-scale</span> <span class="nv">f</span><span class="p">))</span> <span class="p">(</span><span class="nb">* </span><span class="nv">r</span> <span class="nv">decay-scale</span><span class="p">))))</span>
+                   <span class="p">(</span><span class="nb">map vector </span><span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">rings</span><span class="p">))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

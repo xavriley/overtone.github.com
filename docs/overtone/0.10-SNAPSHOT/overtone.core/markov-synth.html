@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>markov-synth</h1>
+    <p class="doc">
+  First order Markov Chain implementation for audio signals 
+
+  [in 0, is-recording 1, wait-time 2, table-size 10]
+
+  in           - The input signal 
+  is-recording - If non-zero, MarkovSynth 
+                 populates the internal table with 
+                 its signal input. 
+  wait-time    - Defines the wait time of the UGen 
+                 to start synthesizing the table, 
+                 in seconds. 
+  table-size   - The probability table size for 
+                 each sample. High values are 
+                 memory hungry! 
+
+  MarkovSynth populates a sample to sample transition 
+  probability table with its signal input. Each possible 
+  sample value in an 16bit signal has its own transition 
+  probability table whose size is defined by the table-size 
+  argument at creation time. It waits and populates the 
+  table for wait-time seconds and then starts synthesizing 
+  audio by continuously outputting a random value selected 
+  from the probability table of the last synthesized sample. 
+  Once the end of table is reached for a single sample, its 
+  index wraps back to zero and populating continues in this 
+  fashion as long as is-recording argument is non-zero. The 
+  character of the input is mainly defined by the way its 
+  input signal changes. So input signals showing little 
+  difference in amplitude and periodicity has a similar 
+  quality in output. The output becomes less dynamic.
+
+  If the tableSize is 1, the output is usually a reflection 
+  of the input. tableSize of 2 makes some funny blips and 
+  blops. When tableSize goes higher, older and older 
+  transition values are taken into account and the output 
+  changes accordingly. You should be careful with the 
+  table-size as it allocates all the memory for the tables 
+  beforehand so it may cause troubles.
+
+  You may want to use leak-dc on its output as the output is 
+  offset agnostic, it just selects a past-recorded 
+  transition value at random. 
+
+  Categories: 
+  Rates: [ :ar ]
+  Default rate: :ar</p>
+    <p>
+      File: 
+      Line: 
+    </p>
+    <div class="highlight"><pre><code class="clojure">      
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

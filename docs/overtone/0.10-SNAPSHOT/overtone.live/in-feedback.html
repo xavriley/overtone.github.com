@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>in-feedback</h1>
+    <p class="doc">
+  read signal from a bus with a current or one cycle old 
+  timestamp 
+
+  [bus 0, num-channels 1]
+
+  bus          - The index of the bus to read in 
+                 from. 
+  num-channels - The number of channels (i.e. 
+                 adjacent buses) to read in. The 
+                 default is 1. You cannot modulate 
+                 this number by assigning it to an 
+                 argument in a SynthDef. 
+
+  When the various output ugens (out, offsetOut, x-out) 
+  write data to a bus, they mix it with any data from the 
+  current cycle, but overwrite any data from the previous 
+  cycle. (replace-out overwrites all data regardless.) Thus 
+  depending on node order and what synths are writing to 
+  thep bus, the data on a given bus may be from the current 
+  cycle or be one cycle old at the time of reading. in:ar 
+  checks the timestamp of any data it reads in and zeros any 
+  data from the previous cycle (for use within that node; 
+  the data remains on the bus). This is fine for audio data, 
+  as it avoids feedback, but for control data it is useful 
+  to be able to read data from any place in the node order. 
+  For this reason in:kr also reads data that is older than 
+  the current cycle.
+
+  In some cases we might also want to read audio from a node 
+  later in the current node order. This is the purpose of 
+  InFeedback. The delay introduced by this is one block 
+  size, which equals about 0.0014 sec at the default block 
+  size and sample rate. (See the resonator example below to 
+  see the implications of this.)
+
+  The variably mixing and overwriting behaviour of the 
+  output ugens can make order of execution crucial. (No pun 
+  intended.) For example with a node order like the 
+  following the InFeedback ugen in Synth 2 will only receive 
+  data from Synth 1 (-> = write out; <- = read in):
+
+  Synth 1 -> busA This synth overwrites the output of Synth3 
+  before it reaches Synth 2
+
+  Synth 2 (with InFeedback) <- busA
+
+  Synth 3 -> busA
+
+  If Synth 1 were moved after Synth 2 then Synth 2's 
+  InFeedback would receive a mix of the output from Synth 1 
+  and Synth 3. This would also be true if Synth 2 came after 
+  Synth1 and Synth 3. In both cases data from Synth 1 and 
+  Synth 3 would have the same time stamp (either current or 
+  from the previous cycle), so nothing would be 
+  overwritten.
+
+  Because of this it is often useful to allocate a separate 
+  bus for feedback. With the following arrangement Synth 2 
+  will receive data from Synth3 regardless of Synth 1's 
+  position in the node order.
+
+  Synth 1 -> busA
+
+  Synth 2 (with InFeedback) <- busB
+
+  Synth 3 -> busB + busA 
+
+  Categories: 
+  Rates: [ :ar ]
+  Default rate: :ar</p>
+    <p>
+      File: 
+      Line: 
+    </p>
+    <div class="highlight"><pre><code class="clojure">      
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

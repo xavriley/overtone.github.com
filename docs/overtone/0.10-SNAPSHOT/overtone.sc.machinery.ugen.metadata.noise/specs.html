@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/noise.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;WhiteNoise&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Noise whose spectrum has equal power at all frequencies.&quot;</span>
+       <span class="ss">:args</span> <span class="p">[]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Noise that contains equal amounts of energy at every</span>
+<span class="s">             frequency - comparable to radio static.</span>
+
+<span class="s">             Useful for generating percussive sounds such as snares and</span>
+<span class="s">             hand claps. Also useful for simulating wind or sea effects,</span>
+<span class="s">             for producing breath effects in wind instrument timbres or</span>
+<span class="s">             for producing the typical trance leads.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BrownNoise&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Noise whose spectrum falls off in power by 6 dB per octave.&quot;</span>
+       <span class="ss">:args</span> <span class="p">[]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Useful for generating percussive sounds such as snares and</span>
+<span class="s">             hand claps. Also useful for simulating wind or sea</span>
+<span class="s">             effects, for producing breath effects in wind instrument</span>
+<span class="s">             timbres or for producing the typical trance leads.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PinkNoise&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Noise whose spectrum falls off in power by 3 dB per octave.&quot;</span>
+       <span class="ss">:args</span> <span class="p">[]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Noise that gives equal power over the span of each octave.</span>
+
+<span class="s">             Useful for generating percussive sounds such as snares and</span>
+<span class="s">             hand claps. Also useful for simulating wind or sea effects,</span>
+<span class="s">             for producing breath effects in wind instrument timbres or</span>
+<span class="s">             for producing the typical trance leads.</span>
+
+<span class="s">             This version gives 8 octaves of pink noise.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ClipNoise&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Noise whose values are either -1 or 1.&quot;</span>
+       <span class="ss">:args</span> <span class="p">[]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;This produces the maximum energy for the least peak to peak amplitude.</span>
+
+<span class="s">             Useful for generating percussive sounds such as snares and</span>
+<span class="s">             hand claps. Also useful for simulating wind or sea effects,</span>
+<span class="s">             for producing breath effects in wind instrument timbres or</span>
+<span class="s">             for producing the typical trance leads.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GrayNoise&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Random impulses from -1 to +1 given a density &quot;</span>
+       <span class="ss">:args</span> <span class="p">[]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Given a density (average number of impulses per second)</span>
+<span class="s">             creates a sequence of random impulses from -1 to +1.</span>
+
+<span class="s">             Useful for generating percussive sounds such as snares and</span>
+<span class="s">             hand claps. Also useful for simulating wind or sea effects,</span>
+<span class="s">             for producing breath effects in wind instrument timbres or</span>
+<span class="s">             for producing the typical trance leads.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Crackle&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Chaotic noise generator&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chaos-param&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a parameter of the chaotic function with useful</span>
+<span class="s">                     values from just below 1.0 to just above</span>
+<span class="s">                     2.0. Towards 2.0 the sound crackles.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A noise generator based on a chaotic function.</span>
+
+<span class="s">             Useful for generating percussive sounds such as snares and</span>
+<span class="s">             hand claps. Also useful for simulating wind or sea effects,</span>
+<span class="s">             for producing breath effects in wind instrument timbres or</span>
+<span class="s">             for producing the typical trance leads.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Logistic&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;chaos-param&quot;</span>
+               <span class="ss">:default</span> <span class="mf">3.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a parameter of the chaotic function with useful</span>
+<span class="s">                     values from 0.0 to 4.0. Chaos occurs from 3.57</span>
+<span class="s">                     up. Don&#39;t use values outside this range if you</span>
+<span class="s">                     don&#39;t want the UGen to blow up.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1000.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency of calculation; if over the sampling</span>
+<span class="s">                     rate, this is clamped to the sampling rate&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;init&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Initial value of y (see equation below)&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A noise generator based on the logistic map:</span>
+
+<span class="s">             y = chaos-param * y * (1.0 - y)</span>
+
+<span class="s">             y will stay in the range of 0.0 to 1.0 for normal values of</span>
+<span class="s">             the chaos-param. This leads to a DC offset and may cause a</span>
+<span class="s">             pop when you stop the Synth. For output you might want to</span>
+<span class="s">             combine this UGen with a LeakDC or rescale around 0.0 via</span>
+<span class="s">             mul and add: see example below. &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFNoise0&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;approximate rate at which to generate random</span>
+<span class="s">                     values.&quot;</span> <span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates random values between -1 and 1 at a rate (the</span>
+<span class="s">             rate is not guaranteed but approximate)&quot;</span><span class="p">}</span>
+
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFNoise1&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;approximate rate at which to generate random</span>
+<span class="s">                     values.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates linearly interpolated random values between -1</span>
+<span class="s">             and 1 at the supplied rate (the rate is not guaranteed but</span>
+<span class="s">             approximate). &quot;</span><span class="p">}</span>
+
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFNoise2&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;approximate rate at which to generate random</span>
+<span class="s">                     values.&quot;</span> <span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates quadratically interpolated random values between</span>
+<span class="s">             -1 and 1 at the supplied rate (the rate is not guaranteed</span>
+<span class="s">             but approximate).</span>
+
+<span class="s">             Note: quadratic interpolation means that the noise values</span>
+<span class="s">             can occasionally extend beyond the normal range of +-1, if</span>
+<span class="s">             the freq varies in certain ways. If this is undesirable</span>
+<span class="s">             then you might like to clip2 the values or use a</span>
+<span class="s">             linearly-interpolating unit instead.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFClipNoise&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;approximate rate at which to generate random</span>
+<span class="s">                     values.&quot;</span> <span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Randomly generates the values -1 or +1 at a rate given by</span>
+<span class="s">             the nearest integer division of the sample rate by the freq</span>
+<span class="s">             argument. It is probably pretty hard on your speakers!&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFDNoise0&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;rate at which to generate random values.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Like lf-noise0, it generates random values between -1 and 1</span>
+<span class="s">             at a rate given by the freq argument, with two differences:</span>
+<span class="s">             p * no time quantization</span>
+
+<span class="s">             * fast recovery from low freq values.</span>
+
+<span class="s">             (lf-noise0,1,2 quantize to the nearest integer division of</span>
+<span class="s">             the samplerate and they poll the freq argument only when</span>
+<span class="s">             scheduled, and thus seem to hang when freqs get very low).</span>
+
+<span class="s">             If you don&#39;t need very high or very low freqs, or use fixed</span>
+<span class="s">             freqs lf-noise0 is more efficient.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFDNoise1&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;rate at which to generate random values.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Like lf-noise1, it generates linearly interpolated random</span>
+<span class="s">             values between -1 and 1 at a rate given by the freq</span>
+<span class="s">             argument, with two differences:</span>
+
+<span class="s">             * no time quantization</span>
+
+<span class="s">             * fast recovery from low freq values.</span>
+
+<span class="s">             (lf-noise0,1,2 quantize to the nearest integer division of</span>
+<span class="s">             the samplerate and they poll the freq argument only when</span>
+<span class="s">             scheduled, and thus seem to hang when freqs get very low).</span>
+
+<span class="s">             If you don&#39;t need very high or very low freqs, or use fixed</span>
+<span class="s">             freqs lf-noise1 is more efficient.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFDNoise3&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;rate at which to generate random values.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Similar to lf-noise2, it generates polynomially</span>
+<span class="s">             interpolated random values between -1 and 1 at a rate given</span>
+<span class="s">             by the freq argument, with 3 differences:</span>
+
+<span class="s">             * no time quantization</span>
+
+<span class="s">             * fast recovery from low freq values</span>
+
+<span class="s">             * cubic instead of quadratic interpolation</span>
+
+<span class="s">             (lf-noise0,1,2 quantize to the nearest integer division of</span>
+<span class="s">             the samplerate and they poll the freq argument only when</span>
+<span class="s">             scheduled, and thus seem to hang when freqs get very low).</span>
+<span class="s">             If you don&#39;t need very high or very low freqs, or use fixed</span>
+<span class="s">             freqs lf-noise2 is more efficient.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFDClipNoise&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+               <span class="ss">:default</span> <span class="mf">500.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;rate at which to generate random values.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Like lf-clip-noise, it generates the values -1 or +1 at a</span>
+<span class="s">             rate given by the freq argument, with two differences:</span>
+
+<span class="s">             * no time quantization</span>
+
+<span class="s">             * fast recovery from low freq values.</span>
+
+<span class="s">             (lf-clip-noise, as well as lf-noise0,1,2 quantize to the</span>
+<span class="s">             nearest integer division of the samplerate, and they poll</span>
+<span class="s">             the freq argument only when scheduled; thus they often seem</span>
+<span class="s">             to hang when freqs get very low).</span>
+
+<span class="s">             If you don&#39;t need very high or very low freqs, or use fixed</span>
+<span class="s">             freqs lf-noise0 is more efficient.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Hasher&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Returns a unique output value from zero to one for each</span>
+<span class="s">             input value according to a hash function. The same input</span>
+<span class="s">             value will always produce the same output value. The input</span>
+<span class="s">             need not be from zero to one.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;MantissaMask&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bits&quot;</span>
+               <span class="ss">:default</span> <span class="mi">3</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the number of mantissa bits to preserve. a number</span>
+<span class="s">                     from 0 to 23.&quot;</span> <span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Masks off bits in the mantissa of the floating point sample</span>
+<span class="s">             value. This introduces a quantization noise, but is less</span>
+<span class="s">             severe than linearly quantizing the signal.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dust&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;density&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;average number of impulses per second&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates random impulses from 0 to +1.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dust2&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;density&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;average number of impulses per second.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Generates random impulses from -1 to +1.&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

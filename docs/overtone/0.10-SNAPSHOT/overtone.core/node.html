@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>node</h1>
+    <p class="doc">Asynchronously instantiate a synth node on the audio server.  Takes
+  the synth name and a map of argument name/value pairs.  Optionally use
+  target <node/group-id> and position <pos> to specify where the node
+  should be located.  The position can be one
+  of :head, :tail :before, :after, or :replace.
+
+  (node "foo")
+  (node "foo" {:pitch 60})
+  (node "foo" {:pitch 60} {:target 0})
+  (node "foo" {:pitch 60} {:position :tail :target 2})
+  </p>
+    <p>
+      File: overtone/sc/node.clj
+      Line: 173
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">node</span>
+  <span class="s">&quot;Asynchronously instantiate a synth node on the audio server.  Takes</span>
+<span class="s">  the synth name and a map of argument name/value pairs.  Optionally use</span>
+<span class="s">  target &lt;node/group-id&gt; and position &lt;pos&gt; to specify where the node</span>
+<span class="s">  should be located.  The position can be one</span>
+<span class="s">  of :head, :tail :before, :after, or :replace.</span>
+
+<span class="s">  (node \&quot;foo\&quot;)</span>
+<span class="s">  (node \&quot;foo\&quot; {:pitch 60})</span>
+<span class="s">  (node \&quot;foo\&quot; {:pitch 60} {:target 0})</span>
+<span class="s">  (node \&quot;foo\&quot; {:pitch 60} {:position :tail :target 2})</span>
+<span class="s">  &quot;</span>
+  <span class="p">([</span><span class="nv">synth-name</span><span class="p">]</span> <span class="p">(</span><span class="nb">node </span><span class="nv">synth-name</span> <span class="p">{}</span> <span class="p">{</span><span class="ss">:position</span> <span class="ss">:tail</span>, <span class="ss">:target</span> <span class="mi">0</span><span class="p">}))</span>
+  <span class="p">([</span><span class="nv">synth-name</span> <span class="nv">arg-map</span><span class="p">]</span> <span class="p">(</span><span class="nb">node </span><span class="nv">synth-name</span> <span class="nv">arg-map</span> <span class="p">{</span><span class="ss">:position</span> <span class="ss">:tail</span>, <span class="ss">:target</span> <span class="mi">0</span><span class="p">}))</span>
+  <span class="p">([</span><span class="nv">synth-name</span> <span class="nv">arg-map</span> <span class="nv">location</span><span class="p">]</span> <span class="p">(</span><span class="nb">node </span><span class="nv">synth-name</span> <span class="nv">arg-map</span> <span class="nv">location</span> <span class="nv">nil</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">synth-name</span> <span class="nv">arg-map</span> <span class="nv">location</span> <span class="nv">sdef</span><span class="p">]</span>
+     <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nf">server-connected?</span><span class="p">))</span>
+       <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">Exception.</span> <span class="s">&quot;Not connected to synthesis engine.  Please boot or connect server.&quot;</span><span class="p">)))</span>
+     <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">id</span>       <span class="p">(</span><span class="nf">next-id</span> <span class="ss">:node</span><span class="p">)</span>
+           <span class="nv">position</span> <span class="p">(</span><span class="nb">get </span><span class="nv">location</span> <span class="ss">:position</span> <span class="ss">:tail</span><span class="p">)</span>
+           <span class="nv">pos-id</span>   <span class="p">(</span><span class="nb">get </span><span class="nv">NODE-POSITION</span> <span class="nv">position</span> <span class="mi">1</span><span class="p">)</span>
+           <span class="nv">target</span>   <span class="p">(</span><span class="nf">to-sc-id</span> <span class="p">(</span><span class="nb">get </span><span class="nv">location</span> <span class="ss">:target</span> <span class="mi">0</span><span class="p">))</span>
+           <span class="nv">arg-map</span>  <span class="p">(</span><span class="nf">map-and-check-node-args</span> <span class="nv">arg-map</span><span class="p">)</span>
+           <span class="nv">args</span>     <span class="p">(</span><span class="nf">flatten</span> <span class="p">(</span><span class="nb">seq </span><span class="nv">arg-map</span><span class="p">))</span>
+           <span class="nv">snode</span>    <span class="p">(</span><span class="nf">SynthNode.</span> <span class="nv">synth-name</span> <span class="nv">id</span> <span class="nv">target</span> <span class="nv">position</span> <span class="nv">arg-map</span> <span class="nv">sdef</span> <span class="p">(</span><span class="nf">atom</span> <span class="ss">:loading</span><span class="p">)</span> <span class="p">(</span><span class="nf">promise</span><span class="p">))]</span>
+       <span class="p">(</span><span class="nf">swap!</span> <span class="nv">active-synth-nodes*</span> <span class="nb">assoc </span><span class="nv">id</span> <span class="nv">snode</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">apply </span><span class="nv">snd</span> <span class="s">&quot;/s_new&quot;</span> <span class="nv">synth-name</span> <span class="nv">id</span> <span class="nv">pos-id</span> <span class="nv">target</span> <span class="nv">args</span><span class="p">)</span>
+       <span class="nv">snode</span><span class="p">)))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

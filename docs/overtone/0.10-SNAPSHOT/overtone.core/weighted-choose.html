@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>weighted-choose</h1>
+    <p class="doc">Returns an element from list vals based on the corresponding
+  probabilities list. The length of vals and probabilities should be
+  similar and the sum of all the probabilities should be 1. It is also
+  possible to pass a map of val -> prob pairs as a param.
+
+  The following will return one of the following vals with the
+  corresponding probabilities:
+  1 -> 50%
+  2 -> 30%
+  3 -> 12.5%
+  4 -> 7.5%
+  (weighted-choose [1 2 3 4] [0.5 0.3 0.125 0.075])
+  (weighted-choose {1 0.5, 2 0.3, 3 0.125, 4 0.075})</p>
+    <p>
+      File: overtone/algo/chance.clj
+      Line: 18
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">weighted-choose</span>
+  <span class="s">&quot;Returns an element from list vals based on the corresponding</span>
+<span class="s">  probabilities list. The length of vals and probabilities should be</span>
+<span class="s">  similar and the sum of all the probabilities should be 1. It is also</span>
+<span class="s">  possible to pass a map of val -&gt; prob pairs as a param.</span>
+
+<span class="s">  The following will return one of the following vals with the</span>
+<span class="s">  corresponding probabilities:</span>
+<span class="s">  1 -&gt; 50%</span>
+<span class="s">  2 -&gt; 30%</span>
+<span class="s">  3 -&gt; 12.5%</span>
+<span class="s">  4 -&gt; 7.5%</span>
+<span class="s">  (weighted-choose [1 2 3 4] [0.5 0.3 0.125 0.075])</span>
+<span class="s">  (weighted-choose {1 0.5, 2 0.3, 3 0.125, 4 0.075})&quot;</span>
+  <span class="p">([</span><span class="nv">val-prob-map</span><span class="p">]</span> <span class="p">(</span><span class="nf">weighted-choose</span> <span class="p">(</span><span class="nb">keys </span><span class="nv">val-prob-map</span><span class="p">)</span> <span class="p">(</span><span class="nb">vals </span><span class="nv">val-prob-map</span><span class="p">)))</span>
+  <span class="p">([</span><span class="nb">vals </span><span class="nv">probabilities</span><span class="p">]</span>
+     <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">count </span><span class="nv">vals</span><span class="p">)</span> <span class="p">(</span><span class="nb">count </span><span class="nv">probabilities</span><span class="p">))</span>
+       <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;Size of vals and probabilities don&#39;t match. Got &quot;</span>
+                               <span class="p">(</span><span class="nb">count </span><span class="nv">vals</span><span class="p">)</span>
+                               <span class="s">&quot; and &quot;</span>
+                               <span class="p">(</span><span class="nb">count </span><span class="nv">probabilities</span><span class="p">)))))</span>
+     <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">reduce + </span><span class="nv">probabilities</span><span class="p">)</span> <span class="mf">1.0</span><span class="p">)</span>
+       <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;The sum of your probabilities is not 1.0&quot;</span><span class="p">))))</span>
+
+     <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">paired</span> <span class="p">(</span><span class="nb">map vector </span><span class="nv">probabilities</span> <span class="nv">vals</span><span class="p">)</span>
+           <span class="nv">sorted</span> <span class="p">(</span><span class="nb">sort </span><span class="o">#</span><span class="p">(</span><span class="nb">&lt; </span><span class="p">(</span><span class="nb">first </span><span class="nv">%1</span><span class="p">)</span> <span class="p">(</span><span class="nb">first </span><span class="nv">%2</span><span class="p">))</span> <span class="nv">paired</span><span class="p">)</span>
+           <span class="nv">summed</span> <span class="p">(</span><span class="k">loop </span><span class="p">[</span><span class="nv">todo</span> <span class="nv">sorted</span>
+                         <span class="nv">done</span> <span class="p">[]</span>
+                         <span class="nv">cumulative</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">empty?</span> <span class="nv">todo</span><span class="p">)</span>
+                      <span class="nv">done</span>
+                      <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">f-prob</span> <span class="p">(</span><span class="nb">ffirst </span><span class="nv">todo</span><span class="p">)</span>
+                            <span class="nv">f-val</span>  <span class="p">(</span><span class="nb">second </span><span class="p">(</span><span class="nb">first </span><span class="nv">todo</span><span class="p">))</span>
+                            <span class="nv">cumulative</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">cumulative</span> <span class="nv">f-prob</span><span class="p">)]</span>
+                        <span class="p">(</span><span class="nf">recur</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">todo</span><span class="p">)</span>
+                               <span class="p">(</span><span class="nb">conj </span><span class="nv">done</span> <span class="p">[</span><span class="nv">cumulative</span> <span class="nv">f-val</span><span class="p">])</span>
+                               <span class="nv">cumulative</span><span class="p">))))</span>
+           <span class="nv">rand-num</span> <span class="p">(</span><span class="nf">rand</span><span class="p">)]</span>
+       <span class="p">(</span><span class="k">loop </span><span class="p">[</span><span class="nv">summed</span> <span class="nv">summed</span><span class="p">]</span>
+         <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nf">empty?</span> <span class="nv">summed</span><span class="p">)</span>
+           <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">Exception.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;Error, Reached end of weighed choice options&quot;</span><span class="p">))))</span>
+         <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt; </span><span class="nv">rand-num</span> <span class="p">(</span><span class="nb">ffirst </span><span class="nv">summed</span><span class="p">))</span>
+           <span class="p">(</span><span class="nb">second </span><span class="p">(</span><span class="nb">first </span><span class="nv">summed</span><span class="p">))</span>
+           <span class="p">(</span><span class="nf">recur</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">summed</span><span class="p">)))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>unnormalized-binaryopugen-docspecs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/binaryopugen.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">unnormalized-binaryopugen-docspecs</span>
+
+  <span class="p">{</span>
+   <span class="s">&quot;+&quot;</span>           <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal summing&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Merges two signals by adding them together.&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;-&quot;</span>           <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal subtraction&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Merges two signals by subtracting the second</span>
+<span class="s">                       from the first&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;*&quot;</span>           <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal multiplication&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Merges two signals by multiplying them together.&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;/&quot;</span>           <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal division&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Merges to signals by dividing the first by the</span>
+<span class="s">                        second. Note, division can be tricky with</span>
+<span class="s">                        signals because of division by zero.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;mod&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Modulo function&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs a modulo b. The modulo is the remainder</span>
+<span class="s">                        after dividing a by b.</span>
+
+<span class="s">                        i.e. (mod 5 2) ;=&gt; 1, (mod 5 3) ;=&gt; 2,</span>
+<span class="s">                        (mod 5 1) ;=&gt; 0, (mod 1 100) ;=&gt; 1,</span>
+<span class="s">                        (mod 150 99) ;=&gt; 51&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;=&quot;</span>           <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - equality&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If they</span>
+<span class="s">                        are equal, outputs 1, otherwise outputs 0.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;not=&quot;</span>        <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - inequality&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If they</span>
+<span class="s">                        are not equal, outputs 1, otherwise outputs 0.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;&lt;&quot;</span>           <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - less than&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If a is</span>
+<span class="s">                        less than b outputs 1, otherwise outputs 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;&gt;&quot;</span>           <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - greater than&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If a is</span>
+<span class="s">                        greater than b outputs 1, otherwise outputs 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;&lt;=&quot;</span>          <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - less than or equal to&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If a is</span>
+<span class="s">                        less than or equal to b outputs 1, otherwise</span>
+<span class="s">                        outputs 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;&gt;=&quot;</span>          <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - greater than or equal to&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If a is</span>
+<span class="s">                        greater than or equal to b outputs 1, otherwise</span>
+<span class="s">                        outputs 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;min&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Minimum of two inputs&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the smallest value of the two inputs a</span>
+<span class="s">                        and b&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;max&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Maximum of two inputs&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Outputs the largest value of the two inputs a</span>
+<span class="s">                        and b&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;and&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - and&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If both</span>
+<span class="s">                        are greater than 0 outputs 1, otherwise outputs 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;or&quot;</span>          <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - or&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If</span>
+<span class="s">                        either is greater than 0 outputs 1, otherwise</span>
+<span class="s">                        outputs 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;xor&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal comparison - xor&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Compares the two input signals a and b. If only</span>
+<span class="s">                        one is greater than 0 outputs 1, otherwise outputs 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;round&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Rounding - nearest multiple&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Rounds a to the nearest (up or down) multiple of</span>
+<span class="s">                        b.</span>
+
+<span class="s">                       i.e. (round 2 10) =&gt; 0, (round 5 10) =&gt; 10</span>
+<span class="s">                       and (round 21 10) =&gt; 20&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;round-up&quot;</span>    <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Rounding - next multiple&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Rounds a up to the next multiple of b above a.</span>
+
+<span class="s">                       i.e. (round-up 2 10) =&gt; 10, (round-up 21 10) =&gt; 30,</span>
+<span class="s">                       (round-up 0 10) =&gt; 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;round-down&quot;</span>  <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Rounding - previous multiple&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Rounds a down to the previous multiple of b</span>
+<span class="s">                        below a. SC refers to this ugen as trunc.</span>
+
+<span class="s">                       i.e. (round-down 2 10) =&gt; 0, (round-down 20 10) =&gt; 20,</span>
+<span class="s">                       (round-down 0 10) =&gt; 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;atan2&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Arctangent of fraction&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Returns the arctangent of a/b&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;hypot&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Length of hypotenuse using Pythag&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Returns the square root of the sum of the</span>
+<span class="s">                        squares of a and b. Or equivalently, the</span>
+<span class="s">                        distance from the origin to the point (x, y).&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;hypot-aprox&quot;</span> <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Approximation of hypotenuse length&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Returns an approximation of the square root of</span>
+<span class="s">                        the sum of the squares of x and y. The formula</span>
+<span class="s">                        used is :</span>
+
+<span class="s">                        abs(x) + abs(y) - ((sqrt(2) - 1) * min(abs(x), abs(y)))</span>
+
+<span class="s">                        This should not be used for simulating a doppler</span>
+<span class="s">                        shift because it is discontinuous. Use hypot.&quot;</span><span class="p">}</span>
+   <span class="s">&quot;pow&quot;</span>         <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;exponentiation&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Returns a to the power of b</span>
+
+<span class="s">                       i.e. (pow 2 4) =&gt; 16, (pow 5 3) =&gt; 125&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;ring1&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Ring modulation plus first source&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of ((a*b) + a). This is more</span>
+<span class="s">                        efficient than using separate unit generators</span>
+<span class="s">                        for the multiply and add.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;ring2&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Ring modulation plus both sources&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of ((a*b) + a + b). This is</span>
+<span class="s">                        more efficient than using separate unit</span>
+<span class="s">                        generators for the multiply and adds.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;ring3&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Ring modulation variant&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of (a * a * b). This is more</span>
+<span class="s">                        efficient than using separate unit generators</span>
+<span class="s">                        for each multiply.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;ring4&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Ring modulation variant 2&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of</span>
+<span class="s">                        ((a * a * b) - (a * b * b)). This is more</span>
+<span class="s">                        efficient than using separate unit generators</span>
+<span class="s">                        for each operation.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;difsqr&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Difference of squares&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of (a*a) - (b*b). This is more</span>
+<span class="s">                        efficient than using separate unit generators</span>
+<span class="s">                        for each operation.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;sumsqr&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Sum of squares&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of (a*a) + (b*b). This is more</span>
+<span class="s">                        efficient than using separate unit generators</span>
+<span class="s">                        for each operation.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;sqrsum&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Square of the sum&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of (a + b)^2. This is more</span>
+<span class="s">                        efficient than using separate unit generators</span>
+<span class="s">                        for each operation.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;sqrdif&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Square of the difference&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of (a - b)**2. This is more</span>
+<span class="s">                        efficient than using separate unit generators</span>
+<span class="s">                        for each operation.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;absdif&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Absolute value of the difference&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Return the value of abs(a - b). Finding the</span>
+<span class="s">                        magnitude of the difference of two values is a</span>
+<span class="s">                        common operation.&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;thresh&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Signal thresholding&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;0 when a &lt; b, otherwise a.&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;amclip&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Two quadrant multiply&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;0  when  b &lt;= 0,  a*b  when  b &gt; 0&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;scale-neg&quot;</span>   <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Scale negative part of input wave&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;a*b when a &lt; 0, otherwise a.&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;clip2&quot;</span>       <span class="p">{</span><span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>    <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+                         <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;clip-val&quot;</span> <span class="ss">:doc</span> <span class="s">&quot;Max/min val of input</span>
+<span class="s">                                                 signal before clipping</span>
+<span class="s">                                                 is applied&quot;</span><span class="p">}]</span>
+                  <span class="ss">:summary</span> <span class="s">&quot;Bilateral clipping&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;clips input wave to +/- clip-val&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;excess&quot;</span>      <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Clipping residual&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;Returns the difference of the original signal</span>
+<span class="s">                        and its clipped form: (a - clip2(a,b)).&quot;</span> <span class="p">}</span>
+
+   <span class="s">&quot;fold2&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Bilateral folding&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;folds input wave a to +/- b&quot;</span><span class="p">}</span>
+
+   <span class="s">&quot;wrap2&quot;</span>       <span class="p">{</span><span class="ss">:summary</span> <span class="s">&quot;Bilateral wrapping&quot;</span>
+                  <span class="ss">:doc</span> <span class="s">&quot;wraps input wave to +/- b&quot;</span><span class="p">}</span>
+   <span class="p">})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>midi-inst-controller</h1>
+    <p class="doc">Create a midi instrument controller for manipulating the parameters of an instrument
+  using an external device.  Requires an atom to store the state of the parameters, a
+  handler that will be called each time a parameter is modified, and a mapping table to
+  specify how midi control messages should manipulate the parameters.
+
+  (def ding-mapping
+    {22 [:attack     #(* 0.3 (/ % 127.0))]
+     23 [:decay      #(* 0.6 (/ % 127.0))]
+     24 [:sustain    #(/ % 127.0)]
+     25 [:release    #(/ % 127.0)]})
+
+  (def ding-state (atom {}))
+
+  (midi-inst-controller ding-state (partial ctl ding) ding-mapping)
+  </p>
+    <p>
+      File: overtone/studio/midi.clj
+      Line: 99
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">midi-inst-controller</span>
+  <span class="s">&quot;Create a midi instrument controller for manipulating the parameters of an instrument</span>
+<span class="s">  using an external device.  Requires an atom to store the state of the parameters, a</span>
+<span class="s">  handler that will be called each time a parameter is modified, and a mapping table to</span>
+<span class="s">  specify how midi control messages should manipulate the parameters.</span>
+
+<span class="s">  (def ding-mapping</span>
+<span class="s">    {22 [:attack     #(* 0.3 (/ % 127.0))]</span>
+<span class="s">     23 [:decay      #(* 0.6 (/ % 127.0))]</span>
+<span class="s">     24 [:sustain    #(/ % 127.0)]</span>
+<span class="s">     25 [:release    #(/ % 127.0)]})</span>
+
+<span class="s">  (def ding-state (atom {}))</span>
+
+<span class="s">  (midi-inst-controller ding-state (partial ctl ding) ding-mapping)</span>
+<span class="s">  &quot;</span>
+  <span class="p">[</span><span class="nv">state-atom</span> <span class="nv">handler</span> <span class="nv">mapping</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">ctl-key</span> <span class="p">(</span><span class="nb">keyword </span><span class="p">(</span><span class="nb">gensym </span><span class="ss">&#39;control-change</span><span class="p">))]</span>
+    <span class="p">(</span><span class="nf">on-event</span> <span class="p">[</span><span class="ss">:midi</span> <span class="ss">:control-change</span><span class="p">]</span>
+              <span class="o">#</span><span class="p">(</span><span class="nf">midi-control-handler</span> <span class="nv">state-atom</span> <span class="nv">handler</span> <span class="nv">mapping</span> <span class="nv">%</span><span class="p">)</span>
+              <span class="nv">ctl-key</span><span class="p">)))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

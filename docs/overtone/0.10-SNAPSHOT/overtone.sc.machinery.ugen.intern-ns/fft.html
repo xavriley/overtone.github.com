@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>fft</h1>
+    <p class="doc">
+  [buffer :none, in 0.0, hop 0.5, wintype 0, active 1, winsize 0]
+
+  buffer  - The buffer where a frame will be held. 
+            Its size must be a power of two. 
+            local-buf is useful here, because 
+            processes should not share data 
+            between synths. (Note: most PV UGens 
+            operate on this data in place. Use 
+            buffer-2n if you wish to create an 
+            external buffer. 
+  in      - The signal to be analyzed. The 
+            signal's rate determines the rate at 
+            which the input is read. 
+  hop     - The amount of offset from one FFT 
+            analysis frame to the next, measured 
+            in multiples of the analysis frame 
+            size. This can range between zero and 
+            one, and the default is 0.5 (meaning 
+            each frame has a 50% overlap with the 
+            preceding/following frames). 
+  wintype - Defines how the data is windowed: RECT 
+            is for rectangular windowing, simple 
+            but typically not recommended; SINE 
+            (the default) is for Sine windowing, 
+            typically recommended for 
+            phase-vocoder work; HANN is for Hann 
+            windowing, typically recommended for 
+            analysis work. 
+  active  - Is a simple control allowing FFT 
+            analysis to be active (>0) or inactive 
+            (<=0). This is mainly useful for 
+            signal analysis processes which are 
+            only intended to analyse at specific 
+            times rather than continuously 
+  winsize - The windowed audio frames are usually 
+            the same size as the buffer. If you 
+            wish the FFT to be zero-padded then 
+            you can specify a window size smaller 
+            than the actual buffer size (e.g. 
+            window size 1024 with buffer size 
+            2048). Both values must still be a 
+            power of two. Leave this at its 
+            default of zero for no zero-padding. 
+
+  Fast fourier transform, converts input data from the time 
+  to the frequency domain and stores the result in a buffer 
+  (audio waveform -> graph equalizer bands)
+
+  Output is -1 except when an FFT frame is ready, when the 
+  output is the buffer index. This creates a special kind of 
+  slower pseudo-rate (built on top of control rate) which 
+  all the pv-ugens understand. 
+
+  Categories: FFT
+  Rates: [ :kr ]
+  Default rate: :kr</p>
+    <p>
+      File: 
+      Line: 
+    </p>
+    <div class="highlight"><pre><code class="clojure">      
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

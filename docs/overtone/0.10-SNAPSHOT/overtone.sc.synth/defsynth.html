@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>defsynth</h1>
+    <p class="doc">Define a synthesizer and return a player function. The synth
+  definition will be loaded immediately, and a :new-synth event will be
+  emitted. Expects a name, an optional doc-string, a vector of synth
+  params, and a ugen-form as its arguments.
+
+  (defsynth foo [freq 440]
+    (out 0 (sin-osc freq)))
+
+  is equivalent to:
+
+  (def foo
+    (synth [freq 440] (out 0 (sin-osc freq))))
+
+  Params can also be given rates. By default, they are :kr, however
+  another rate can be specified by using either a pair of [default rate]
+  or a map with keys :default and rate:
+
+  (defsynth foo [freq [440 :kr] gate [0 :tr]] ...)
+  (defsynth foo [freq {:default 440 :rate :kr}] ...)
+
+  A doc string can also be included:
+  (defsynth bar
+    "The phatest space pad ever!"
+    [] (...))
+
+  The function generated will accept a target vector argument that
+  must come first, containing position and target as elements (see the
+  node function docs).
+
+  ;; call foo player with default args:
+  (foo)
+
+  ;; call foo player specifying node should be at the tail of group 0
+  (foo [:tail 0])
+
+  ;; call foo player with positional arguments
+  (foo 440 0.3)
+
+  ;; target node to be at the tail of group 0 with positional args
+  (foo [:tail 0] 440 0.3)
+
+  ;; or target node to be at the head of group 2
+  (foo [:head 2] 440 0.3)
+
+  ;; you may also use keyword args
+  (foo :freq 440 :amp 0.3)
+
+  ;; which allows you to re-order the args
+  (foo :amp 0.3 :freq 440 )
+
+  ;; you can also combine a target vector with keyword args
+  (foo [:head 2] :amp 0.3 :freq 440)
+
+  ;; finally, you can combine target vector, keywords args and
+  ;; positional args. Positional args must go first.
+  (foo [:head 2] 440 :amp 0.3)</p>
+    <p>
+      File: overtone/sc/synth.clj
+      Line: 582
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">defsynth</span>
+  <span class="s">&quot;Define a synthesizer and return a player function. The synth</span>
+<span class="s">  definition will be loaded immediately, and a :new-synth event will be</span>
+<span class="s">  emitted. Expects a name, an optional doc-string, a vector of synth</span>
+<span class="s">  params, and a ugen-form as its arguments.</span>
+
+<span class="s">  (defsynth foo [freq 440]</span>
+<span class="s">    (out 0 (sin-osc freq)))</span>
+
+<span class="s">  is equivalent to:</span>
+
+<span class="s">  (def foo</span>
+<span class="s">    (synth [freq 440] (out 0 (sin-osc freq))))</span>
+
+<span class="s">  Params can also be given rates. By default, they are :kr, however</span>
+<span class="s">  another rate can be specified by using either a pair of [default rate]</span>
+<span class="s">  or a map with keys :default and rate:</span>
+
+<span class="s">  (defsynth foo [freq [440 :kr] gate [0 :tr]] ...)</span>
+<span class="s">  (defsynth foo [freq {:default 440 :rate :kr}] ...)</span>
+
+<span class="s">  A doc string can also be included:</span>
+<span class="s">  (defsynth bar</span>
+<span class="s">    \&quot;The phatest space pad ever!\&quot;</span>
+<span class="s">    [] (...))</span>
+
+<span class="s">  The function generated will accept a target vector argument that</span>
+<span class="s">  must come first, containing position and target as elements (see the</span>
+<span class="s">  node function docs).</span>
+
+<span class="s">  ;; call foo player with default args:</span>
+<span class="s">  (foo)</span>
+
+<span class="s">  ;; call foo player specifying node should be at the tail of group 0</span>
+<span class="s">  (foo [:tail 0])</span>
+
+<span class="s">  ;; call foo player with positional arguments</span>
+<span class="s">  (foo 440 0.3)</span>
+
+<span class="s">  ;; target node to be at the tail of group 0 with positional args</span>
+<span class="s">  (foo [:tail 0] 440 0.3)</span>
+
+<span class="s">  ;; or target node to be at the head of group 2</span>
+<span class="s">  (foo [:head 2] 440 0.3)</span>
+
+<span class="s">  ;; you may also use keyword args</span>
+<span class="s">  (foo :freq 440 :amp 0.3)</span>
+
+<span class="s">  ;; which allows you to re-order the args</span>
+<span class="s">  (foo :amp 0.3 :freq 440 )</span>
+
+<span class="s">  ;; you can also combine a target vector with keyword args</span>
+<span class="s">  (foo [:head 2] :amp 0.3 :freq 440)</span>
+
+<span class="s">  ;; finally, you can combine target vector, keywords args and</span>
+<span class="s">  ;; positional args. Positional args must go first.</span>
+<span class="s">  (foo [:head 2] 440 :amp 0.3)&quot;</span>
+  <span class="p">[</span><span class="nv">s-name</span> <span class="o">&amp;</span> <span class="nv">s-form</span><span class="p">]</span>
+  <span class="p">{</span><span class="ss">:arglists</span> <span class="o">&#39;</span><span class="p">([</span><span class="nb">name </span><span class="nv">doc-string?</span> <span class="nv">params</span> <span class="nv">ugen-form</span><span class="p">])}</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">s-name</span> <span class="nv">params</span> <span class="nv">ugen-form</span><span class="p">]</span> <span class="p">(</span><span class="nf">synth-form</span> <span class="nv">s-name</span> <span class="nv">s-form</span><span class="p">)]</span>
+    <span class="o">`</span><span class="p">(</span><span class="k">def </span><span class="o">~</span><span class="nv">s-name</span> <span class="p">(</span><span class="nf">synth</span> <span class="o">~</span><span class="nv">s-name</span> <span class="o">~</span><span class="nv">params</span> <span class="o">~</span><span class="nv">ugen-form</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>defunk</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/helpers/lib.clj
+      Line: 196
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">defunk</span> <span class="p">[</span><span class="nv">fn-name</span> <span class="nv">docstring</span> <span class="nv">args</span> <span class="o">&amp;</span> <span class="nv">body</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">arg-names</span>       <span class="p">(</span><span class="nb">map first </span><span class="p">(</span><span class="nf">partition</span> <span class="mi">2</span> <span class="nv">args</span><span class="p">))</span>
+        <span class="nv">arg-names-symbs</span> <span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">map symbol </span><span class="nv">arg-names</span><span class="p">))</span>
+        <span class="nv">arg-keys</span>        <span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">map keyword </span><span class="nv">arg-names</span><span class="p">))</span>
+        <span class="nv">default-map</span>     <span class="p">(</span><span class="nb">apply hash-map </span><span class="p">(</span><span class="nf">syms-to-keywords</span> <span class="nv">args</span><span class="p">))</span>
+        <span class="nv">arg-pairs</span>       <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">with-out-str </span><span class="s">&quot;&quot;</span> <span class="p">(</span><span class="nb">pr </span><span class="p">(</span><span class="nb">first </span><span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nb">second </span><span class="nv">%</span><span class="p">)))</span> <span class="p">(</span><span class="nf">partition</span> <span class="mi">2</span> <span class="nv">args</span><span class="p">))</span>
+        <span class="nv">arg-pairs-str</span>   <span class="p">(</span><span class="nb">apply str </span><span class="p">(</span><span class="nf">interpose</span> <span class="s">&quot;, &quot;</span> <span class="nv">arg-pairs</span><span class="p">))</span>
+        <span class="nv">arg-string</span>      <span class="s">&quot;Keyword arg fn with defaults:\n  &quot;</span>
+        <span class="nv">arg-string</span>      <span class="p">(</span><span class="nb">str </span><span class="nv">arg-string</span> <span class="s">&quot;[&quot;</span> <span class="nv">arg-pairs-str</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
+        <span class="nv">indented-doc</span>    <span class="p">(</span><span class="nf">indented-str-block</span> <span class="nv">docstring</span> <span class="mi">55</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="nv">full-docstring</span>  <span class="p">(</span><span class="nb">str </span><span class="nv">arg-string</span> <span class="s">&quot;\n\n  &quot;</span> <span class="nv">indented-doc</span><span class="p">)]</span>
+    <span class="o">`</span><span class="p">(</span><span class="nf">intern</span> <span class="nv">*ns*</span> <span class="p">(</span><span class="nb">with-meta </span><span class="o">&#39;~</span><span class="nv">fn-name</span>
+                    <span class="p">{</span><span class="ss">:doc</span> <span class="o">~</span><span class="nv">full-docstring</span>
+                     <span class="ss">:arglists</span> <span class="o">&#39;</span><span class="p">(</span><span class="o">~</span><span class="nv">arg-names-symbs</span><span class="p">)})</span>
+             <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="o">&amp;</span> <span class="nv">args#</span><span class="p">]</span>
+               <span class="p">(</span><span class="k">let </span><span class="p">[{</span><span class="ss">:keys</span> <span class="p">[</span><span class="o">~@</span><span class="nv">arg-names</span><span class="p">]}</span>
+                     <span class="p">(</span><span class="nf">arg-mapper</span> <span class="nv">args#</span> <span class="o">~</span><span class="nv">arg-keys</span> <span class="o">~</span><span class="nv">default-map</span><span class="p">)]</span>
+                 <span class="o">~@</span><span class="nv">body</span><span class="p">)))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

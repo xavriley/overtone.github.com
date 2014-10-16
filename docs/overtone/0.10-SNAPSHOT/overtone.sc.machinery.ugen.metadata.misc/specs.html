@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/misc.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PitchShift&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>, <span class="ss">:doc</span> <span class="s">&quot;The input signal.&quot;</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;window-size&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.2</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The size of the grain window in seconds. This value</span>
+<span class="s">                     cannot be modulated.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pitch-ratio&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The ratio of the pitch shift. Must be from 0.0 to</span>
+<span class="s">                     4.0&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pitch-dispersion&quot;</span>,
+               <span class="ss">:default</span>
+               <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The maximum random deviation of the pitch from the</span>
+<span class="s">                     pitchRatio.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;time-dispersion&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;A random offset of from zero to timeDispersion</span>
+<span class="s">                     seconds is added to the delay of each grain. Use of</span>
+<span class="s">                     some dispersion can alleviate a hard comb filter</span>
+<span class="s">                     effect due to uniform grain placement. It can also</span>
+<span class="s">                     be an effect in itself. timeDispersion can be no</span>
+<span class="s">                     larger than windowSize.&quot;</span> <span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">same-rate-as-first-input</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A time domain granular pitch shifter. Grains have a</span>
+<span class="s">             triangular amplitude envelope and an overlap of 4:1.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Pluck&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;An excitation signal.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Upon a negative to positive transition, the</span>
+<span class="s">                     excitation signal will be fed into the delay line.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxdelaytime&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.2</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The max delay time in seconds (initializes the</span>
+<span class="s">                     internal delay buffer).&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delaytime&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.2</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Delay time in seconds.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;decaytime&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Time for the echoes to decay by 60</span>
+<span class="s">                     decibels. Negative times emphasize odd partials.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;coef&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The coef of the internal OnePole filter. Values</span>
+<span class="s">                     should be between -1 and +1 (larger values will be</span>
+<span class="s">                     unstable... so be careful!).&quot;</span> <span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Implements the Karplus-Strong style of synthesis, where a</span>
+<span class="s">             delay line (normally starting with noise) is filtered and</span>
+<span class="s">             fed back on itself so that over time it becomes periodic.&quot;</span><span class="p">}</span>
+
+      <span class="c1">;; TODO write some functions implementing these classand buffer  methods</span>
+      <span class="c1">;; Partitioned Convolution, from PartConv.sc</span>
+      <span class="c1">;; PartConv : UGen</span>
+      <span class="c1">;; {</span>
+      <span class="c1">;;  *ar { arg in, fftsize, irbufnum,mul = 1.0, add = 0.0;</span>
+      <span class="c1">;;    ^this.multiNew(&#39;audio&#39;, in, fftsize, irbufnum).madd(mul, add);</span>
+      <span class="c1">;;  }</span>
+      <span class="c1">;;</span>
+      <span class="c1">;;  *calcNumPartitions {arg fftsize, irbuffer;</span>
+      <span class="c1">;;    var siz, partitionsize;</span>
+      <span class="c1">;;</span>
+      <span class="c1">;;    partitionsize=fftsize.div(2);</span>
+      <span class="c1">;;</span>
+      <span class="c1">;;    siz= irbuffer.numFrames;</span>
+      <span class="c1">;;    ^((siz/partitionsize).roundUp);</span>
+      <span class="c1">;;    //bufsize = numpartitions*fftsize;</span>
+      <span class="c1">;;  }</span>
+      <span class="c1">;;</span>
+      <span class="c1">;;  *calcBufSize {arg fftsize, irbuffer;</span>
+      <span class="c1">;;    ^ fftsize* (PartConv.calcNumPartitions(fftsize,irbuffer));</span>
+      <span class="c1">;;  }</span>
+      <span class="c1">;; }</span>
+      <span class="c1">;;</span>
+      <span class="c1">;; + Buffer {</span>
+      <span class="c1">;;  preparePartConv { arg buf, fftsize;</span>
+      <span class="c1">;;    server.listSendMsg([&quot;/b_gen&quot;, bufnum, &quot;PreparePartConv&quot;, buf.bufnum, fftsize]);</span>
+      <span class="c1">;;  }</span>
+      <span class="c1">;; }</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PartConv&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Processing target.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;fftsize&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Spectral convolution partition size (twice</span>
+<span class="s">                     partition size). You must ensure that the blocksize</span>
+<span class="s">                     divides the partition size and there are at least</span>
+<span class="s">                     two blocks per partition (to allow for</span>
+<span class="s">                     amortisation)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;irbufnum&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Prepared buffer of spectra for each partition of</span>
+<span class="s">                     the inpulse response&quot;</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Partitioned convolution. Various additional buffers must be</span>
+<span class="s">             supplied. Mono impulse response only! If inputting multiple</span>
+<span class="s">             channels, you&#39;ll need independent PartConvs, one for each</span>
+<span class="s">             channel. But the charm is: impulse response can be as large</span>
+<span class="s">             as you like (CPU load increases with IR size. Various</span>
+<span class="s">             tradeoffs based on fftsize choice, due to rarer but larger</span>
+<span class="s">             FFTs. This plug-in uses amortisation to spread processing</span>
+<span class="s">             and avoid spikes). Normalisation factors difficult to</span>
+<span class="s">             anticipate; convolution piles up multiple copies of the</span>
+<span class="s">             input on top of itself, so can easily overload.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Hilbert&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>,
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:num-outs</span> <span class="mi">2</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FreqShift&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The signal to process&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Amount of shift in cycles per second&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Phase of the frequency shift (0 - 2pi)&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>,
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;FreqShift implements single sideband amplitude modulation,</span>
+<span class="s">             also known as frequency shifting, but not to be confused</span>
+<span class="s">             with pitch shifting.  Frequency shifting moves all the</span>
+<span class="s">             components of a signal by a fixed amount but does not</span>
+<span class="s">             preserve the original harmonic relationships.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GVerb&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;mono input&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;roomsize&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">10.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;in squared meters.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;revtime&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">3.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;in seconds&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;damping&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;0 to 1, high frequency rolloff, 0 damps the reverb</span>
+<span class="s">                     signal completely, 1 not at all&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;inputbw&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;0 to 1, same as damping control, but on the input</span>
+<span class="s">                     signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;spread&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">15.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;a control on the stereo spread and diffusion of the</span>
+<span class="s">                     reverb signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;drylevel&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;amount of dry signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;earlyreflevel&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.7</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;amount of early reflection level&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;taillevel&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:doc</span> <span class="s">&quot;amount of tail level&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxroomsize&quot;</span>
+               <span class="ss">:default</span> <span class="mf">300.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;to set the size of the delay lines.&quot;</span> <span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>,
+       <span class="ss">:num-outs</span> <span class="mi">2</span>,
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A two-channel reverb UGen, based on the \&quot;GVerb\&quot; LADSPA</span>
+<span class="s">             effect by Juhana Sadeharju (kouhia at nic.funet.fi).</span>
+
+<span class="s">             WARNING - in the current version of the server, there are</span>
+<span class="s">             severe noise issues when you attempt to modify the roomsize</span>
+<span class="s">             or set it to a value greater than 40.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FreeVerb&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The input signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;mix&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.33</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Dry/wet balance. range 0..1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;room&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Room size. rage 0..1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;damp&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Reverb HF damp. range 0..1&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A reverb coded from experiments with faust. Valid parameter</span>
+<span class="s">             range from 0 to 1. Values outside this range are clipped by the UGen.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FreeVerb2&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Input signal channel 1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in2&quot;</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Input signal channel 2&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;mix&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.33</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Dry/wet balance. range 0..1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;room&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Room size. rage 0..1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;damp&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Reverb HF damp. range 0..1&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>,
+       <span class="ss">:num-outs</span> <span class="mi">2</span>,
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">1</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A two-channel reverb coded from experiments with</span>
+<span class="s">             faust. Valid parameter range from 0 to 1. Values outside</span>
+<span class="s">             this range are clipped by the UGen.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;MoogFF&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The input signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">100.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The cutoff frequency&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">2.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;The filter resonance gain, between zero and 4&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;reset&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;When greater than zero, this will reset the state</span>
+<span class="s">                     of the digital filters at the beginning of a</span>
+<span class="s">                     computational block.&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A digital implementation of the Moog VCF (filter).&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Spring&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Modulated input force&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;spring&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Spring constant (incl. mass)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;damp&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Damping&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Physical model of resonating spring&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Ball&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;modulated surface level&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;g&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;gravity&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;damp&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;damping on impact&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;friction&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.01</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;proximity from which on attraction to surface starts&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;models the path of a bouncing object that is reflected by a</span>
+<span class="s">             vibrating surface&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TBall&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;modulated surface level&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;g&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">10.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;gravity&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;damp&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;damping on impact&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;friction&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.01</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;proximity from which on attraction to surface</span>
+<span class="s">                    starts&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;models the impacts of a bouncing object that is reflected</span>
+<span class="s">            by a vibrating surface&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gendy1&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;ampdist&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Choice of probability distribution for the next</span>
+<span class="s">                     perturbation of the amplitude of a control</span>
+<span class="s">                     point. The distributions are (adapted from the</span>
+<span class="s">                     GENDYN program in Formalized Music): 0- LINEAR,1-</span>
+<span class="s">                     CAUCHY, 2- LOGIST, 3- HYPERBCOS, 4- ARCSINE, 5-</span>
+<span class="s">                     EXPON, 6- SINUS, Where the sinus (Xenakis&#39; name) is</span>
+<span class="s">                     in this implementation taken as sampling from a</span>
+<span class="s">                     third party oscillator. See example below.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durdist&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Choice of distribution for the perturbation of the</span>
+<span class="s">                     current inter control point duration.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;adparam&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;A parameter for the shape of the amplitude</span>
+<span class="s">                     probability distribution, requires values in the</span>
+<span class="s">                     range 0.0001 to 1 (there are safety checks in the</span>
+<span class="s">                     code so don&#39;t worry too much if you want to</span>
+<span class="s">                     modulate!)</span>
+<span class="s">&quot;</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ddparam&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;A parameter for the shape of the duration</span>
+<span class="s">                     probability distribution, requires values in the</span>
+<span class="s">                     range 0.0001 to 1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum allowed frequency of oscillation for the</span>
+<span class="s">                     Gendy1 oscillator, so gives the largest period the</span>
+<span class="s">                     duration is allowed to take on.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">660.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum allowed frequency of oscillation for the</span>
+<span class="s">                     Gendy1 oscillator, so gives the smallest period the</span>
+<span class="s">                     duration is allowed to take on. &quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ampscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Normally 0.0 to 1.0, multiplier for the</span>
+<span class="s">                     distribution&#39;s delta value for amplitude. An</span>
+<span class="s">                     ampscale of 1.0 allows the full range of -1 to 1</span>
+<span class="s">                     for a change of amplitude.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Normally 0.0 to 1.0, multiplier for the</span>
+<span class="s">                     distribution&#39;s delta value for duration. An</span>
+<span class="s">                     ampscale of 1.0 allows the full range of -1 to 1</span>
+<span class="s">                     for a change of duration.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;init-cps&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">12</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Initialise the number of control points in the</span>
+<span class="s">                     memory. Xenakis specifies 12. There would be this</span>
+<span class="s">                     number of control points per cycle of the</span>
+<span class="s">                     oscillator, though the oscillator&#39;s period will</span>
+<span class="s">                     constantly change due to the duration</span>
+<span class="s">                     distribution.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;knum&quot;</span>
+               <span class="ss">:default</span> <span class="mi">12</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Current number of utilised control points, allows</span>
+<span class="s">                     modulation.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;An implementation of the dynamic stochastic synthesis</span>
+<span class="s">             generator conceived by Iannis Xenakis and described in</span>
+<span class="s">             Formalized Music (1992, Stuyvesant, NY: Pendragon Press)</span>
+<span class="s">             chapter 9 (pp 246-254) and chapters 13 and 14 (pp</span>
+<span class="s">             289-322). The BASIC program in the book was written by</span>
+<span class="s">             Marie-Helene Serra so I think it helpful to credit her</span>
+<span class="s">             too. The program code has been adapted to avoid infinities</span>
+<span class="s">             in the probability distribution functions. The</span>
+<span class="s">             distributions are hard-coded in C but there is an option to</span>
+<span class="s">             have new amplitude or time breakpoints sampled from a</span>
+<span class="s">             continuous controller input.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gendy2&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;ampdist&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Choice of probability distribution for the next</span>
+<span class="s">                     perturbation of the amplitude of a control</span>
+<span class="s">                     point. The distributions are (adapted from the</span>
+<span class="s">                     GENDYN program in Formalized Music): 0- LINEAR, 1-</span>
+<span class="s">                     CAUCHY, 2- LOGIST, 3- HYPERBCOS, 4- ARCSINE, 5-</span>
+<span class="s">                     EXPON, 6- SINUS, Where the sinus (Xenakis&#39; name) is</span>
+<span class="s">                     in this implementation taken as sampling from a</span>
+<span class="s">                     third party oscillator. &quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durdist&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Choice of distribution for the perturbation of the</span>
+<span class="s">                     current inter control point duration. &quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;adparam&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;A parameter for the shape of the amplitude</span>
+<span class="s">                     probability distribution, requires values in the</span>
+<span class="s">                     range 0.0001 to 1 (there are safety checks in the</span>
+<span class="s">                     code so don&#39;t worry too much if you want to</span>
+<span class="s">                     modulate!)&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ddparam&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;A parameter for the shape of the duration</span>
+<span class="s">                     probability distribution, requires values in the</span>
+<span class="s">                     range 0.0001 to 1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Minimum allowed frequency of oscillation for the</span>
+<span class="s">                     Gendy1 oscillator, so gives the largest period the</span>
+<span class="s">                     duration is allowed to take on.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">660.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Maximum allowed frequency of oscillation for the</span>
+<span class="s">                     Gendy1 oscillator, so gives the smallest period the</span>
+<span class="s">                     duration is allowed to take on.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ampscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Normally 0.0 to 1.0, multiplier for the</span>
+<span class="s">                     distribution&#39;s delta value for amplitude. An</span>
+<span class="s">                     ampscale of 1.0 allows the full range of -1 to 1</span>
+<span class="s">                     for a change of amplitude.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Normally 0.0 to 1.0, multiplier for the</span>
+<span class="s">                     distribution&#39;s delta value for duration. An</span>
+<span class="s">                     ampscale of 1.0 allows the full range of -1 to 1</span>
+<span class="s">                     for a change of duration.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;init-cps&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">12</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Initialise the number of control points in the</span>
+<span class="s">                     memory. Xenakis specifies 12. There would be this</span>
+<span class="s">                     number of control points per cycle of the</span>
+<span class="s">                     oscillator, though the oscillator&#39;s period will</span>
+<span class="s">                     constantly change due to the duration</span>
+<span class="s">                     distribution.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;knum&quot;</span>
+               <span class="ss">:default</span> <span class="mi">12</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Current number of utilised control points, allows</span>
+<span class="s">                     modulation. &quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.17</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;parameter for Lehmer random number generator</span>
+<span class="s">                     perturbed by Xenakis as in ((old*a)+c)%1.0&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.31</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;parameter for Lehmer random number generator</span>
+<span class="s">                     perturbed by Xenakis&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;See gendy1 help file for background. This variant of GENDYN</span>
+<span class="s">             is closer to that presented in Hoffmann, Peter. (2000) The</span>
+<span class="s">             New GENDYN Program. Computer Music Journal 24:2, pp</span>
+<span class="s">             31-38. &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gendy3&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;ampdist&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Choice of probability distribution for the next</span>
+<span class="s">                     perturbation of the amplitude of a control</span>
+<span class="s">                     point. The distributions are (adapted from the</span>
+<span class="s">                     GENDYN program in Formalized Music): 0- LINEAR,1-</span>
+<span class="s">                     CAUCHY, 2- LOGIST, 3- HYPERBCOS, 4- ARCSINE, 5-</span>
+<span class="s">                     EXPON, 6- SINUS, Where the sinus (Xenakis&#39; name) is</span>
+<span class="s">                     in this implementation taken as sampling from a</span>
+<span class="s">                     third party oscillator.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durdist&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Choice of distribution for the perturbation of the</span>
+<span class="s">                     current inter control point duration.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;adparam&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;A parameter for the shape of the amplitude</span>
+<span class="s">                     probability distribution, requires values in the</span>
+<span class="s">                     range 0.0001 to 1 (there are safety checks in the</span>
+<span class="s">                     code so don&#39;t worry too much if you want to</span>
+<span class="s">                     modulate!)&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ddparam&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;A parameter for the shape of the duration</span>
+<span class="s">                     probability distribution, requires values in the</span>
+<span class="s">                     range 0.0001 to 1&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Oscillation frquency.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ampscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Normally 0.0 to 1.0, multiplier for the</span>
+<span class="s">                     distribution&#39;s delta value for amplitude. An</span>
+<span class="s">                     ampscale of 1.0 allows the full range of -1 to 1</span>
+<span class="s">                     for a change of amplitude.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Normally 0.0 to 1.0, multiplier for the</span>
+<span class="s">                     distribution&#39;s delta value for duration. An</span>
+<span class="s">                     ampscale of 1.0 allows the full range of -1 to 1</span>
+<span class="s">                     for a change of duration.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;init-cps&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">12</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Initialise the number of control points in the</span>
+<span class="s">                     memory. Xenakis specifies 12. There would be this</span>
+<span class="s">                     number of control points per cycle of the</span>
+<span class="s">                     oscillator, though the oscillator&#39;s period will</span>
+<span class="s">                     constantly change due to the duration</span>
+<span class="s">                     distribution.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;knum&quot;</span>
+               <span class="ss">:default</span> <span class="mi">12</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Current number of utilised control points, allows</span>
+<span class="s">                     modulation.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+      <span class="ss">:doc</span> <span class="s">&quot;See Gendy1 help file for background. This variant of GENDYN</span>
+<span class="s">            normalises the durations in each period to force oscillation</span>
+<span class="s">            at the desired pitch. The breakpoints still get perturbed as</span>
+<span class="s">            in Gendy1. There is some glitching in the oscillator caused</span>
+<span class="s">            by the stochastic effects: control points as they vary cause</span>
+<span class="s">            big local jumps of amplitude. Put ampscale and durscale low</span>
+<span class="s">            to minimise this. All parameters can be modulated at control</span>
+<span class="s">            rate except for initCPs which is used only at</span>
+<span class="s">            initialisation.&quot;</span> <span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

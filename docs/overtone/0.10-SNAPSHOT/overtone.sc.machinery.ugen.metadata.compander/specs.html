@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/compander.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+<span class="c1">;;amplitude</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Amplitude&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;attack-time&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.01</span>
+               <span class="ss">:modulatable</span> <span class="nv">false</span>
+               <span class="ss">:doc</span> <span class="s">&quot;60dB convergence time for following attacks&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;release-time&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.01</span>
+               <span class="ss">:modulatable</span> <span class="nv">false</span>
+               <span class="ss">:doc</span> <span class="s">&quot;60dB convergence time for following decays&quot;</span><span class="p">}]</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Amplitude follower&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Tracks the peak amplitude of a signal.&quot;</span>
+       <span class="ss">:scsynth-location</span> <span class="s">&quot;FilterUgens&quot;</span>
+       <span class="ss">:sclang-location</span> <span class="s">&quot;Compander&quot;</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:auto-rate</span> <span class="nv">true</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Compander&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The signal to be compressed / expanded / gated&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;control&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The signal whose amplitude determines the gain</span>
+<span class="s">                     applied to the input signal. Often the same as</span>
+<span class="s">                     in (for standard gating or compression) but should</span>
+<span class="s">                     be different for ducking.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;thresh&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.5</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Control signal amplitude threshold, which</span>
+<span class="s">                     determines the break point between slope-below and</span>
+<span class="s">                     slope-above. Typically a value between 0 and 1. &quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;slope-below&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Slope of the amplitude curve below the threshold. A</span>
+<span class="s">                     value of 1 means the output amplitude will match</span>
+<span class="s">                     the control signal amplitude.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;slope-above&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Slope of the amplitude curve above the threshold. A</span>
+<span class="s">                     value of 1 means the output amplitude will match</span>
+<span class="s">                     the control signal amplitude.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;clamp-time&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.01</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Time taken for the amplitude adjustment to kick in</span>
+<span class="s">                     fully (in seconds). This is usually pretty small,</span>
+<span class="s">                     not much more than 10 milliseconds (the default</span>
+<span class="s">                     value). Also known as the time of the attack</span>
+<span class="s">                     phase.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;relax-time&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.1</span>
+               <span class="ss">:modulatable</span> <span class="nv">true</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The amount of time for the amplitude adjustment to</span>
+<span class="s">                     be released. Usually a bit longer than clamp-time;</span>
+<span class="s">                     if both times are too short, you can get</span>
+<span class="s">                     some (possibly unwanted) artifacts. Also known as</span>
+<span class="s">                     the time of the release phase.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:summary</span> <span class="s">&quot;General purpose hard-knee dynamic range processor.&quot;</span>
+       <span class="ss">:scsynth-location</span> <span class="s">&quot;FilterUgens&quot;</span>
+       <span class="ss">:sclang-location</span> <span class="s">&quot;Compander&quot;</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nf">first-n-inputs-ar</span> <span class="mi">2</span><span class="p">)]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;The compander will modify the amplitude of the in signal</span>
+<span class="s">             based on an analysis of the control signal. Typically the</span>
+<span class="s">             in and control signals are the same. The amplitude of the</span>
+<span class="s">             control signal is calcuated using RMS (Root Mean Square)</span>
+<span class="s">             and the final amplitude of the in signal is calculated as a</span>
+<span class="s">             function of the amplitude threshold, and slopes either</span>
+<span class="s">             side (below and above) with some temporal modifications in</span>
+<span class="s">             terms of attack and release phases. It is a hard-knee</span>
+<span class="s">             processor which means that the response curve is a sharp</span>
+<span class="s">             angle rather than a rounded edge.</span>
+
+<span class="s">             If the control amplitude is less than the threshold, the</span>
+<span class="s">             slope below is used to calculate the amplitude</span>
+<span class="s">             modification. If this is steep (greater than 1) this will</span>
+<span class="s">             reduce the amplitude of quiet signals (the quieter the</span>
+<span class="s">             control amplitude the greater the reduction affect).</span>
+<span class="s">             Values &lt; 1.0 are possible, but it means that a very</span>
+<span class="s">             low-level control signal will cause the input signal to be</span>
+<span class="s">             amplified, which would raise the noise floor.</span>
+
+<span class="s">             If the control amplitude is greater than the threshold, the</span>
+<span class="s">             slope above is used to calculate the amplitude</span>
+<span class="s">             modification. If this is steep (greater than 1) this will</span>
+<span class="s">             create expansion - loud signals will be made louder). Less</span>
+<span class="s">             than 1 will achieve compressions (louder signals are</span>
+<span class="s">             attenuated).</span>
+
+<span class="s">             The clamp and relax times modify when the amplitude</span>
+<span class="s">             modification takes place and ends.</span>
+
+<span class="s">             May be used to define: compressers, expanders, limiters,</span>
+<span class="s">             gates and duckers.</span>
+
+<span class="s">             For more information see:</span>
+<span class="s">             http://en.wikipedia.org/wiki/Audio_level_compression&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Normalizer&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The input signal&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The peak output amplitude level to which to</span>
+<span class="s">                     normalize the input&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.01</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The buffer delay time. Shorter times will produce</span>
+<span class="s">                     smaller delays and quicker transient response</span>
+<span class="s">                     times, but may introduce amplitude modulation</span>
+<span class="s">                     artifacts. (AKA lookAheadTime)&quot;</span><span class="p">}]</span>
+       <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;flattens dynamics. Normalizes the input amplitude to the</span>
+<span class="s">             given level. Normalize will not overshoot like Compander</span>
+<span class="s">             will, but it needs to look ahead in the audio. Thus there</span>
+<span class="s">             is a delay equal to twice the lookAheadTime.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Limiter&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;Normalizer&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Limits the input amplitude to the given level. Limiter will</span>
+<span class="s">             not overshoot like Compander will, but it needs to look</span>
+<span class="s">             ahead in the audio. Thus there is a delay equal to twice</span>
+<span class="s">             the lookAheadTime. Limiter, unlike Compander, is completely</span>
+<span class="s">             transparent for an in range signal.&quot;</span> <span class="p">}</span> <span class="p">])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>synth-player</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/synth.clj
+      Line: 476
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">synth-player</span>
+  <span class="p">[</span><span class="nv">sdef</span> <span class="nv">params</span> <span class="nv">this</span> <span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
+    <span class="s">&quot;Returns a player function for a named synth.  Used by (synth ...)</span>
+<span class="s">    internally, but can be used to generate a player for a pre-compiled</span>
+<span class="s">    synth.  The function generated will accept a target and position</span>
+<span class="s">    vector of two values that must come first (see the node function</span>
+<span class="s">    docs).</span>
+
+<span class="s">    ;; call foo player with default args:</span>
+<span class="s">    (foo)</span>
+
+<span class="s">    ;; call foo player specifyign node should be at the tail of group 0</span>
+<span class="s">    (foo [:tail 0])</span>
+
+<span class="s">    ;; call foo player with positional arguments</span>
+<span class="s">    (foo 440 0.3)</span>
+
+<span class="s">    ;; target node to be at the tail of group 0 with positional args</span>
+<span class="s">    (foo [:tail 0] 440 0.3)</span>
+
+<span class="s">    ;; or target node to be at the head of group 2</span>
+<span class="s">    (foo [:head 2] 440 0.3)</span>
+
+<span class="s">    ;; you may also use keyword args</span>
+<span class="s">    (foo :freq 440 :amp 0.3)</span>
+
+<span class="s">    ;; which allows you to re-order the args</span>
+<span class="s">    (foo :amp 0.3 :freq 440 )</span>
+
+<span class="s">    ;; you can also combine a target vector with keyword args</span>
+<span class="s">    (foo [:head 2] :amp 0.3 :freq 440)</span>
+
+<span class="s">    ;; finally, you can combine target vector, keywords args and</span>
+<span class="s">    ;; positional args. Positional args must go first.</span>
+<span class="s">    (foo [:head 2] 440 :amp 0.3)</span>
+<span class="s">    &quot;</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">arg-names</span>         <span class="p">(</span><span class="nb">map keyword </span><span class="p">(</span><span class="nb">map </span><span class="ss">:name</span> <span class="nv">params</span><span class="p">))</span>
+          <span class="nv">args</span>              <span class="p">(</span><span class="nb">or </span><span class="nv">args</span> <span class="p">[])</span>
+          <span class="p">[</span><span class="nv">target</span> <span class="nv">pos</span> <span class="nv">args</span><span class="p">]</span> <span class="p">(</span><span class="nf">extract-target-pos-args</span> <span class="nv">args</span> <span class="p">(</span><span class="nf">foundation-default-group</span><span class="p">)</span> <span class="ss">:tail</span><span class="p">)</span>
+          <span class="nv">args</span>              <span class="p">(</span><span class="nf">idify</span> <span class="nv">args</span><span class="p">)</span>
+          <span class="nv">args</span>              <span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">arg</span><span class="p">]</span> <span class="p">(</span><span class="nb">if-let </span><span class="p">[</span><span class="nv">id</span> <span class="p">(</span><span class="ss">:id</span> <span class="nv">arg</span><span class="p">)]</span>
+                                            <span class="nv">id</span>
+                                            <span class="nv">arg</span><span class="p">))</span>
+                                 <span class="nv">args</span><span class="p">)</span>
+          <span class="nv">defaults</span>          <span class="p">(</span><span class="nb">into </span><span class="p">{}</span> <span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="k">fn </span><span class="p">[{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nb">name </span><span class="nv">value</span><span class="p">]}]</span>
+                                            <span class="p">[(</span><span class="nb">keyword </span><span class="nv">name</span><span class="p">)</span> <span class="o">@</span><span class="nv">value</span><span class="p">])</span>
+                                          <span class="nv">params</span><span class="p">))</span>
+          <span class="nv">arg-map</span>           <span class="p">(</span><span class="nf">arg-mapper</span> <span class="nv">args</span> <span class="nv">arg-names</span> <span class="nv">defaults</span><span class="p">)</span>
+          <span class="nv">synth-node</span>        <span class="p">(</span><span class="nb">node </span><span class="p">(</span><span class="ss">:name</span> <span class="nv">sdef</span><span class="p">)</span> <span class="nv">arg-map</span> <span class="p">{</span><span class="ss">:position</span> <span class="nv">pos</span> <span class="ss">:target</span> <span class="nv">target</span><span class="p">}</span> <span class="nv">sdef</span><span class="p">)</span>
+          <span class="nv">synth-node</span>        <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="ss">:instance-fn</span> <span class="nv">this</span><span class="p">)</span>
+                              <span class="p">((</span><span class="ss">:instance-fn</span> <span class="nv">this</span><span class="p">)</span> <span class="nv">synth-node</span><span class="p">)</span>
+                              <span class="nv">synth-node</span><span class="p">)]</span>
+      <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="ss">:instance-fn</span> <span class="nv">this</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">swap!</span> <span class="nv">active-synth-nodes*</span> <span class="nb">assoc </span><span class="p">(</span><span class="ss">:id</span> <span class="nv">synth-node</span><span class="p">)</span> <span class="nv">synth-node</span><span class="p">))</span>
+      <span class="nv">synth-node</span><span class="p">))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>bell-partials:ar</h1>
+    <p class="doc">
+  Bell partial generator 
+
+  [freq 440, dur 1.0, partials [0.5 1 2 4]]
+
+  freq     - The fundamental frequency for the 
+             partials 
+  dur      - Duration multiplier. Length of 
+             longest partial will be dur seconds 
+  partials - Sequence of frequencies which are 
+             multiples of freq 
+
+  Generates a series of progressively shorter and quieter 
+  enveloped sine waves for each of the partials specified. 
+  The length of the envolope is proportional to dur and the 
+  fundamental frequency is specified with freq. 
+
+  Categories: Composite Ugen
+  Rates: [ :ar ]
+  Default rate: :ar</p>
+    <p>
+      File: overtone/examples/compositions/bells.clj
+      Line: 35
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="nf">defcgen</span> <span class="nv">bell-partials</span>
+  <span class="s">&quot;Bell partial generator&quot;</span>
+  <span class="p">[</span><span class="nv">freq</span> <span class="p">{</span><span class="ss">:default</span> <span class="mi">440</span> <span class="ss">:doc</span> <span class="s">&quot;The fundamental frequency for the partials&quot;</span><span class="p">}</span>
+   <span class="nv">dur</span>  <span class="p">{</span><span class="ss">:default</span> <span class="mf">1.0</span> <span class="ss">:doc</span> <span class="s">&quot;Duration multiplier. Length of longest partial will</span>
+<span class="s">                            be dur seconds&quot;</span><span class="p">}</span>
+   <span class="nv">partials</span> <span class="p">{</span><span class="ss">:default</span> <span class="p">[</span><span class="mf">0.5</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">4</span><span class="p">]</span> <span class="ss">:doc</span> <span class="s">&quot;sequence of frequencies which are</span>
+<span class="s">                                        multiples of freq&quot;</span><span class="p">}]</span>
+  <span class="s">&quot;Generates a series of progressively shorter and quieter enveloped sine waves</span>
+<span class="s">  for each of the partials specified. The length of the envolope is proportional</span>
+<span class="s">  to dur and the fundamental frequency is specified with freq.&quot;</span>
+  <span class="p">(</span><span class="ss">:ar</span>
+   <span class="p">(</span><span class="nb">apply </span><span class="nv">+</span>
+          <span class="p">(</span><span class="nf">map</span>
+           <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nb">partial </span><span class="nv">proportion</span><span class="p">]</span>
+             <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">env</span>      <span class="p">(</span><span class="nf">env-gen</span> <span class="p">(</span><span class="nf">perc</span> <span class="mf">0.01</span> <span class="p">(</span><span class="nb">* </span><span class="nv">dur</span> <span class="nv">proportion</span><span class="p">)))</span>
+                   <span class="nv">vol</span>      <span class="p">(</span><span class="nb">/ </span><span class="nv">proportion</span> <span class="mi">2</span><span class="p">)</span>
+                   <span class="nv">overtone</span> <span class="p">(</span><span class="nb">* partial </span><span class="nv">freq</span><span class="p">)]</span>
+               <span class="p">(</span><span class="nb">* </span><span class="nv">env</span> <span class="nv">vol</span> <span class="p">(</span><span class="nf">sin-osc</span> <span class="nv">overtone</span><span class="p">))))</span>
+           <span class="nv">partials</span> <span class="c1">;; current partial</span>
+           <span class="p">(</span><span class="nb">iterate </span><span class="o">#</span><span class="p">(</span><span class="nb">/ </span><span class="nv">%</span> <span class="mi">2</span><span class="p">)</span> <span class="mf">1.0</span><span class="p">)</span>  <span class="c1">;; proportions (1.0  0.5 0.25)  etc</span>
+           <span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>TYPES</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/server/osc_validator.clj
+      Line: 11
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">TYPES</span>
+  <span class="p">{</span>
+   <span class="ss">:anything</span>         <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;any type&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="nv">true</span><span class="p">)}</span>
+
+   <span class="ss">:int</span>              <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:sample-idx</span>       <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer 0 or greater representing the index of a sample&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">0</span><span class="p">)))}</span>
+
+   <span class="ss">:sample-val</span>       <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a float representing the value of a sample&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">instance? </span><span class="nv">Float</span> <span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:frame-start</span>      <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer 0 or greater representing the starting frame&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= </span> <span class="nb">val </span><span class="mi">0</span><span class="p">)))}</span>
+
+   <span class="ss">:chan-idx</span>         <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer 0 or greater representing a channel index&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= </span> <span class="nb">val </span><span class="mi">0</span><span class="p">)))}</span>
+
+   <span class="ss">:num-frames</span>       <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer -1 or greater representing the number of frames&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= </span> <span class="nb">val </span><span class="mi">-1</span><span class="p">)))}</span>
+
+   <span class="ss">:buf-num</span>          <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer representing a buffer number&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:ugen-idx</span>         <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer representing the index of a ugen&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:count</span>            <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a positive integer representing the cardinality of elements&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt; val </span><span class="mi">0</span><span class="p">)))}</span>
+
+   <span class="ss">:node-id</span>          <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer (-1 upwards) representing a node id.&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">-1</span><span class="p">)))}</span>
+
+   <span class="ss">:group-id</span>         <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer (-1 upwards) representing a group id.&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">-1</span><span class="p">)))}</span>
+
+   <span class="ss">:synth-id</span>         <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer (-1 upwards) representing a synth id.&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">-1</span><span class="p">)))}</span>
+
+   <span class="ss">:ctl-val</span>          <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a float representing a control value&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">instance? </span><span class="nv">Float</span> <span class="nb">val </span><span class="p">))}</span>
+
+   <span class="ss">:string</span>           <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a string&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">string? </span><span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:cmd-name</span>         <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a string representing a command name&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">string? </span><span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:ctl-handle</span>       <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer or a string representing a control&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">string? </span><span class="nv">val</span><span class="p">)))}</span>
+
+   <span class="ss">:ctl-bus-idx</span>      <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer (-1 or greater) representing a control bus index&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">-1</span><span class="p">)))}</span>
+
+   <span class="ss">:pathname</span>         <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a string representing a pathname&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">string? </span><span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:synthdef-name</span>    <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a string representing the name of a synthdef&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">string? </span><span class="nv">val</span><span class="p">))}</span>
+
+   <span class="ss">:bytes</span>            <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a buffer of bytes&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">type</span> <span class="p">(</span><span class="nf">byte-array</span> <span class="mi">0</span><span class="p">))</span> <span class="p">(</span><span class="nf">type</span> <span class="nv">val</span><span class="p">)))}</span>
+
+   <span class="ss">:zero-to-three</span>    <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer in the range 0 -&gt; 3 inclusive&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">0</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&lt;= val </span><span class="mi">3</span><span class="p">)))}</span>
+
+   <span class="ss">:zero-to-four</span>     <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer in the range 0 -&gt; 4 inclusive&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">0</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&lt;= val </span><span class="mi">4</span><span class="p">)))}</span>
+
+   <span class="ss">:minus-two-to-one</span> <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer in the range -2 -&gt; 1 inclusive&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">instance? </span><span class="nv">Integer</span> <span class="nv">val</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&gt;= val </span><span class="mi">-2</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">&lt;= val </span><span class="mi">1</span><span class="p">)))}</span>
+
+   <span class="ss">:zero-or-one</span>      <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;an integer that&#39;s either 0 or 1&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nb">= </span><span class="mi">0</span> <span class="nv">val</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="nv">val</span><span class="p">)))}</span>
+
+   <span class="ss">:header-format</span>    <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a string representing the sound header format - one of \&quot;aiff\&quot;, \&quot;next\&quot;, \&quot;wav\&quot;, \&quot;ircam\&quot;\&quot;, \&quot;raw\&quot;&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nb">= val </span><span class="s">&quot;aiff&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;next&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;wav&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;ircam&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;raw&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;flac&quot;</span><span class="p">)))}</span>
+
+   <span class="ss">:sample-format</span>    <span class="p">{</span><span class="ss">:desc</span>      <span class="s">&quot;a string representing the sound sample format - one of \&quot;int8\&quot;, \&quot;int16\&quot;, \&quot;int24\&quot;, \&quot;int32\&quot;, \&quot;float\&quot;, \&quot;double\&quot;, \&quot;mulaw\&quot;, \&quot;alaw\&quot;&quot;</span>
+                      <span class="ss">:validator</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">val</span><span class="p">]</span> <span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nb">= val </span><span class="s">&quot;int8&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;int16&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;int24&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;int32&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;float&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;double&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;mulaw&quot;</span><span class="p">)</span>
+                                              <span class="p">(</span><span class="nb">= val </span><span class="s">&quot;alaw&quot;</span><span class="p">)))}})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

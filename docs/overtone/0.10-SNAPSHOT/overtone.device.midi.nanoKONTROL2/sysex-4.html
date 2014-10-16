@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>sysex-4</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/device/midi/nanoKONTROL2.clj
+      Line: 137
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">sysex-4</span> <span class="s">&quot;F0 42 40 00 01 13 00 7F  7F 02 03 05 40 00 00 00</span>
+<span class="s">              01 10 01 00 00 00 00 7F  00 01 00 10 00 00 7F 00</span>
+<span class="s">              01 00 20 00 7F 00 00 01  00 30 00 7F 00 00 01 00</span>
+<span class="s">              40 00 7F 00 10 00 01 00  01 00 7F 00 01 00 00 11</span>
+<span class="s">              00 7F 00 01 00 00 21 00  7F 00 01 00 31 00 00 7F</span>
+<span class="s">              00 01 00 41 00 00 7F 00  10 01 00 02 00 00 7F 00</span>
+<span class="s">              01 00 12 00 7F 00 00 01  00 22 00 7F 00 00 01 00</span>
+<span class="s">              32 00 7F 00 01 00 00 42  00 7F 00 10 01 00 00 03</span>
+<span class="s">              00 7F 00 01 00 00 13 00  7F 00 01 00 23 00 00 7F</span>
+<span class="s">              00 01 00 33 00 00 7F 00  01 00 43 00 7F 00 00 10</span>
+<span class="s">              01 00 04 00 7F 00 00 01  00 14 00 7F 00 00 01 00</span>
+<span class="s">              24 00 7F 00 01 00 00 34  00 7F 00 01 00 00 44 00</span>
+<span class="s">              7F 00 10 01 00 00 05 00  7F 00 01 00 15 00 00 7F</span>
+<span class="s">              00 01 00 25 00 00 7F 00  01 00 35 00 7F 00 00 01</span>
+<span class="s">              00 45 00 7F 00 00 10 01  00 06 00 7F 00 00 01 00</span>
+<span class="s">              16 00 7F 00 01 00 00 26  00 7F 00 01 00 00 36 00</span>
+<span class="s">              7F 00 01 00 46 00 00 7F  00 10 01 00 07 00 00 7F</span>
+<span class="s">              00 01 00 17 00 00 7F 00  01 00 27 00 7F 00 00 01</span>
+<span class="s">              00 37 00 7F 00 00 01 00  47 00 7F 00 10 00 01 00</span>
+<span class="s">              3A 00 7F 00 01 00 00 3B  00 7F 00 01 00 00 2E 00</span>
+<span class="s">              7F 00 01 00 3C 00 00 7F  00 01 00 3D 00 00 7F 00</span>
+<span class="s">              01 00 3E 00 7F 00 00 01  00 2B 00 7F 00 00 01 00</span>
+<span class="s">              2C 00 7F 00 01 00 00 2A  00 7F 00 01 00 00 29 00</span>
+<span class="s">              7F 00 01 00 2D 00 00 7F  00 7F 7F 7F 7F 00 7F 00</span>
+<span class="s">              00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00</span>
+<span class="s">              00 F7&quot;</span><span class="p">)</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/buf_io.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PlayBuf&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The number of channels that the buffer will</span>
+<span class="s">                     be. This must be a fixed integer. The architechture</span>
+<span class="s">                     of the SynthDef cannot change after it is</span>
+<span class="s">                     compiled. Warning: if you supply a bufnum of a</span>
+<span class="s">                     buffer that has a different numChannels then you</span>
+<span class="s">                     have specified to the play-buf, it will fail</span>
+<span class="s">                     silently.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The index of the buffer to use.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;1.0 is the server&#39;s sample rate, 2.0 is one octave</span>
+<span class="s">                     up, 0.5 is one octave down -1.0 is backwards normal</span>
+<span class="s">                     rate ... etc. Interpolation is cubic. Note: if the</span>
+<span class="s">                     buffer&#39;s sample rate is different from the</span>
+<span class="s">                     server&#39;s, you will need to multiply the desired</span>
+<span class="s">                     playback rate by (file&#39;s rate / server&#39;s rate). The</span>
+<span class="s">                     UGen (buf-rate-scale bufnum) returns this factor.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;A trigger causes a jump to the startPos. A trigger</span>
+<span class="s">                     occurs when a signal changes from &lt;= 0 to &gt; 0.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;start-pos&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Sample frame to start playback.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;1 means true, 0 means false. This is modulateable.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an integer representing an action to be executed</span>
+<span class="s">                     when the buffer is finished playing. This can be</span>
+<span class="s">                     used to free the enclosing synth. Action is only</span>
+<span class="s">                     evaluated if loop is 0&quot;</span><span class="p">}]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Plays back a sample resident in a buffer&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TGrains&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+               <span class="ss">:default</span> <span class="mi">2</span>
+               <span class="ss">:doc</span> <span class="s">&quot;number of output channels&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;at each trigger, the following arguments are</span>
+<span class="s">                     sampled and used as the arguments of a new grain. A</span>
+<span class="s">                     trigger occurs when a signal changes from &lt;= 0 to &gt;</span>
+<span class="s">                     0. If the trigger is audio rate then the grains</span>
+<span class="s">                     will start with sample accuracy.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the buffer to use. It must be a one</span>
+<span class="s">                     channel (mono) buffer.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;1.0 is normal, 2.0 is one octave up, 0.5 is one</span>
+<span class="s">                     octave down -1.0 is backwards normal rate. Unlike</span>
+<span class="s">                     PlayBuf, the rate is multiplied by BufRate, so you</span>
+<span class="s">                     needn&#39;t do that yourself.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;center-pos&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the position in the buffer in seconds at which the</span>
+<span class="s">                     grain envelope will reach maximum amplitude.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;duration of the grain in seconds&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pan&quot;</span> <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a value from -1 to 1. Determines where to pan the</span>
+<span class="s">                     output in the same manner as PanAz.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;amp&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;amplitude of the grain.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;interp&quot;</span>
+               <span class="ss">:default</span> <span class="mi">4</span>
+               <span class="ss">:doc</span> <span class="s">&quot;1,2,or 4. Determines whether the grain uses (1) no</span>
+<span class="s">                     interpolation, (2) linear interpolation, or (4)</span>
+<span class="s">                     cubic interpolation.&quot;</span> <span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">num-outs-greater-than</span> <span class="mi">1</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;sample playback from a buffer with fine control for doing</span>
+<span class="s">             granular synthesis. Triggers generate grains from a single</span>
+<span class="s">             channel (mono) buffer. Each grain has a Hann</span>
+<span class="s">             envelope (sin^2(x) for x from 0 to pi) and is panned</span>
+<span class="s">             between two channels of multiple outputs.&quot;</span> <span class="p">}</span>
+
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufRd&quot;</span>,
+       <span class="ss">:summary</span> <span class="s">&quot;Read the contents of a buffer at a specified index&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The number of channels of the supplied buffer. This</span>
+<span class="s">                     must be a fixed integer and not a signal or a</span>
+<span class="s">                     control proxy. The architecture of the synth design</span>
+<span class="s">                     cannot change after it is compiled. (Warning: if</span>
+<span class="s">                     you supply a bufnum of a buffer that has a</span>
+<span class="s">                     different number of channels than you have</span>
+<span class="s">                     specified to buf-rd , it will fail silently).&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;The index of the buffer to use&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Audio rate modulatable index into the</span>
+<span class="s">                     buffer. Warning: The phase argument only offers</span>
+<span class="s">                     precision for addressing 2**24 samples (about 6.3</span>
+<span class="s">                     minutes at 44100Hz)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;1 means true, 0 means false.  This is modulatable.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;interpolation&quot;</span>
+               <span class="ss">:default</span> <span class="mi">2</span>
+               <span class="ss">:doc</span> <span class="s">&quot;1 means no interpolation, 2 is linear, 4 is cubic</span>
+<span class="s">                     interpolation&quot;</span><span class="p">}]</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">nth-input-ar</span> <span class="mi">1</span> <span class="s">&quot;Phase must be audio rate. The following message is offset by 1 due to first arg being special.&quot;</span><span class="p">))</span> <span class="c1">;; first arg is in mode num-outs</span>
+       <span class="ss">:doc</span> <span class="s">&quot;reads the contents of a buffer at a given index.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufWr&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input-array&quot;</span>,
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span>
+               <span class="ss">:doc</span> <span class="s">&quot;input ugens (channelArray)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the buffer to use&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;phase&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;modulatable index into the buffer (has to be audio</span>
+<span class="s">                     rate).&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;1 means true, 0 means false.  This is modulatable&quot;</span><span class="p">}]</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">nth-input-ar</span> <span class="mi">1</span> <span class="s">&quot;Phase must be audio rate. The following message is offset by 1 due to first arg being special.&quot;</span><span class="p">))</span>  <span class="c1">;; first arg is in mode append-sequence</span>
+       <span class="ss">:doc</span> <span class="s">&quot;writes to a buffer at a given index. Note, buf-wr (in</span>
+<span class="s">             difference to buf-rd) does not do multichannel expansion,</span>
+<span class="s">             because input is an array.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RecordBuf&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input-array&quot;</span>,
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an Array of input channels&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the buffer to use&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;offset&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an offset into the buffer in frames,&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rec-level&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;value to multiply by input before mixing with</span>
+<span class="s">                     existing data.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pre-level&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;value to multiply to existing data in buffer before</span>
+<span class="s">                     mixing with input&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;run&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;If zero, then recording stops, otherwise recording</span>
+<span class="s">                     proceeds.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;If zero then don&#39;t loop, otherwise do.  This is</span>
+<span class="s">                     modulate-able. &quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a trigger causes a jump to the offset position in</span>
+<span class="s">                     the Buffer. A trigger occurs when a signal changes</span>
+<span class="s">                     from &lt;= 0 to &gt; 0.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>, <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an integer representing an action to be executed</span>
+<span class="s">                     when the buffer is finished playing. This can be</span>
+<span class="s">                     used to free the enclosing synth. Action is only</span>
+<span class="s">                     evaluated if loop is 0&quot;</span><span class="p">}]</span>
+       <span class="ss">:doc</span> <span class="s">&quot;record a stream of values into a buffer. If recLevel is 1.0</span>
+<span class="s">             and preLevel is 0.0 then the new input overwrites the old</span>
+<span class="s">             data. If they are both 1.0 then the new data is added to</span>
+<span class="s">             the existing data. (Any other settings are also valid.)</span>
+<span class="s">             Note that the number of channels must be fixed for the</span>
+<span class="s">             defsynth, it cannot vary depending on which buffer you</span>
+<span class="s">             use.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ScopeOut&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input-array&quot;</span>, <span class="ss">:mode</span> <span class="ss">:append-sequence</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>, <span class="ss">:default</span> <span class="mf">0.0</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:num-outs</span> <span class="mi">0</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LocalBuf&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span> <span class="ss">:default</span> <span class="mi">1</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-frames&quot;</span><span class="p">}]</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-number?</span> <span class="mi">1</span><span class="p">)</span>
+       <span class="ss">:internal-name</span> <span class="nv">true</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;MaxLocalBufs&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-local-bufs&quot;</span><span class="p">}]</span>
+       <span class="ss">:check</span> <span class="p">[(</span><span class="nf">nth-input-number?</span> <span class="mi">0</span><span class="p">)]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}}</span>
+
+      <span class="c1">;; SetBuf : UGen {</span>
+      <span class="c1">;;        *new { arg buf, values, offset = 0;</span>
+      <span class="c1">;;                ^this.multiNewList([&#39;scalar&#39;, buf, offset, values.size] ++ values)</span>
+      <span class="c1">;;        }</span>
+      <span class="c1">;; }</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SetBuf&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;values&quot;</span> <span class="ss">:mode</span> <span class="ss">:not-expanded</span><span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;offset&quot;</span> <span class="ss">:default</span> <span class="mi">0</span><span class="p">}]</span>
+       <span class="c1">;;:init (fn [rate [buf values offset] spec]</span>
+       <span class="c1">;;         (apply vector buf offset (count values) values))</span>
+       <span class="p">}</span>
+
+      <span class="c1">;; ClearBuf : UGen {</span>
+      <span class="c1">;;        *new { arg buf;</span>
+      <span class="c1">;;                ^this.multiNew(&#39;scalar&#39;, buf)</span>
+      <span class="c1">;;        }</span>
+      <span class="c1">;; }</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ClearBuf&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>buffer-write!</h1>
+    <p class="doc">Write into a section of an audio buffer which modifies the buffer in
+  place on the server. Data can either be a single number or a
+  collection of numbers.  Accepts an optional param start-idx which
+  specifies an initial offset into the buffer from which to start
+  writing the data (defaults to 0).</p>
+    <p>
+      File: overtone/sc/buffer.clj
+      Line: 252
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">buffer-write!</span>
+  <span class="s">&quot;Write into a section of an audio buffer which modifies the buffer in</span>
+<span class="s">  place on the server. Data can either be a single number or a</span>
+<span class="s">  collection of numbers.  Accepts an optional param start-idx which</span>
+<span class="s">  specifies an initial offset into the buffer from which to start</span>
+<span class="s">  writing the data (defaults to 0).&quot;</span>
+  <span class="p">([</span><span class="nv">buf</span> <span class="nv">data</span><span class="p">]</span> <span class="p">(</span><span class="nf">buffer-write!</span> <span class="nv">buf</span> <span class="mi">0</span> <span class="nv">data</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">buf</span> <span class="nv">start-idx</span> <span class="nv">data</span><span class="p">]</span>
+     <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">cnt</span> <span class="p">(</span><span class="nb">count </span><span class="nv">data</span><span class="p">)]</span>
+       <span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nf">buffer?</span> <span class="nv">buf</span><span class="p">))</span>
+       <span class="p">(</span><span class="nf">ensure-buffer-active!</span> <span class="nv">buf</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">&lt;= </span><span class="nv">cnt</span> <span class="nv">MAX-OSC-SAMPLES</span><span class="p">)</span>
+               <span class="p">(</span><span class="nf">fs</span> <span class="s">&quot;Error - the data you attempted to write to the buffer was</span>
+<span class="s">                  too large to be sent via UDP.&quot;</span><span class="p">))</span>
+       <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">data</span>    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">number?</span> <span class="nv">data</span><span class="p">)</span> <span class="p">[</span><span class="nv">data</span><span class="p">]</span> <span class="nv">data</span><span class="p">)</span>
+             <span class="nv">doubles</span> <span class="p">(</span><span class="nb">map float </span><span class="nv">data</span><span class="p">)]</span>
+         <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="p">(</span><span class="nb">+ </span><span class="nv">start-idx</span> <span class="nv">cnt</span><span class="p">)</span> <span class="p">(</span><span class="ss">:size</span> <span class="nv">buf</span><span class="p">))</span>
+           <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">Exception.</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;the data you attempted to write to buffer &quot;</span> <span class="p">(</span><span class="ss">:id</span> <span class="nv">buf</span><span class="p">)</span> <span class="s">&quot;was too large for its capacity. Use a smaller data list and/or a lower start index.&quot;</span><span class="p">)))</span>
+           <span class="p">(</span><span class="nb">apply </span><span class="nv">snd</span> <span class="s">&quot;/b_setn&quot;</span> <span class="p">(</span><span class="ss">:id</span> <span class="nv">buf</span><span class="p">)</span> <span class="nv">start-idx</span> <span class="nv">cnt</span> <span class="nv">doubles</span><span class="p">))))</span>
+     <span class="nv">buf</span><span class="p">))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

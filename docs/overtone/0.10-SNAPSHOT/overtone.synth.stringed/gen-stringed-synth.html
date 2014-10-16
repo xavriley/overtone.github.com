@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>gen-stringed-synth</h1>
+    <p class="doc">Macro to generate a stringed defsynth with distortion, reverb and
+   a low-pass filter.  Use the pluck-strings and strum-strings helper
+  functions to play the instrument.
+
+   Note: the strings need to be silenced with a gate -> 0 transition
+   before a gate -> 1 transition activates it.  Testing
+   showed it needed > 25 ms between these transitions to be effective.</p>
+    <p>
+      File: overtone/synth/stringed.clj
+      Line: 15
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">gen-stringed-synth</span>
+  <span class="s">&quot;Macro to generate a stringed defsynth with distortion, reverb and</span>
+<span class="s">   a low-pass filter.  Use the pluck-strings and strum-strings helper</span>
+<span class="s">  functions to play the instrument.</span>
+
+<span class="s">   Note: the strings need to be silenced with a gate -&gt; 0 transition</span>
+<span class="s">   before a gate -&gt; 1 transition activates it.  Testing</span>
+<span class="s">   showed it needed &gt; 25 ms between these transitions to be effective.&quot;</span>
+  <span class="p">[</span><span class="nb">name </span><span class="nv">num-strings</span> <span class="nv">free-on-silence</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">note-ins</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">num-strings</span> <span class="mi">1</span><span class="p">)</span>
+                   <span class="p">[(</span><span class="nb">symbol </span><span class="s">&quot;note&quot;</span><span class="p">)]</span>
+                   <span class="p">(</span><span class="nb">apply </span><span class="nv">vector</span>
+                          <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">symbol </span><span class="p">(</span><span class="nf">format</span> <span class="s">&quot;note-%d&quot;</span> <span class="nv">%</span><span class="p">))</span> <span class="p">(</span><span class="nb">range </span><span class="nv">num-strings</span><span class="p">))))</span>
+        <span class="nv">note-default-ins</span> <span class="p">(</span><span class="nb">apply </span><span class="nv">vector</span>
+                                <span class="p">(</span><span class="nf">flatten</span> <span class="p">(</span><span class="nb">map </span><span class="nv">vector</span>
+                                              <span class="nv">note-ins</span>
+                                              <span class="p">(</span><span class="nb">repeat </span><span class="nv">num-strings</span> <span class="p">{</span><span class="ss">:default</span> <span class="mi">60</span> <span class="ss">:min</span> <span class="mi">0</span> <span class="ss">:max</span> <span class="mi">127</span><span class="p">}))))</span>
+        <span class="nv">gate-ins</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">num-strings</span> <span class="mi">1</span><span class="p">)</span>
+                   <span class="p">[(</span><span class="nb">symbol </span><span class="s">&quot;gate&quot;</span><span class="p">)]</span>
+                   <span class="p">(</span><span class="nb">apply </span><span class="nv">vector</span>
+                          <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">symbol </span><span class="p">(</span><span class="nf">format</span> <span class="s">&quot;gate-%d&quot;</span> <span class="nv">%</span><span class="p">))</span> <span class="p">(</span><span class="nb">range </span><span class="nv">num-strings</span><span class="p">))))</span>
+        <span class="nv">gate-default-ins</span> <span class="p">(</span><span class="nb">apply vector </span><span class="p">(</span><span class="nf">flatten</span> <span class="p">(</span><span class="nb">map </span><span class="nv">vector</span>
+                                                     <span class="nv">gate-ins</span>
+                                                     <span class="p">(</span><span class="nb">repeat </span><span class="nv">num-strings</span> <span class="p">{</span><span class="ss">:default</span> <span class="mi">0</span><span class="p">}))))</span>
+        <span class="nv">both-default-ins</span> <span class="p">(</span><span class="nb">into </span><span class="nv">note-default-ins</span> <span class="nv">gate-default-ins</span><span class="p">)</span>
+        <span class="nv">note-gate-pairs</span> <span class="p">(</span><span class="nb">apply vector </span><span class="p">(</span><span class="nb">map vector </span><span class="nv">note-ins</span> <span class="nv">gate-ins</span><span class="p">))</span>
+        <span class="nv">env-gen-fn</span> <span class="p">(</span><span class="k">if </span><span class="nv">free-on-silence</span>
+                     <span class="o">&#39;</span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">overtone.sc.ugens/env-gen</span>
+                              <span class="p">(</span><span class="nf">overtone.sc.envelope/asr</span> <span class="mf">0.0001</span> <span class="mi">1</span> <span class="mf">0.1</span><span class="p">)</span>
+                              <span class="ss">:gate</span> <span class="p">(</span><span class="nb">second </span><span class="nv">x</span><span class="p">)</span>
+                              <span class="ss">:action</span> <span class="nv">overtone.sc.ugens/FREE</span><span class="p">))</span>
+                     <span class="o">&#39;</span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">overtone.sc.ugens/env-gen</span>
+                              <span class="p">(</span><span class="nf">overtone.sc.envelope/asr</span> <span class="mf">0.0001</span> <span class="mi">1</span> <span class="mf">0.1</span><span class="p">)</span>
+                              <span class="ss">:gate</span> <span class="p">(</span><span class="nb">second </span><span class="nv">x</span><span class="p">))))</span>
+        <span class="p">]</span>
+    <span class="o">`</span><span class="p">(</span><span class="nf">defsynth</span> <span class="o">~</span><span class="nv">name</span>
+       <span class="o">~</span><span class="p">(</span><span class="nb">str </span><span class="s">&quot;a stringed instrument synth with &quot;</span> <span class="nv">num-strings</span>
+             <span class="s">&quot; strings mixed and sent thru</span>
+<span class="s">  distortion and reverb effects followed by a low-pass filter.  Use</span>
+<span class="s">  the pluck-strings and strum-strings helper functions to play the</span>
+<span class="s">  instrument. Note: the strings need to be silenced with a gate -&gt; 0</span>
+<span class="s">  transition before a gate -&gt; 1 transition activates it.&quot;</span>
+             <span class="p">(</span><span class="k">if </span><span class="nv">free-on-silence</span>
+               <span class="s">&quot; This instrument</span>
+<span class="s">  is transient.  When a string becomes silent, it will be freed.&quot;</span>
+               <span class="s">&quot; This instrument</span>
+<span class="s">  is persistent.  It will not be freed when the strings go silent.&quot;</span><span class="p">))</span>
+
+       <span class="p">[</span><span class="o">~@</span><span class="nv">both-default-ins</span>
+        <span class="o">~</span><span class="ss">&#39;dur</span>       <span class="p">{</span><span class="ss">:default</span> <span class="mf">10.0</span>  <span class="ss">:min</span> <span class="mf">1.0</span> <span class="ss">:max</span> <span class="mf">100.0</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;decay</span>     <span class="p">{</span><span class="ss">:default</span> <span class="mi">30</span>    <span class="ss">:min</span> <span class="mi">1</span>   <span class="ss">:max</span> <span class="mi">100</span><span class="p">}</span> <span class="c1">;; pluck decay</span>
+        <span class="o">~</span><span class="ss">&#39;coef</span>      <span class="p">{</span><span class="ss">:default</span> <span class="mf">0.3</span>   <span class="ss">:min</span> <span class="mi">-1</span>  <span class="ss">:max</span> <span class="mi">1</span><span class="p">}</span>   <span class="c1">;; pluck coef</span>
+        <span class="o">~</span><span class="ss">&#39;noise-amp</span> <span class="p">{</span><span class="ss">:default</span> <span class="mf">0.8</span>   <span class="ss">:min</span> <span class="mf">0.0</span> <span class="ss">:max</span> <span class="mf">1.0</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;pre-amp</span>   <span class="p">{</span><span class="ss">:default</span> <span class="mf">6.0</span>   <span class="ss">:min</span> <span class="mf">0.0</span> <span class="ss">:max</span> <span class="mf">10.0</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;amp</span>       <span class="p">{</span><span class="ss">:default</span> <span class="mf">1.0</span>   <span class="ss">:min</span> <span class="mf">0.0</span> <span class="ss">:max</span> <span class="mf">10.0</span><span class="p">}</span>
+        <span class="c1">;; by default, no distortion, no reverb, no low-pass</span>
+        <span class="o">~</span><span class="ss">&#39;distort</span>   <span class="p">{</span><span class="ss">:default</span> <span class="mf">0.0</span>   <span class="ss">:min</span> <span class="mf">0.0</span> <span class="ss">:max</span> <span class="mf">0.9999999999</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;rvb-mix</span>   <span class="p">{</span><span class="ss">:default</span> <span class="mf">0.0</span>   <span class="ss">:min</span> <span class="mf">0.0</span> <span class="ss">:max</span> <span class="mf">1.0</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;rvb-room</span>  <span class="p">{</span><span class="ss">:default</span> <span class="mf">0.0</span>   <span class="ss">:min</span> <span class="mf">0.0</span> <span class="ss">:max</span> <span class="mf">1.0</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;rvb-damp</span>  <span class="p">{</span><span class="ss">:default</span> <span class="mf">0.0</span>   <span class="ss">:min</span> <span class="mf">0.0</span> <span class="ss">:max</span> <span class="mf">1.0</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;lp-freq</span>   <span class="p">{</span><span class="ss">:default</span> <span class="mi">20000</span> <span class="ss">:min</span> <span class="mi">100</span> <span class="ss">:max</span> <span class="mi">20000</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;lp-rq</span>     <span class="p">{</span><span class="ss">:default</span> <span class="mf">1.0</span>   <span class="ss">:min</span> <span class="mf">0.1</span> <span class="ss">:max</span> <span class="mf">10.0</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;pan</span>       <span class="p">{</span><span class="ss">:default</span> <span class="mf">0.0</span>   <span class="ss">:min</span> <span class="mi">-1</span>  <span class="ss">:max</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="o">~</span><span class="ss">&#39;out-bus</span>   <span class="p">{</span><span class="ss">:default</span> <span class="mi">0</span>     <span class="ss">:min</span> <span class="mi">0</span>   <span class="ss">:max</span> <span class="mi">100</span><span class="p">}]</span>
+       <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">strings#</span> <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">frq#</span>  <span class="p">(</span><span class="nf">midicps</span> <span class="p">(</span><span class="nb">first </span><span class="nv">%</span><span class="p">))</span>
+                                  <span class="nv">nze#</span>  <span class="p">(</span><span class="o">~</span><span class="ss">&#39;*</span> <span class="o">~</span><span class="ss">&#39;noise-amp</span> <span class="p">(</span><span class="nf">pink-noise</span><span class="p">))</span>
+                                  <span class="nv">plk#</span>  <span class="p">(</span><span class="nf">pluck</span> <span class="nv">nze#</span>
+                                               <span class="p">(</span><span class="nb">second </span><span class="nv">%</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nb">/ </span><span class="mf">1.0</span> <span class="mf">8.0</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="o">~</span><span class="ss">&#39;/</span> <span class="mf">1.0</span> <span class="nv">frq#</span><span class="p">)</span>
+                                               <span class="o">~</span><span class="ss">&#39;decay</span>
+                                               <span class="o">~</span><span class="ss">&#39;coef</span><span class="p">)]</span>
+                              <span class="p">(</span><span class="nf">leak-dc</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;*</span> <span class="nv">plk#</span> <span class="p">(</span><span class="o">~</span><span class="nv">env-gen-fn</span> <span class="nv">%</span><span class="p">))</span>
+                                       <span class="mf">0.995</span><span class="p">))</span>
+                           <span class="o">~</span><span class="nv">note-gate-pairs</span><span class="p">)</span>
+             <span class="nv">src#</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;*</span> <span class="o">~</span><span class="ss">&#39;pre-amp</span> <span class="p">(</span><span class="nf">mix</span> <span class="nv">strings#</span><span class="p">))</span>
+             <span class="c1">;; distortion from fx-distortion2</span>
+             <span class="nv">k#</span>   <span class="p">(</span><span class="o">~</span><span class="ss">&#39;/</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;*</span> <span class="mi">2</span> <span class="o">~</span><span class="ss">&#39;distort</span><span class="p">)</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;-</span> <span class="mi">1</span> <span class="o">~</span><span class="ss">&#39;distort</span><span class="p">))</span>
+             <span class="nv">dis#</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;/</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;*</span> <span class="nv">src#</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;+</span> <span class="mi">1</span> <span class="nv">k#</span><span class="p">))</span>
+                       <span class="p">(</span><span class="o">~</span><span class="ss">&#39;+</span> <span class="mi">1</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;*</span> <span class="nv">k#</span> <span class="p">(</span><span class="nf">abs</span> <span class="nv">src#</span><span class="p">))))</span>
+             <span class="nv">vrb#</span> <span class="p">(</span><span class="nf">free-verb</span> <span class="nv">dis#</span> <span class="o">~</span><span class="ss">&#39;rvb-mix</span> <span class="o">~</span><span class="ss">&#39;rvb-room</span> <span class="o">~</span><span class="ss">&#39;rvb-damp</span><span class="p">)</span>
+             <span class="nv">fil#</span> <span class="p">(</span><span class="nf">rlpf</span> <span class="nv">vrb#</span> <span class="o">~</span><span class="ss">&#39;lp-freq</span> <span class="o">~</span><span class="ss">&#39;lp-rq</span><span class="p">)]</span>
+         <span class="p">(</span><span class="nf">out</span> <span class="o">~</span><span class="ss">&#39;out-bus</span> <span class="p">(</span><span class="nf">pan2</span> <span class="p">(</span><span class="o">~</span><span class="ss">&#39;*</span> <span class="o">~</span><span class="ss">&#39;amp</span> <span class="nv">fil#</span><span class="p">)</span> <span class="o">~</span><span class="ss">&#39;pan</span><span class="p">))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

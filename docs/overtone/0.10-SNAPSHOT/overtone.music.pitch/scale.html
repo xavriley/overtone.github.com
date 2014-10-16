@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>SCALE</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/music/pitch.clj
+      Line: 232
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">SCALE</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">ionian-sequence</span>     <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="nv">hex-sequence</span>        <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="nv">pentatonic-sequence</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="nv">rotate</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">scale-sequence</span> <span class="nv">offset</span><span class="p">]</span>
+                 <span class="p">(</span><span class="nb">take </span><span class="p">(</span><span class="nb">count </span><span class="nv">scale-sequence</span><span class="p">)</span>
+                       <span class="p">(</span><span class="nb">drop </span><span class="nv">offset</span> <span class="p">(</span><span class="nb">cycle </span><span class="nv">scale-sequence</span><span class="p">))))]</span>
+    <span class="p">{</span><span class="ss">:diatonic</span>           <span class="nv">ionian-sequence</span>
+     <span class="ss">:ionian</span>             <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">0</span><span class="p">)</span>
+     <span class="ss">:major</span>              <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">0</span><span class="p">)</span>
+     <span class="ss">:dorian</span>             <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">1</span><span class="p">)</span>
+     <span class="ss">:phrygian</span>           <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">2</span><span class="p">)</span>
+     <span class="ss">:lydian</span>             <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">3</span><span class="p">)</span>
+     <span class="ss">:mixolydian</span>         <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">4</span><span class="p">)</span>
+     <span class="ss">:aeolian</span>            <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">5</span><span class="p">)</span>
+     <span class="ss">:minor</span>              <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">5</span><span class="p">)</span>
+     <span class="ss">:locrian</span>            <span class="p">(</span><span class="nf">rotate</span> <span class="nv">ionian-sequence</span> <span class="mi">6</span><span class="p">)</span>
+     <span class="ss">:hex-major6</span>         <span class="p">(</span><span class="nf">rotate</span> <span class="nv">hex-sequence</span> <span class="mi">0</span><span class="p">)</span>
+     <span class="ss">:hex-dorian</span>         <span class="p">(</span><span class="nf">rotate</span> <span class="nv">hex-sequence</span> <span class="mi">1</span><span class="p">)</span>
+     <span class="ss">:hex-phrygian</span>       <span class="p">(</span><span class="nf">rotate</span> <span class="nv">hex-sequence</span> <span class="mi">2</span><span class="p">)</span>
+     <span class="ss">:hex-major7</span>         <span class="p">(</span><span class="nf">rotate</span> <span class="nv">hex-sequence</span> <span class="mi">3</span><span class="p">)</span>
+     <span class="ss">:hex-sus</span>            <span class="p">(</span><span class="nf">rotate</span> <span class="nv">hex-sequence</span> <span class="mi">4</span><span class="p">)</span>
+     <span class="ss">:hex-aeolian</span>        <span class="p">(</span><span class="nf">rotate</span> <span class="nv">hex-sequence</span> <span class="mi">5</span><span class="p">)</span>
+     <span class="ss">:minor-pentatonic</span>   <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">0</span><span class="p">)</span>
+     <span class="ss">:yu</span>                 <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">0</span><span class="p">)</span>
+     <span class="ss">:major-pentatonic</span>   <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">1</span><span class="p">)</span>
+     <span class="ss">:gong</span>               <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">1</span><span class="p">)</span>
+     <span class="ss">:egyptian</span>           <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">2</span><span class="p">)</span>
+     <span class="ss">:shang</span>              <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">2</span><span class="p">)</span>
+     <span class="ss">:jiao</span>               <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">3</span><span class="p">)</span>
+     <span class="ss">:pentatonic</span>         <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; historical match</span>
+     <span class="ss">:zhi</span>                <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">4</span><span class="p">)</span>
+     <span class="ss">:ritusen</span>            <span class="p">(</span><span class="nf">rotate</span> <span class="nv">pentatonic-sequence</span> <span class="mi">4</span><span class="p">)</span>
+     <span class="ss">:whole-tone</span>         <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:whole</span>              <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:chromatic</span>          <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:harmonic-minor</span>     <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:melodic-minor-asc</span>  <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:hungarian-minor</span>    <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:octatonic</span>          <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:messiaen1</span>          <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:messiaen2</span>          <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:messiaen3</span>          <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:messiaen4</span>          <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:messiaen5</span>          <span class="p">[</span><span class="mi">1</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:messiaen6</span>          <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:messiaen7</span>          <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:super-locrian</span>      <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:hirajoshi</span>          <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span><span class="p">]</span>
+     <span class="ss">:kumoi</span>              <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+     <span class="ss">:neapolitan-major</span>   <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:bartok</span>             <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:bhairav</span>            <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:locrian-major</span>      <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:ahirbhairav</span>        <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:enigmatic</span>          <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:neapolitan-minor</span>   <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:pelog</span>              <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span><span class="p">]</span>
+     <span class="ss">:augmented2</span>         <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">3</span><span class="p">]</span>
+     <span class="ss">:scriabin</span>           <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+     <span class="ss">:harmonic-major</span>     <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:melodic-minor-desc</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:romanian-minor</span>     <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:hindu</span>              <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:iwato</span>              <span class="p">[</span><span class="mi">1</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:melodic-minor</span>      <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:diminished2</span>        <span class="p">[</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:marva</span>              <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:melodic-major</span>      <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:indian</span>             <span class="p">[</span><span class="mi">4</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:spanish</span>            <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:prometheus</span>         <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">5</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:diminished</span>         <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="ss">:todi</span>               <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:leading-whole</span>      <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:augmented</span>          <span class="p">[</span><span class="mi">3</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:purvi</span>              <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:chinese</span>            <span class="p">[</span><span class="mi">4</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">1</span><span class="p">]</span>
+     <span class="ss">:lydian-minor</span>       <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]}))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>paint-scope</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/studio/scope.clj
+      Line: 74
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn- </span><span class="nv">paint-scope</span> <span class="p">[</span><span class="o">^</span><span class="nv">Graphics</span> <span class="nv">g</span> <span class="nv">id</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">if-let </span><span class="p">[</span><span class="nv">scope</span> <span class="p">(</span><span class="nb">get </span><span class="o">@</span><span class="nv">scopes*</span> <span class="nv">id</span><span class="p">)]</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">background</span> <span class="nv">width</span> <span class="nv">height</span> <span class="nv">color</span> <span class="nv">x-array</span> <span class="nv">y-arrays</span> <span class="nv">slider</span><span class="p">]}</span> <span class="nv">scope</span>
+          <span class="nv">s-val</span>     <span class="p">(</span><span class="nf">.getValue</span> <span class="nv">slider</span><span class="p">)</span>
+          <span class="nv">y-zoom</span>    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">s-val</span> <span class="mi">49</span><span class="p">)</span>
+                      <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="p">(</span><span class="nb">* </span><span class="mf">0.1</span> <span class="p">(</span><span class="nb">- </span><span class="nv">s-val</span> <span class="mi">50</span><span class="p">)))</span>
+                      <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">* </span><span class="mf">0.02</span> <span class="nv">s-val</span><span class="p">)</span> <span class="mf">0.01</span><span class="p">))</span>
+          <span class="nv">y-shift</span>   <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">/ </span><span class="nv">height</span> <span class="mf">2.0</span><span class="p">)</span> <span class="nv">Y-PADDING</span><span class="p">)</span>
+          <span class="p">[</span><span class="nv">y-a</span> <span class="nv">y-b</span><span class="p">]</span> <span class="o">@</span><span class="nv">y-arrays</span><span class="p">]</span>
+      <span class="p">(</span><span class="nb">doto </span><span class="nv">g</span>
+        <span class="p">(</span><span class="nf">.setRenderingHint</span> <span class="nv">RenderingHints/KEY_ANTIALIASING</span>
+                           <span class="nv">RenderingHints/VALUE_ANTIALIAS_ON</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">.setColor</span> <span class="o">^</span><span class="nv">Color</span> <span class="nv">background</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">.fillRect</span> <span class="mi">0</span> <span class="mi">0</span> <span class="nv">width</span> <span class="nv">height</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">.setColor</span> <span class="o">^</span><span class="nv">Color</span> <span class="p">(</span><span class="nf">Color.</span> <span class="mi">100</span> <span class="mi">100</span> <span class="mi">100</span><span class="p">))</span>
+        <span class="p">(</span><span class="nf">.drawRect</span> <span class="mi">0</span> <span class="mi">0</span> <span class="nv">width</span> <span class="nv">height</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">.setColor</span> <span class="o">^</span><span class="nv">Color</span> <span class="nv">color</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">.translate</span> <span class="mi">0</span> <span class="nv">y-shift</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">.scale</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">* </span><span class="mi">-1</span> <span class="nv">y-zoom</span><span class="p">))</span>
+        <span class="p">(</span><span class="nf">.drawPolyline</span> <span class="o">^</span><span class="nv">ints</span> <span class="nv">x-array</span> <span class="o">^</span><span class="nv">ints</span> <span class="nv">y-a</span> <span class="nv">width</span><span class="p">)))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

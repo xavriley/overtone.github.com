@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>space-reverb</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/examples/instruments/space.clj
+      Line: 27
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="nf">defsynth</span> <span class="nv">space-reverb</span>
+  <span class="p">[</span><span class="nv">out-bus</span> <span class="mi">0</span>
+   <span class="nv">in-bus</span> <span class="mi">0</span>
+   <span class="nv">gate</span> <span class="mi">1</span>
+   <span class="nv">threshold</span> <span class="mf">0.1</span>
+   <span class="nv">amp</span> <span class="mf">0.1</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">env</span>             <span class="p">(</span><span class="nf">linen</span> <span class="nv">gate</span> <span class="mf">0.1</span> <span class="mi">1</span> <span class="mf">0.1</span> <span class="nv">FREE</span><span class="p">)</span>
+        <span class="nv">num-combs</span>       <span class="mi">6</span>
+        <span class="nv">num-allpass</span>     <span class="mi">4</span>
+        <span class="nv">src</span>             <span class="p">(</span><span class="nf">in</span> <span class="nv">in-bus</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="nv">reverb-predelay</span> <span class="p">(</span><span class="nf">delay-n</span> <span class="nv">src</span> <span class="mf">0.048</span> <span class="mf">0.048</span><span class="p">)</span>
+        <span class="nv">y</span>               <span class="p">(</span><span class="nf">mix</span> <span class="p">(</span><span class="nb">repeat </span><span class="nv">num-combs</span> <span class="p">(</span><span class="nf">comb-l</span> <span class="nv">reverb-predelay</span> <span class="mf">0.1</span> <span class="p">(</span><span class="nf">ranged-rand</span> <span class="mf">0.01</span> <span class="mf">0.1</span><span class="p">)</span> <span class="mi">5</span><span class="p">)))</span>
+        <span class="nv">y</span>               <span class="p">(</span><span class="k">loop </span><span class="p">[</span><span class="nv">cnt</span> <span class="nv">num-allpass</span>
+                               <span class="nv">res</span> <span class="nv">y</span><span class="p">]</span>
+                          <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt;= </span><span class="nv">cnt</span> <span class="mi">0</span><span class="p">)</span>
+                            <span class="nv">res</span>
+                            <span class="p">(</span><span class="nf">recur</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">cnt</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="nf">allpass-n</span> <span class="nv">res</span>
+                                              <span class="mf">0.051</span>
+                                              <span class="p">[(</span><span class="nf">ranged-rand</span> <span class="mf">0.01</span> <span class="mf">0.05</span><span class="p">)</span>
+                                               <span class="p">(</span><span class="nf">ranged-rand</span> <span class="mf">0.01</span> <span class="mf">0.05</span><span class="p">)]</span>
+                                              <span class="mi">1</span><span class="p">))))]</span>
+    <span class="p">(</span><span class="nf">out</span> <span class="nv">out-bus</span> <span class="p">(</span><span class="nb">* </span><span class="nv">env</span> <span class="nv">amp</span> <span class="p">(</span><span class="nf">pan2</span> <span class="nv">y</span><span class="p">)))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

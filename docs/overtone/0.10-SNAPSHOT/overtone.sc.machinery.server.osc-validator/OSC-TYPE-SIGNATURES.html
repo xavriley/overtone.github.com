@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>OSC-TYPE-SIGNATURES</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/server/osc_validator.clj
+      Line: 123
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">OSC-TYPE-SIGNATURES</span>
+  <span class="p">{</span>
+   <span class="c1">;;Master Controls</span>
+   <span class="s">&quot;/quit&quot;</span>               <span class="p">[]</span>
+   <span class="s">&quot;/notify&quot;</span>             <span class="p">[</span><span class="ss">:zero-or-one</span><span class="p">]</span>
+   <span class="s">&quot;/status&quot;</span>             <span class="p">[]</span>
+   <span class="s">&quot;/cmd&quot;</span>                <span class="p">[</span><span class="ss">:int</span> <span class="ss">:anything*</span><span class="p">]</span>
+   <span class="s">&quot;/dumpOSC&quot;</span>            <span class="p">[</span><span class="ss">:zero-to-three</span><span class="p">]</span>
+   <span class="s">&quot;/sync&quot;</span>               <span class="p">[</span><span class="ss">:int</span><span class="p">]</span>
+   <span class="s">&quot;/clearSched&quot;</span>         <span class="p">[]</span>
+   <span class="s">&quot;/error&quot;</span>              <span class="p">[</span><span class="ss">:minus-two-to-one</span><span class="p">]</span>
+
+   <span class="c1">;;Synth Definition Commands</span>
+   <span class="s">&quot;/d_recv&quot;</span>             <span class="p">[</span><span class="ss">:bytes</span><span class="p">]</span>
+   <span class="s">&quot;/d_load&quot;</span>             <span class="p">[</span><span class="ss">:pathname</span><span class="p">]</span>
+   <span class="s">&quot;/d_loadDir&quot;</span>          <span class="p">[</span><span class="ss">:pathname</span><span class="p">]</span>
+   <span class="s">&quot;/d_free&quot;</span>             <span class="p">[</span><span class="ss">:synthdef-name</span><span class="p">]</span>
+
+   <span class="c1">;;Node Commands</span>
+   <span class="s">&quot;/n_free&quot;</span>             <span class="p">[</span><span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/n_run&quot;</span>              <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:zero-or-one</span><span class="p">]</span>
+   <span class="s">&quot;/n_set&quot;</span>              <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ALTERNATING-ctl-handle-THEN-ctl-val*</span><span class="p">]</span>
+   <span class="s">&quot;/n_setn&quot;</span>             <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ctl-handle</span> <span class="ss">:count</span> <span class="ss">:ctl-val*</span><span class="p">]</span>
+   <span class="s">&quot;/n_fill&quot;</span>             <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ctl-handle</span> <span class="ss">:count</span> <span class="ss">:ctl-val</span><span class="p">]</span>
+   <span class="s">&quot;/n_map&quot;</span>              <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ctl-handle</span> <span class="ss">:ctl-bus-idx</span><span class="p">]</span>
+   <span class="s">&quot;/n_mapn&quot;</span>             <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ctl-handle</span> <span class="ss">:ctl-bus-idx</span> <span class="ss">:count</span><span class="p">]</span>
+   <span class="s">&quot;/n_mapa&quot;</span>             <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ctl-handle</span> <span class="ss">:ctl-bus-idx</span><span class="p">]</span>
+   <span class="s">&quot;/n_mapan&quot;</span>            <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ctl-handle</span> <span class="ss">:ctl-bus-idx</span> <span class="ss">:count</span><span class="p">]</span>
+   <span class="s">&quot;/n_before&quot;</span>           <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/n_after&quot;</span>            <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/n_query&quot;</span>            <span class="p">[</span><span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/n_trace&quot;</span>            <span class="p">[</span><span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/n_order&quot;</span>            <span class="p">[</span><span class="ss">:zero-to-three</span> <span class="ss">:node-id</span> <span class="ss">:node-id</span><span class="p">]</span>
+
+   <span class="c1">;;Synth Commands</span>
+   <span class="s">&quot;/s_new&quot;</span>              <span class="p">[</span><span class="ss">:synthdef-name</span> <span class="ss">:synth-id</span> <span class="ss">:zero-to-four</span> <span class="ss">:node-id</span> <span class="ss">:ALTERNATING-ctl-handle-THEN-ctl-val*</span><span class="p">]</span>
+   <span class="s">&quot;/s_get&quot;</span>              <span class="p">[</span><span class="ss">:synth-id</span> <span class="ss">:ctl-handle*</span><span class="p">]</span>
+   <span class="s">&quot;/s_getn&quot;</span>             <span class="p">[</span><span class="ss">:synth-id</span> <span class="ss">:ctl-handle</span> <span class="ss">:count</span><span class="p">]</span>
+   <span class="s">&quot;/s_noid&quot;</span>             <span class="p">[</span><span class="ss">:synth-id</span><span class="p">]</span>
+
+   <span class="c1">;;Group Commands</span>
+   <span class="s">&quot;/g_new&quot;</span>              <span class="p">[</span><span class="ss">:group-id</span> <span class="ss">:zero-to-four</span> <span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/g_head&quot;</span>             <span class="p">[</span><span class="ss">:group-id</span> <span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/g_tail&quot;</span>             <span class="p">[</span><span class="ss">:group-id</span> <span class="ss">:node-id</span><span class="p">]</span>
+   <span class="s">&quot;/g_freeAll&quot;</span>          <span class="p">[</span><span class="ss">:group-id</span><span class="p">]</span>
+   <span class="s">&quot;/g_deepFree&quot;</span>         <span class="p">[</span><span class="ss">:group-id</span><span class="p">]</span>
+   <span class="s">&quot;/g_dumpTree&quot;</span>         <span class="p">[</span><span class="ss">:group-id</span> <span class="ss">:zero-or-one</span><span class="p">]</span>
+   <span class="s">&quot;/g_queryTree&quot;</span>        <span class="p">[</span><span class="ss">:group-id</span> <span class="ss">:zero-or-one</span><span class="p">]</span>
+
+   <span class="c1">;;Unit Generator Commands</span>
+   <span class="s">&quot;/u_cmd&quot;</span>              <span class="p">[</span><span class="ss">:node-id</span> <span class="ss">:ugen-idx</span> <span class="ss">:cmd-name</span> <span class="ss">:anything*</span><span class="p">]</span>
+
+   <span class="c1">;;Buffer Commands</span>
+   <span class="s">&quot;/b_alloc&quot;</span>            <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:num-frames</span> <span class="ss">:count</span><span class="p">]</span>
+   <span class="s">&quot;/b_allocRead&quot;</span>        <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:pathname</span> <span class="ss">:frame-start</span> <span class="ss">:num-frames</span><span class="p">]</span>
+   <span class="s">&quot;/b_allocReadChannel&quot;</span> <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:pathname</span> <span class="ss">:frame-start</span> <span class="ss">:num-frames</span> <span class="ss">:chan-idx*</span><span class="p">]</span>
+   <span class="s">&quot;/b_read&quot;</span>             <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:pathname</span> <span class="ss">:frame-start</span> <span class="ss">:num-frames</span> <span class="ss">:frame-start</span> <span class="ss">:zero-or-one</span><span class="p">]</span>
+   <span class="s">&quot;/b_readChannel&quot;</span>      <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:pathname</span> <span class="ss">:frame-start</span> <span class="ss">:num-frames</span> <span class="ss">:frame-start</span> <span class="ss">:zero-or-one</span> <span class="ss">:chan-idx*</span><span class="p">]</span>
+   <span class="s">&quot;/b_write&quot;</span>            <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:pathname</span> <span class="ss">:header-format</span> <span class="ss">:sample-format</span> <span class="ss">:num-frames</span> <span class="ss">:frame-start</span> <span class="ss">:zero-or-one</span><span class="p">]</span>
+   <span class="s">&quot;/b_free&quot;</span>             <span class="p">[</span><span class="ss">:buf-num</span><span class="p">]</span>
+   <span class="s">&quot;/b_zero&quot;</span>             <span class="p">[</span><span class="ss">:buf-num</span><span class="p">]</span>
+   <span class="s">&quot;/b_set&quot;</span>              <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:sample-idx</span> <span class="ss">:sample-val</span><span class="p">]</span>
+   <span class="s">&quot;/b_setn&quot;</span>             <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:sample-idx</span> <span class="ss">:count</span> <span class="ss">:sample-val*</span><span class="p">]</span>
+   <span class="s">&quot;/b_fill&quot;</span>             <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:sample-idx</span> <span class="ss">:count</span> <span class="ss">:sample-val</span><span class="p">]</span>
+   <span class="s">&quot;/b_gen&quot;</span>              <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:cmd-name</span> <span class="ss">:anything*</span><span class="p">]</span>
+   <span class="s">&quot;/b_close&quot;</span>            <span class="p">[</span><span class="ss">:buf-num</span><span class="p">]</span>
+   <span class="s">&quot;/b_query&quot;</span>            <span class="p">[</span><span class="ss">:buf-num</span><span class="p">]</span>
+   <span class="s">&quot;/b_get&quot;</span>              <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:sample-idx</span><span class="p">]</span>
+   <span class="s">&quot;/b_getn&quot;</span>             <span class="p">[</span><span class="ss">:buf-num</span> <span class="ss">:sample-idx</span> <span class="ss">:count</span><span class="p">]</span>
+
+   <span class="c1">;;Control Bus Commands</span>
+   <span class="s">&quot;/c_set&quot;</span>              <span class="p">[</span><span class="ss">:ctl-bus-idx</span> <span class="ss">:ctl-val</span><span class="p">]</span>
+   <span class="s">&quot;/c_setn&quot;</span>             <span class="p">[</span><span class="ss">:ctl-bus-idx</span> <span class="ss">:count</span> <span class="ss">:ctl-val*</span><span class="p">]</span>
+   <span class="s">&quot;/c_fill&quot;</span>             <span class="p">[</span><span class="ss">:ctl-bus-idx</span> <span class="ss">:count</span> <span class="ss">:ctl-val</span><span class="p">]</span>
+   <span class="s">&quot;/c_get&quot;</span>              <span class="p">[</span><span class="ss">:ctl-bus-idx</span><span class="p">]</span>
+   <span class="s">&quot;/c_getn&quot;</span>             <span class="p">[</span><span class="ss">:ctl-bus-idx</span> <span class="ss">:count</span><span class="p">]}</span>
+
+  <span class="c1">;; Unused Commands (undocumented in server reference: http://doc.sccode.org/Reference/Server-Command-Reference.html)</span>
+  <span class="c1">;; &quot;/none&quot;</span>
+  <span class="c1">;; &quot;/s_newargs&quot;</span>
+  <span class="c1">;; &quot;/n_cmd&quot;</span>
+  <span class="c1">;; &quot;/d_freeAll&quot;</span>
+  <span class="p">)</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

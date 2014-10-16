@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/io.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DiskOut&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the number of the buffer to write to (prepared with</span>
+<span class="s">                     /b-write)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;channelsArray&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the Array of channels to write to the file.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>,
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-ar</span> <span class="mi">1</span> <span class="s">&quot;channels-array must be audio rate&quot;</span><span class="p">)</span>
+       <span class="ss">:summary</span> <span class="s">&quot;stream audio out to disk file&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;The output of DiskOut is the number of frames written to</span>
+<span class="s">             disk. Note that the number of channels in the buffer and</span>
+<span class="s">             the channelsArray must be the same, otherwise DiskOut will</span>
+<span class="s">             fail silently (and not write anything to your file).&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DiskIn&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;numChannels&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Number of channels in the incoming audio.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;id of buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Soundfile will loop if 1 otherwise not.&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;stream audio in from disk file&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Continuously play a longer soundfile from disk.  This</span>
+<span class="s">             requires a buffer to be preloaded with one buffer size of</span>
+<span class="s">             sound. If loop is set to 1, the soundfile will loop.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;VDiskIn&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;numChannels&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Number of channels in the audio&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;id of buffer&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;controls the rate of playback. Values below 4 are</span>
+<span class="s">                      probably fine, but the higher the value, the more</span>
+<span class="s">                      disk activity there is, and the more likelihood</span>
+<span class="s">                      there will be a problem.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;loop&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Soundfile will loop if 1 otherwise not.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;sendID&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;send an osc message with this id and the file</span>
+<span class="s">                      position each time the buffer is reloaded:</span>
+<span class="s">                      [&#39;/diskin&#39;, nodeID, sendID, frame] &quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;stream in audio from a file (with variable rate)&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Continuously play a longer soundfile from disk.  This</span>
+<span class="s">             requires a buffer to be preloaded with one buffer size of sound.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;In&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the bus to read in from&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the number of channels (i.e. adjacent buses) to</span>
+<span class="s">                     read in. The default is 1. You cannot modulate this</span>
+<span class="s">                     number by assigning it to an argument in a</span>
+<span class="s">                     SynthDef.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+
+       <span class="ss">:summary</span> <span class="s">&quot;Read a signal from a bus.&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;in:kr is functionally similar to in-feedback. That is it</span>
+<span class="s">             reads all data on the bus whether it is from the current</span>
+<span class="s">             cycle or not. This allows for it to receive data from later</span>
+<span class="s">             in the node order.</span>
+
+<span class="s">             in:ar reads only data from the current cycle, and will zero</span>
+<span class="s">             data from earlier cycles (for use within that synth; the</span>
+<span class="s">             data remains on the bus). Because of this and the fact that</span>
+<span class="s">             the various out ugens mix their output with data from the</span>
+<span class="s">             current cycle but overwrite data from an earlier cycle it</span>
+<span class="s">             may be necessary to use a private control bus when this</span>
+<span class="s">             type of feedback is desired.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LocalIn&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the number of channels (i.e. adjacent buses) to</span>
+<span class="s">                     read in. The default is 1. You cannot modulate this</span>
+<span class="s">                     argument.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;defines buses that are local to the enclosing synth. These</span>
+<span class="s">             are like the global buses, but are more convenient if you</span>
+<span class="s">             want to implement a self contained effect that uses a</span>
+<span class="s">             feedback processing loop.</span>
+
+<span class="s">             There can only be one audio rate and one control rate</span>
+<span class="s">             local-in per SynthDef.</span>
+
+<span class="s">             The audio can be written to the bus using local-out.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LagIn&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the bus to read in from&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the number of channels (i.e. adjacent buses) to</span>
+<span class="s">                     read in. Not modulatable.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}</span>
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lag&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;lag factor&quot;</span><span class="p">}]</span>,
+
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Read a control signal from a bus with a lag.&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Please document me&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;InFeedback&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the bus to read in from.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the number of channels (i.e. adjacent buses) to</span>
+<span class="s">                     read in. The default is 1. You cannot modulate this</span>
+<span class="s">                     number by assigning it to an argument in a</span>
+<span class="s">                     SynthDef.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;read signal from a bus with a current or one cycle old</span>
+<span class="s">                 timestamp&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;When the various output ugens (out, offsetOut, x-out) write</span>
+<span class="s">             data to a bus, they mix it with any data from the current</span>
+<span class="s">             cycle, but overwrite any data from the previous</span>
+<span class="s">             cycle. (replace-out overwrites all data regardless.) Thus</span>
+<span class="s">             depending on node order and what synths are writing to thep</span>
+<span class="s">             bus, the data on a given bus may be from the current cycle</span>
+<span class="s">             or be one cycle old at the time of reading. in:ar checks</span>
+<span class="s">             the timestamp of any data it reads in and zeros any data</span>
+<span class="s">             from the previous cycle (for use within that node; the data</span>
+<span class="s">             remains on the bus). This is fine for audio data, as it</span>
+<span class="s">             avoids feedback, but for control data it is useful to be</span>
+<span class="s">             able to read data from any place in the node order. For</span>
+<span class="s">             this reason in:kr also reads data that is older than the</span>
+<span class="s">             current cycle.</span>
+
+
+<span class="s">             In some cases we might also want to read audio from a node</span>
+<span class="s">             later in the current node order. This is the purpose of</span>
+<span class="s">             InFeedback. The delay introduced by this is one block size,</span>
+<span class="s">             which equals about 0.0014 sec at the default block size and</span>
+<span class="s">             sample rate. (See the resonator example below to see the</span>
+<span class="s">             implications of this.)</span>
+
+
+<span class="s">             The variably mixing and overwriting behaviour of the output</span>
+<span class="s">             ugens can make order of execution crucial. (No pun</span>
+<span class="s">             intended.) For example with a node order like the following</span>
+<span class="s">             the InFeedback ugen in Synth 2 will only receive data from</span>
+<span class="s">             Synth 1 (-&gt; = write out; &lt;- = read in):</span>
+
+<span class="s">             Synth 1 -&gt; busA  This synth overwrites the output of Synth3</span>
+<span class="s">             before it reaches Synth 2</span>
+
+<span class="s">             Synth 2 (with InFeedback) &lt;- busA</span>
+
+<span class="s">             Synth 3 -&gt; busA</span>
+
+<span class="s">             If Synth 1 were moved after Synth 2 then Synth 2&#39;s</span>
+<span class="s">             InFeedback would receive a mix of the output from Synth 1</span>
+<span class="s">             and Synth 3. This would also be true if Synth 2 came after</span>
+<span class="s">             Synth1 and Synth 3. In both cases data from Synth 1 and</span>
+<span class="s">             Synth 3 would have the same time stamp (either current or</span>
+<span class="s">             from the previous cycle), so nothing would be overwritten.</span>
+
+
+<span class="s">             Because of this it is often useful to allocate a separate</span>
+<span class="s">             bus for feedback. With the following arrangement Synth 2</span>
+<span class="s">             will receive data from Synth3 regardless of Synth 1&#39;s</span>
+<span class="s">             position in the node order.</span>
+
+
+<span class="s">             Synth 1 -&gt; busA</span>
+
+<span class="s">             Synth 2 (with InFeedback) &lt;- busB</span>
+
+<span class="s">             Synth 3 -&gt; busB + busA&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;InTrig&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the bus to read in from.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;numChannels&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the number of channels (i.e. adjacent buses) to</span>
+<span class="s">                     read in. The default is 1. You cannot modulate this</span>
+<span class="s">                     number by assigning it to an argument in a</span>
+<span class="s">                     SynthDef.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;generates a trigger any time the bus is set&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Any time the bus is &#39;touched&#39; ie. has its value set (using</span>
+<span class="s">             \&quot;/c_set\&quot; etc.), a single impulse trigger will be</span>
+<span class="s">             generated. Its amplitude is the value that the bus was set</span>
+<span class="s">             to.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SharedIn&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the shared control bus to read from&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;numChannels&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">1</span> <span class="ss">:doc</span> <span class="s">&quot;the number of channels (i.e. adjacent</span>
+<span class="s">                                buses) to read in. The default is 1. You</span>
+<span class="s">                                cannot modulate this number by assigning</span>
+<span class="s">                                it to an argument in a SynthDef.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:num-outs</span> <span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;read from a shared control bus (internal dsp only)&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Reads from a control bus shared between the internal server</span>
+<span class="s">             and the SC client. Control rate only. Writing to a shared</span>
+<span class="s">             control bus from the client is synchronous. When not using</span>
+<span class="s">             the internal server use node arguments or the set method of</span>
+<span class="s">             Bus (or /c_set in messaging style). &quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Out&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the buss to write to. The lowest index</span>
+<span class="s">                     numbers are written to the audio hardware.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;signals&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a list of signals or single output to write</span>
+<span class="s">                     out. You cannot change the size of this once a</span>
+<span class="s">                     synth has been defined.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span> <span class="p">}]</span>,
+
+       <span class="ss">:num-outs</span> <span class="mi">0</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:auto-rate</span> <span class="nv">true</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">all-but-first-input-ar</span> <span class="s">&quot;out:ar requires that all incoming signals be audio rate&quot;</span><span class="p">))</span>
+       <span class="ss">:summary</span> <span class="s">&quot;write a signal to a bus, adding to previous contents.&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;write a signal to a bus, adding to any existing contents</span>
+
+<span class="s">             N.B. Out is subject to control rate jitter. Where sample</span>
+<span class="s">             accurate output is needed, use OffsetOut.</span>
+
+<span class="s">             When using an array of bus indexes, the channel array will</span>
+<span class="s">             just be copied to each bus index in the array. So (out:ar</span>
+<span class="s">             [bus1 bus2] channels-array) will be the same as (+ (out:ar</span>
+<span class="s">             bus1 channelsArray) (out:ar bus2 channelsArray)).&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ReplaceOut&quot;</span>, <span class="ss">:extends</span> <span class="s">&quot;Out&quot;</span>
+       <span class="ss">:summary</span> <span class="s">&quot;Send signal to a bus, overwriting previous contents.&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Out adds its output to a given bus, making it available to</span>
+<span class="s">             all nodes later in the node tree (See Synth and</span>
+<span class="s">             Order-of-execution for more information). ReplaceOut</span>
+<span class="s">             overwrites those contents. This can make it useful for</span>
+<span class="s">             processing.&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;OffsetOut&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;Out&quot;</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">all-but-first-input-ar</span> <span class="s">&quot;signals-array must all be audio rate&quot;</span><span class="p">)</span>
+       <span class="ss">:summary</span>   <span class="s">&quot;write signal to a bus with sample accurate timing&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Output signal to a bus, the sample offset within the bus is</span>
+<span class="s">             kept exactly; i.e. if the synth is scheduled to be started</span>
+<span class="s">             part way through a control cycle, offset-out will maintain</span>
+<span class="s">             the correct offset by buffering the output and delaying it</span>
+<span class="s">             until the exact time that the synth was scheduled for.</span>
+
+<span class="s">             This ugen is used where sample accurate output is needed.&quot;</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LocalOut&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;channels-array&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an Array of channels or single output to write</span>
+<span class="s">                     out. You cannot change the size of this once a</span>
+<span class="s">                     SynthDef has been built.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span> <span class="p">}]</span>,
+       <span class="ss">:num-outs</span> <span class="mi">0</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">all-inputs-ar</span> <span class="s">&quot;all channels must be audio rate&quot;</span><span class="p">))</span>
+       <span class="ss">:summary</span> <span class="s">&quot;write to buses local to a synth&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;local-out writes to buses that are local to the enclosing</span>
+<span class="s">             synth. The buses should have been defined by a local-in</span>
+<span class="s">             ugen. The channelsArray must be the same number of channels</span>
+<span class="s">             as were declared in the LocalIn. These are like the global</span>
+<span class="s">             buses, but are more convenient if you want to implement a</span>
+<span class="s">             self contained effect that uses a feedback processing</span>
+<span class="s">             loop.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;XOut&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index, or array of indexes, of buses to write</span>
+<span class="s">                     to. The lowest index numbers are written to the audio hardware.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xfade&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;crossfade level.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;channels-array&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an Array of channels or single output to write</span>
+<span class="s">                     out. You cannot change the size of this once a</span>
+<span class="s">                     SynthDef has been built.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span> <span class="p">}]</span>,
+       <span class="ss">:num-outs</span> <span class="mi">0</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">when-ar</span> <span class="p">(</span><span class="nf">after-n-inputs-rest-ar</span> <span class="mi">2</span> <span class="s">&quot;all channels must be audio rate&quot;</span><span class="p">))</span>
+       <span class="ss">:summary</span> <span class="s">&quot;write signal to a bus, crossfading with the existing</span>
+<span class="s">                 content&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;xfade is a level for the crossfade between what is on the</span>
+<span class="s">             bus and what you are sending.</span>
+
+<span class="s">             The algorithm is equivalent to this:</span>
+
+<span class="s">             bus_signal = (input_signal * xfade) + (bus_signal * (1 - xfade));&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SharedOut&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;bus&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the index of the shared control bus to read from&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;channels-array&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an Array of channels or single output to write</span>
+<span class="s">                     out. You cannot change the size of this once a SynthDef has been built.&quot;</span><span class="p">}]</span>,
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>,
+       <span class="ss">:num-outs</span> <span class="mi">0</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Reads from a control bus shared between the internal server</span>
+<span class="s">             and the SC client. Control rate only. Reading from a shared</span>
+<span class="s">             control bus on the client is synchronous. &quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

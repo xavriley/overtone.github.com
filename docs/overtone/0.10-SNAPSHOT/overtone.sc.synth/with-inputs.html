@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>with-inputs</h1>
+    <p class="doc">Returns ugen object with its input ports connected to constants and
+  upstream ugens according to the arguments in the initial definition.</p>
+    <p>
+      File: overtone/sc/synth.clj
+      Line: 70
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn- </span><span class="nv">with-inputs</span>
+  <span class="s">&quot;Returns ugen object with its input ports connected to constants and</span>
+<span class="s">  upstream ugens according to the arguments in the initial definition.&quot;</span>
+  <span class="p">[</span><span class="nv">ugen</span> <span class="nv">ugens</span> <span class="nv">constants</span> <span class="nv">grouped-params</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nb">contains? </span><span class="nv">ugen</span> <span class="ss">:args</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">if-not </span><span class="p">(</span><span class="nf">sc-ugen?</span> <span class="nv">ugen</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span>
+              <span class="p">(</span><span class="nb">str </span><span class="s">&quot;Error: synth expected a ugen. Got: &quot;</span> <span class="nv">ugen</span><span class="p">)))</span>
+      <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span>
+              <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;The %s ugen does not have any arguments.&quot;</span>
+                      <span class="p">(</span><span class="ss">:name</span> <span class="nv">ugen</span><span class="p">))))))</span>
+  <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nb">every? </span><span class="o">#</span><span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nf">sc-ugen?</span> <span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nf">number?</span> <span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nb">string? </span><span class="nv">%</span><span class="p">))</span> <span class="p">(</span><span class="ss">:args</span> <span class="nv">ugen</span><span class="p">))</span>
+    <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">IllegalArgumentException.</span>
+            <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;The %s ugen has an invalid argument: %s&quot;</span>
+                    <span class="p">(</span><span class="ss">:name</span> <span class="nv">ugen</span><span class="p">)</span>
+                    <span class="p">(</span><span class="nb">first </span><span class="p">(</span><span class="nf">filter</span>
+                            <span class="o">#</span><span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nf">sc-ugen?</span> <span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nf">number?</span> <span class="nv">%</span><span class="p">)))</span>
+                            <span class="p">(</span><span class="ss">:args</span> <span class="nv">ugen</span><span class="p">)))))))</span>
+
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">inputs</span> <span class="p">(</span><span class="nf">flatten</span>
+                <span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">arg</span><span class="p">]</span>
+                       <span class="p">(</span><span class="nf">cond</span>
+                                        <span class="c1">; constant</span>
+                         <span class="p">(</span><span class="nf">number?</span> <span class="nv">arg</span><span class="p">)</span>
+                         <span class="p">{</span><span class="ss">:src</span> <span class="mi">-1</span> <span class="ss">:index</span> <span class="p">(</span><span class="nf">index-of</span> <span class="nv">constants</span> <span class="p">(</span><span class="nb">float </span><span class="nv">arg</span><span class="p">))}</span>
+
+                                        <span class="c1">; control</span>
+                         <span class="p">(</span><span class="nf">control-proxy?</span> <span class="nv">arg</span><span class="p">)</span>
+                         <span class="p">(</span><span class="nf">param-input-spec</span> <span class="nv">grouped-params</span> <span class="nv">arg</span><span class="p">)</span>
+
+                                        <span class="c1">; output proxy</span>
+                         <span class="p">(</span><span class="nf">output-proxy?</span> <span class="nv">arg</span><span class="p">)</span>
+                         <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">src</span> <span class="p">(</span><span class="nf">ugen-index</span> <span class="nv">ugens</span> <span class="p">(</span><span class="ss">:ugen</span> <span class="nv">arg</span><span class="p">))]</span>
+                           <span class="p">{</span><span class="ss">:src</span> <span class="nv">src</span> <span class="ss">:index</span> <span class="p">(</span><span class="ss">:index</span> <span class="nv">arg</span><span class="p">)})</span>
+
+                                        <span class="c1">; child ugen</span>
+                         <span class="p">(</span><span class="nf">sc-ugen?</span> <span class="nv">arg</span><span class="p">)</span>
+                         <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">src</span> <span class="p">(</span><span class="nf">ugen-index</span> <span class="nv">ugens</span> <span class="nv">arg</span><span class="p">)</span>
+                               <span class="nv">updated-ugen</span> <span class="p">(</span><span class="nb">nth </span><span class="nv">ugens</span> <span class="nv">src</span><span class="p">)]</span>
+                           <span class="p">(</span><span class="nf">inputs-from-outputs</span> <span class="nv">src</span> <span class="nv">updated-ugen</span><span class="p">))))</span>
+                     <span class="p">(</span><span class="ss">:args</span> <span class="nv">ugen</span><span class="p">)))</span>
+        <span class="nv">ugen</span> <span class="p">(</span><span class="nb">assoc </span><span class="nv">ugen</span> <span class="ss">:inputs</span> <span class="nv">inputs</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nb">when-not </span><span class="p">(</span><span class="nb">every? </span><span class="p">(</span><span class="k">fn </span><span class="p">[{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">src</span> <span class="nv">index</span><span class="p">]}]</span>
+                        <span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nb">nil? </span><span class="nv">src</span><span class="p">))</span>
+                             <span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nb">nil? </span><span class="nv">index</span><span class="p">))))</span>
+                      <span class="p">(</span><span class="ss">:inputs</span> <span class="nv">ugen</span><span class="p">))</span>
+      <span class="p">(</span><span class="nf">throw</span> <span class="p">(</span><span class="nf">Exception.</span>
+              <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;Cannot connect ugen arguments for %s ugen with args: %s&quot;</span> <span class="p">(</span><span class="ss">:name</span> <span class="nv">ugen</span><span class="p">)</span> <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nb">seq </span><span class="p">(</span><span class="ss">:args</span> <span class="nv">ugen</span><span class="p">)))))))</span>
+
+    <span class="c1">;;Add link back to MaxLocalBufs ugen (always at root of tree) if</span>
+    <span class="c1">;;ugen is a local-buf.</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="s">&quot;LocalBuf&quot;</span> <span class="p">(</span><span class="ss">:name</span> <span class="nv">ugen</span><span class="p">))</span>
+      <span class="p">(</span><span class="nb">assoc </span><span class="nv">ugen</span> <span class="ss">:inputs</span> <span class="p">(</span><span class="nb">concat </span><span class="p">(</span><span class="ss">:inputs</span> <span class="nv">ugen</span><span class="p">)</span> <span class="p">[{</span><span class="ss">:src</span> <span class="mi">0</span> <span class="ss">:index</span> <span class="mi">0</span><span class="p">}]))</span>
+      <span class="nv">ugen</span><span class="p">)))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

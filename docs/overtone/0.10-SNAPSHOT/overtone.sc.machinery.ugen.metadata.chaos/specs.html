@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/chaos.clj
+      Line: 22
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">(</span><span class="nf">map</span>
+   <span class="o">#</span><span class="p">(</span><span class="nb">assoc </span><span class="nv">%</span>
+      <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">})</span>
+   <span class="p">[</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;QuadN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;1st coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+             <span class="ss">:default</span> <span class="mf">-1.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;2nd coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+             <span class="ss">:default</span> <span class="mf">-0.75</span>
+             <span class="ss">:doc</span> <span class="s">&quot;3rd coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;a non-interpolating (general quadratic map chaotic) sound</span>
+<span class="s">           generator based on the difference equation: xn+1 = axn2 + bxn</span>
+<span class="s">           + c &quot;</span><span class="p">}</span>
+
+    <span class="c1">;; QuadL : QuadN {}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;QuadL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;QuadN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a linear-interpolating (general quadratic map chaotic) sound</span>
+<span class="s">           generator based on the difference equation: xn+1 = axn2 + bxn</span>
+<span class="s">           + c&quot;</span><span class="p">}</span>
+
+    <span class="c1">;; QuadC : QuadN {}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;QuadC&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;QuadN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a cubic-interpolating (general quadratic map chaotic) sound</span>
+<span class="s">           generator based on the difference equation: xn+1 = axn2 + bxn</span>
+<span class="s">           + c&quot;</span><span class="p">}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;CuspN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;first coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.9</span>
+             <span class="ss">:doc</span> <span class="s">&quot;2nd coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span> <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;a non-interpolating (cusp map chaotic) sound generator based</span>
+<span class="s">           on the difference equation: xn+1 = a - b*sqrt(|xn|)&quot;</span><span class="p">}</span>
+
+    <span class="c1">;; CuspL : CuspN {}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;CuspL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;CuspN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a linear-interpolating (cusp map chaotic) sound generator</span>
+<span class="s">           based on the difference equation: xn+1 = a - b*sqrt(|xn|)&quot;</span><span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GbmanN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.2</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;yi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">2.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;A non-interpolating (gingerbreadman map chaotic) sound</span>
+<span class="s">          generator based on the difference equations: xn+1 = 1 - yn +</span>
+<span class="s">          |xn| yn+1 = xn&quot;</span><span class="p">}</span>
+
+    <span class="c1">;; GbmanL : GbmanN {}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GbmanL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;GbmanN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;A linear-interpolating (gingerbreadman map chaotic) sound</span>
+<span class="s">           generator based on the difference equations: xn+1 = 1 - yn +</span>
+<span class="s">           |xn| yn+1 = xn&quot;</span><span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;HenonN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.4</span>
+             <span class="ss">:doc</span> <span class="s">&quot;1st coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.3</span>
+             <span class="ss">:doc</span> <span class="s">&quot;2nd coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x1&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;second value of x&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;a non-interpolating (henon map chaotic) sound generator based</span>
+<span class="s">           on the difference equation: x[n+2] = 1 - a*(x[n+1]^)2 +</span>
+<span class="s">           bx[n]. This equation was discovered by French astronomer</span>
+<span class="s">           Michel Hénon while studying the orbits of stars in globular</span>
+<span class="s">           clusters.&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;HenonL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;HenonN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a linear-interpolating (henon map chaotic) sound generator</span>
+<span class="s">           based on the difference equation: x[n+2] = 1 - a*(x[n+1]^)2 +</span>
+<span class="s">           bx[n]. This equation was discovered by French astronomer</span>
+<span class="s">           Michel Hénon while studying the orbits of stars in globular</span>
+<span class="s">           clusters.&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;HenonC&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;HenonN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a cubic-interpolating (henon map chaotic) sound generator</span>
+<span class="s">           based on the difference equation: x[n+2] = 1 - a*(x[n+1]^)2 +</span>
+<span class="s">           bx[n]. This equation was discovered by French astronomer</span>
+<span class="s">           Michel Hénon while studying the orbits of stars in globular</span>
+<span class="s">           clusters.&quot;</span> <span class="p">}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LatoocarfianN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;1st coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+             <span class="ss">:default</span> <span class="mf">3.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;2nd coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.5</span>
+             <span class="ss">:doc</span> <span class="s">&quot;3rd coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;d&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.5</span>
+             <span class="ss">:doc</span> <span class="s">&quot;4th coefficient&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.5</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;yi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.5</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;a non-interpolating (latoocarfian chaotic) sound</span>
+<span class="s">           generator. Parameters a and b should be in the range from -3</span>
+<span class="s">           to +3, and parameters c and d should be in the range from 0.5</span>
+<span class="s">           to 1.5. The function can, depending on the parameters given,</span>
+<span class="s">           give continuous chaotic output, converge to a single</span>
+<span class="s">           value (silence) or oscillate in a cycle (tone).&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LatoocarfianL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;LatoocarfianN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a linear-interpolating (latoocarfian chaotic) sound</span>
+<span class="s">           generator. Parameters a and b should be in the range from -3</span>
+<span class="s">           to +3, and parameters c and d should be in the range from 0.5</span>
+<span class="s">           to 1.5. The function can, depending on the parameters given,</span>
+<span class="s">           give continuous chaotic output, converge to a single</span>
+<span class="s">           value (silence) or oscillate in a cycle (tone).&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LatoocarfianC&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;LatoocarfianN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a cubic-interpolating (latoocarfian chaotic) sound</span>
+<span class="s">           generator. Parameters a and b should be in the range from -3</span>
+<span class="s">           to +3, and parameters c and d should be in the range from 0.5</span>
+<span class="s">           to 1.5. The function can, depending on the parameters given,</span>
+<span class="s">           give continuous chaotic output, converge to a single</span>
+<span class="s">           value (silence) or oscillate in a cycle (tone).&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LinCongN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz.&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;multiplier amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.13</span>
+             <span class="ss">:doc</span> <span class="s">&quot;increment amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;m&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;modulus amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;a non-interpolating (linear congruential chaotic) sound</span>
+<span class="s">           generator. The output signal is automatically scaled to a</span>
+<span class="s">           range of [-1, 1].&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LinCongL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;LinCongN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a linear-interpolating (linear congruential chaotic) sound</span>
+<span class="s">           generator. The output signal is automatically scaled to a</span>
+<span class="s">           range of [-1, 1].&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LinCongC&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;LinCongN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a cubic-interpolating (linear congruential chaotic) sound</span>
+<span class="s">           generator. The output signal is automatically scaled to a</span>
+<span class="s">           range of [-1, 1].&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;StandardN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;k&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;perturbation amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.5</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;yi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;standard map chaotic generator. The standard map is an area</span>
+<span class="s">           preserving map of a cylinder discovered by the plasma</span>
+<span class="s">           physicist Boris Chirikov.&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;StandardL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;StandardN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;linear-interpolating standard map chaotic generator. The</span>
+<span class="s">           standard map is an area preserving map of a cylinder</span>
+<span class="s">           discovered by the plasma physicist Boris Chirikov.&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FBSineN&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;im&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;index multiplier amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;fb&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;feedback amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+             <span class="ss">:default</span> <span class="mf">1.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;phase multiplier amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.5</span>
+             <span class="ss">:doc</span> <span class="s">&quot;phase increment amount&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;yi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;a non-interpolating feedback sine with chaotic phase indexing</span>
+<span class="s">           sound generator. This uses a linear congruential function to</span>
+<span class="s">           drive the phase indexing of a sine wave.  For im = 1, fb = 0,</span>
+<span class="s">           and a = 1 a normal sinewave results.&quot;</span> <span class="p">}</span>
+
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FBSineL&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;FBSineN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a linear-interpolating feedback sine with chaotic phase</span>
+<span class="s">           indexing sound generator. This uses a linear congruential</span>
+<span class="s">           function to drive the phase indexing of a sine wave.  For im</span>
+<span class="s">           = 1, fb = 0, and a = 1 a normal sinewave results.&quot;</span> <span class="p">}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FBSineC&quot;</span> <span class="ss">:extends</span> <span class="s">&quot;FBSineN&quot;</span>
+     <span class="ss">:doc</span> <span class="s">&quot;a cubic-interpolating feedback sine with chaotic phase</span>
+<span class="s">           indexing sound generator. This uses a linear congruential</span>
+<span class="s">           function to drive the phase indexing of a sine wave.  For im</span>
+<span class="s">           = 1, fb = 0, and a = 1 a normal sinewave results.&quot;</span> <span class="p">}</span>
+
+    <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LorenzL&quot;</span>,
+     <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+             <span class="ss">:default</span> <span class="mf">22050.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;s&quot;</span>
+             <span class="ss">:default</span> <span class="mf">10.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;1st variable&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;r&quot;</span>
+             <span class="ss">:default</span> <span class="mf">28.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;2nd variable&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+             <span class="ss">:default</span> <span class="mf">2.667</span>
+             <span class="ss">:doc</span> <span class="s">&quot;3rd variable&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;h&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.05</span>
+             <span class="ss">:doc</span> <span class="s">&quot;integration time stamp&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;xi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.1</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;yi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}</span>
+
+            <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;zi&quot;</span>
+             <span class="ss">:default</span> <span class="mf">0.0</span>
+             <span class="ss">:doc</span> <span class="s">&quot;initial value of z&quot;</span><span class="p">}]</span>
+
+     <span class="ss">:doc</span> <span class="s">&quot;lorenz chaotic generator. A strange attractor discovered by</span>
+<span class="s">           Edward N. Lorenz while studying mathematical models of the</span>
+<span class="s">           atmosphere. The time step amount h determines the rate at</span>
+<span class="s">           which the ODE is evaluated.  Higher values will increase the</span>
+<span class="s">           rate, but cause more instability.  A safe choice is the</span>
+<span class="s">           default amount of 0.05.&quot;</span> <span class="p">}]))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

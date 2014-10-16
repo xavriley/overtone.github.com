@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/ff_osc.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FSinOsc&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;frequency in Hertz&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;iphase&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;phase offset or modulator in radians&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;Very fast sine wave generator (2 PowerPC instructions per</span>
+<span class="s">             output sample!) implemented using a ringing filter.  This</span>
+<span class="s">             generates a much cleaner sine wave than a table lookup</span>
+<span class="s">             oscillator and is a lot faster. However, the amplitude of</span>
+<span class="s">             the wave will vary with frequency. Generally the amplitude</span>
+<span class="s">             will go down as you raise the frequency and go up as you</span>
+<span class="s">             lower the frequency.</span>
+
+<span class="s">              WARNING: In the current implementation, the amplitude can</span>
+<span class="s">              blow up if the frequency is modulated by certain</span>
+<span class="s">              alternating signals.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Klang&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;specs&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;An array of three arrays frequencies, amplitudes</span>
+<span class="s">                     and phases: 1) an array of filter frequencies, 2)</span>
+<span class="s">                     an Array of filter amplitudes, or nil. If nil, then</span>
+<span class="s">                     amplitudes default to 1.0, 3) an Array of initial</span>
+<span class="s">                     phases, or nil. If nil, then phases default to</span>
+<span class="s">                     0.0.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freqscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a scale factor multiplied by all frequencies at initialization time.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freqoffset&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an offset added to all frequencies at</span>
+<span class="s">                     initialization time.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:init</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">rate</span> <span class="nv">args</span> <span class="nv">spec</span><span class="p">]</span>
+               <span class="p">(</span><span class="k">let </span><span class="p">[[[</span> <span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">times</span><span class="p">]]</span> <span class="nv">args</span>
+                     <span class="nv">amps</span>                  <span class="p">(</span><span class="nb">or </span><span class="nv">amps</span> <span class="p">(</span><span class="nb">repeat </span><span class="p">(</span><span class="nb">count </span><span class="nv">freqs</span><span class="p">)</span> <span class="mf">1.0</span><span class="p">))</span>
+                     <span class="nv">times</span>                 <span class="p">(</span><span class="nb">or </span><span class="nv">times</span> <span class="p">(</span><span class="nb">repeat </span><span class="p">(</span><span class="nb">count </span><span class="nv">freqs</span><span class="p">)</span> <span class="mf">1.0</span><span class="p">))</span>
+                     <span class="nv">fats</span>                  <span class="p">(</span><span class="nb">map vector </span><span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">times</span><span class="p">)</span>
+                     <span class="nv">new-args</span>              <span class="p">(</span><span class="nb">concat </span><span class="p">[</span><span class="nv">fats</span><span class="p">]</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">args</span><span class="p">))]</span>
+                 <span class="nv">new-args</span><span class="p">))</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Klang is a bank of fixed frequency sine oscillators. Klang</span>
+<span class="s">             is more efficient than creating individual oscillators but</span>
+<span class="s">             offers less flexibility.</span>
+
+<span class="s">             The specs can&#39;t be changed after it has been started.  For</span>
+<span class="s">             a modulatable but less efficient version, see dyn-klang.&quot;</span><span class="p">}</span>
+
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Klank&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;specs&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span>
+               <span class="ss">:doc</span> <span class="s">&quot;An array of three arrays: frequencies, amplitudes</span>
+<span class="s">                     and ring times: *all arrays should have the same</span>
+<span class="s">                     length* 1) an Array of filter frequencies. 2) an</span>
+<span class="s">                     Array of filter amplitudes, or nil. If nil, then</span>
+<span class="s">                     amplitudes default to 1.0 3) an Array of 60 dB</span>
+<span class="s">                     decay times for the filters.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the excitation input to the resonant filter bank.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freqscale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a scale factor multiplied by all frequencies at</span>
+<span class="s">                     initialization time.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;freqoffset&quot;</span>
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an offset added to all frequencies at</span>
+<span class="s">                     initialization time.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;decayscale&quot;</span>
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a scale factor multiplied by all ring times at</span>
+<span class="s">                     initialization time.&quot;</span><span class="p">}]</span>
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:init</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">rate</span> <span class="nv">args</span> <span class="nv">spec</span><span class="p">]</span>
+               <span class="p">(</span><span class="k">let </span><span class="p">[[[</span> <span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">times</span><span class="p">]]</span> <span class="nv">args</span>
+                     <span class="nv">amps</span>                  <span class="p">(</span><span class="nb">or </span><span class="nv">amps</span> <span class="p">(</span><span class="nb">repeat </span><span class="p">(</span><span class="nb">count </span><span class="nv">freqs</span><span class="p">)</span> <span class="mf">1.0</span><span class="p">))</span>
+                     <span class="nv">times</span>                 <span class="p">(</span><span class="nb">or </span><span class="nv">times</span> <span class="p">(</span><span class="nb">repeat </span><span class="p">(</span><span class="nb">count </span><span class="nv">freqs</span><span class="p">)</span> <span class="mf">1.0</span><span class="p">))</span>
+                     <span class="nv">fats</span>                  <span class="p">(</span><span class="nb">map vector </span><span class="nv">freqs</span> <span class="nv">amps</span> <span class="nv">times</span><span class="p">)</span>
+                     <span class="nv">new-args</span>              <span class="p">(</span><span class="nb">concat </span><span class="p">[</span><span class="nv">fats</span><span class="p">]</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">args</span><span class="p">))]</span>
+                 <span class="nv">new-args</span><span class="p">))</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Klank is a bank of fixed frequency resonators which can be</span>
+<span class="s">             used to simulate the resonant modes of an object. Each mode</span>
+<span class="s">             is given a ring time, which is the time for the mode to</span>
+<span class="s">             decay by 60 dB.</span>
+
+<span class="s">             The specs can&#39;t be changed after it has been started.  For</span>
+<span class="s">             a modulatable but less efficient version, see dyn-klank.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Blip&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz (control rate)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;numharm&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">200.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Number of harmonics. This may be lowered internally</span>
+<span class="s">                     if it would cause aliasing.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Band Limited Impulse generator. All harmonics have equal</span>
+<span class="s">             amplitude. This is the equivalent of buzz in MusicN</span>
+<span class="s">             languages.  WARNING: This waveform in its raw form could be</span>
+<span class="s">             damaging to your ears at high amplitudes or for long</span>
+<span class="s">             periods.</span>
+
+<span class="s">             It is improved from other implementations in that it will</span>
+<span class="s">             crossfade in a control period when the number of harmonics</span>
+<span class="s">             changes, so that there are no audible pops. It also</span>
+<span class="s">             eliminates the divide in the formula by using a 1/sin</span>
+<span class="s">             table (with special precautions taken for 1/0).  The lookup</span>
+<span class="s">             tables are linearly interpolated for better quality.</span>
+
+<span class="s">             Synth-O-Matic (1990) had an impulse generator called blip,</span>
+<span class="s">             hence that name here rather than &#39;buzz&#39;.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Saw&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz (control rate).&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;band limited sawtooth wave generator&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;The sawtooth wave produces even and odd harmonics in series</span>
+<span class="s">             and therefore produces a bright sound that is an excellent</span>
+<span class="s">             starting point for brassy, raspy sounds. It&#39;s also suitable</span>
+<span class="s">             for creating the gritty, bright sounds needed for leads and</span>
+<span class="s">             raspy basses. Due to its harmonic richness it&#39;s extremely</span>
+<span class="s">             suitable for use with sounds that will be filter swept.&quot;</span> <span class="p">}</span>
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Pulse&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Frequency in Hertz (control rate)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;width&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.5</span>,
+               <span class="ss">:doc</span> <span class="s">&quot;Pulse width ratio from zero to one. 0.5 makes a square wave (control rate)&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:summary</span> <span class="s">&quot;band limited pulse wave generator with pulse width modulation.&quot;</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Pulse waves are a general form of square wave that allow</span>
+<span class="s">             for the width of the pulses to be varied. A square wave is</span>
+<span class="s">             therefore a pulse with a width of 0.5 i.e. the width of the</span>
+<span class="s">             high and low states is identical.</span>
+
+<span class="s">             Adjusting the ratio of the pulse width will vary the</span>
+<span class="s">             harmonic content of the sound. For example, reductions in</span>
+<span class="s">             the width allow you to produce thin reed-like timbres along</span>
+<span class="s">             with the wide, hollow sounds created by a square wave.&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PSinGrain&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">440.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;frequency in cycles per second. Must be a scalar&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.2</span>
+               <span class="ss">:doc</span> <span class="s">&quot;grain duration&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;amp&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;amplitude of grain&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Fixed frequency sine oscillator this ugen uses a very fast</span>
+<span class="s">             algorithm for generating a sine wave at a fixed frequency&quot;</span><span class="p">}</span> <span class="p">])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

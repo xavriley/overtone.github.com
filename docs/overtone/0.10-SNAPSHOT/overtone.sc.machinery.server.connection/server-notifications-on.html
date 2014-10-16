@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>server-notifications-on</h1>
+    <p class="doc">Turn on notification messages from the audio server.  This lets us
+  free synth IDs when they are automatically freed with envelope
+  triggers.  It also lets us receive custom messages from various
+  trigger ugens.
+
+  These messages are sent as notification of some event to all clients
+  who have registered via the /notify command .
+
+  All of these have the same arguments:
+   int - node ID
+   int - the node's parent group ID
+   int - previous node ID, -1 if no previous node.
+   int - next node ID, -1 if no next node.
+   int - 1 if the node is a group, 0 if it is a synth
+
+  The following two arguments are only sent if the node is a group:
+   int - the ID of the head node, -1 if there is no head node.
+   int - the ID of the tail node, -1 if there is no tail node.
+
+   /n_go   - a node was created
+   /n_end  - a node was destroyed
+   /n_on   - a node was turned on
+   /n_off  - a node was turned off
+   /n_move - a node was moved
+   /n_info - in reply to /n_query</p>
+    <p>
+      File: overtone/sc/machinery/server/connection.clj
+      Line: 30
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn- </span><span class="nv">server-notifications-on</span>
+  <span class="s">&quot;Turn on notification messages from the audio server.  This lets us</span>
+<span class="s">  free synth IDs when they are automatically freed with envelope</span>
+<span class="s">  triggers.  It also lets us receive custom messages from various</span>
+<span class="s">  trigger ugens.</span>
+
+<span class="s">  These messages are sent as notification of some event to all clients</span>
+<span class="s">  who have registered via the /notify command .</span>
+
+<span class="s">  All of these have the same arguments:</span>
+<span class="s">   int - node ID</span>
+<span class="s">   int - the node&#39;s parent group ID</span>
+<span class="s">   int - previous node ID, -1 if no previous node.</span>
+<span class="s">   int - next node ID, -1 if no next node.</span>
+<span class="s">   int - 1 if the node is a group, 0 if it is a synth</span>
+
+<span class="s">  The following two arguments are only sent if the node is a group:</span>
+<span class="s">   int - the ID of the head node, -1 if there is no head node.</span>
+<span class="s">   int - the ID of the tail node, -1 if there is no tail node.</span>
+
+<span class="s">   /n_go   - a node was created</span>
+<span class="s">   /n_end  - a node was destroyed</span>
+<span class="s">   /n_on   - a node was turned on</span>
+<span class="s">   /n_off  - a node was turned off</span>
+<span class="s">   /n_move - a node was moved</span>
+<span class="s">   /n_info - in reply to /n_query&quot;</span>
+  <span class="p">[]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">notifications-enabled</span> <span class="p">(</span><span class="nf">server-recv</span> <span class="s">&quot;/done&quot;</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">msg</span><span class="p">]</span>
+                                                     <span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">first </span><span class="p">(</span><span class="ss">:args</span> <span class="nv">msg</span><span class="p">))</span>
+                                                        <span class="s">&quot;/notify&quot;</span><span class="p">)))]</span>
+    <span class="p">(</span><span class="nf">server-snd</span> <span class="s">&quot;/notify&quot;</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">deref!</span> <span class="nv">notifications-enabled</span> <span class="s">&quot;whilst turning server notifications on&quot;</span><span class="p">)))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

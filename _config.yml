@@ -1,4 +1,4 @@
-baseurl: 'http://overtone-docs-staging.herokuapp.com'
-exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', 'src', 'ext', 'lib', 'doc', 'autodoc']
+baseurl: '/overtone.github.com/_site/'
+exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', 'src', 'ext', 'lib', 'autodoc']
 pygements: true
 lsi: false

@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/extras/bhob.clj
+      Line: 5
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Henon2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;hénon map 2D chaotic generator with no interpolation&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">11025</span>
+            <span class="ss">:default:kr</span> <span class="mi">40</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">22050</span>
+            <span class="ss">:default:kr</span> <span class="mi">100</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.30501993062401</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.20938865431933</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;The Hénon map is a discrete-time dynamical system. It is one</span>
+<span class="s">          of the most studied examples of dynamical systems that exhibit</span>
+<span class="s">          chaotic behaviour.</span>
+
+<span class="s">          The map depends on two parameters, a and b, which for the</span>
+<span class="s">          canonical Hénon map have values of a = 1.4 and b = 0.3. For</span>
+<span class="s">          the canonical values the Hénon map is chaotic. For other</span>
+<span class="s">          values of a and b the map may be chaotic, intermittent, or</span>
+<span class="s">          converge to a periodic orbit. An overview of the type of</span>
+<span class="s">          behaviour of the map at different parameter values may be</span>
+<span class="s">          obtained from its orbit diagram.</span>
+
+<span class="s">          For more information see the wikipedia article:</span>
+
+<span class="s">          http://en.wikipedia.org/wiki/Hénon_map&quot;</span> <span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Henon2DL&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Henon2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;hénon map 2D chaotic generator with linear interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Henon2DC&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Henon2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;hénon map 2D chaotic generator with cubic interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;HenonTrig&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Henon2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;hénon map 2D chaotic trigger&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">10</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Hénon equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Hénon equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.30501993062401</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.20938865431933</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gbman2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;gingerbreadman map 2D chaotic generator with no interpolation&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">11025</span>
+            <span class="ss">:default:kr</span> <span class="mi">40</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">22050</span>
+            <span class="ss">:default:kr</span> <span class="mi">100</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.2</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">2.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;A two-dimensional piecewise linear chaotic 2D map. See</span>
+<span class="s">          wikipedia article for more information:</span>
+
+<span class="s">          http://en.wikipedia.org/wiki/Gingerbreadman_map&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gbman2DL&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Gbman2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;gingerbreadman map 2D chaotic generator with linear interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gbman2DC&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Gbman2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;gingerbreadman map 2D chaotic generator with cubic interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GbmanTrig&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Gbman2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;gingerbreadman map 2D chaotic trigger&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">10</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.2</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">2.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Standard2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;standard map 2D chaotic generator with no interpolation&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">11025</span>
+            <span class="ss">:default:kr</span> <span class="mi">40</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">22050</span>
+            <span class="ss">:default:kr</span> <span class="mi">100</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;k&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;perturbation amount&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">4.9789799812499</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">5.7473416156381</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;The standard map is an area-preserving chaotic map from a</span>
+<span class="s">          square with side 2pi onto itself. This map is also known as</span>
+<span class="s">          the Chirikov–Taylor map or as the Chirikov standard map. For</span>
+<span class="s">          more information see the wikipedia article:</span>
+
+<span class="s">          http://en.wikipedia.org/wiki/Standard_map&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Standard2DL&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Standard2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;standard map 2D chaotic generator with linear interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Standard2DC&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Standard2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;standard map 2D chaotic generator with cubic interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;StandardTrig&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Standard2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;standard map 2D chaotic trigger&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">10</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;k&quot;</span>
+            <span class="ss">:default</span> <span class="mf">1.4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;perturbation amount&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">4.9789799812499</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">5.7473416156381</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Latoocarfian2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;latoocarfian 2D chaotic generator with no interpolation&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">11025</span>
+            <span class="ss">:default:kr</span> <span class="mi">40</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">22050</span>
+            <span class="ss">:default:kr</span> <span class="mi">100</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Latoocarfian equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:default</span> <span class="mi">3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Latoocarfian equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Latoocarfian equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;d&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Latoocarfian equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.34082301375036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">-0.38270086971332</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This is a function given in Clifford Pickover&#39;s book Chaos In</span>
+<span class="s">          Wonderland, pg 26.</span>
+
+<span class="s">          The function has four parameters a, b, c, and d. The function is:</span>
+
+<span class="s">          xnew = sin(y * b) + c * sin(x * b);</span>
+
+<span class="s">          ynew = sin(x * a) + d * sin(y * a);</span>
+
+<span class="s">          x = xnew;</span>
+
+<span class="s">          y = ynew;</span>
+
+<span class="s">          output = x;</span>
+
+<span class="s">          x values determine frequencies; y values determine amplitudes.</span>
+<span class="s">          Stable ranges for a &amp; b tend to be between -3 to + 3. c &amp; d</span>
+<span class="s">          between 0.5 and 1.5.  There are combinations within these</span>
+<span class="s">          ranges that are unstable, so be prepared to tweak this</span>
+<span class="s">          oscillator.&quot;</span> <span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Latoocarfian2DL&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Latoocarfian2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;latoocarfian 2D chaotic generator with linear interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Latoocarfian2DC&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Latoocarfian2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;latoocarfian 2D chaotic generator with cubic interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LatoocarfianTrig&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Latoocarfian2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;latoocarfian 2D chaotic trigger&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">10</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:default</span> <span class="mi">3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Latoocarfian equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Latoocarfian equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;d&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Latoocarfian equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.34082301375036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;intial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">-0.38270086971332</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}]}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lorenz2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;lorenz 2D chaotic generator with no interpolation&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">11025</span>
+            <span class="ss">:default:kr</span> <span class="mi">40</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">22050</span>
+            <span class="ss">:default:kr</span> <span class="mi">100</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;s&quot;</span>
+            <span class="ss">:default</span> <span class="mi">10</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Lorenz equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;r&quot;</span>
+            <span class="ss">:default</span> <span class="mi">28</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Lorenz equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:default</span> <span class="mf">2.6666667</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Lorenz equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;h&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.02</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Lorenz equation variable&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;x0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.090879182417163</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of x&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;y0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">2.97077458055</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of y&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;z0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">24.282041054363</span>
+            <span class="ss">:doc</span> <span class="s">&quot;initial value of z&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;The Lorenz system is a system of ordinary differential</span>
+<span class="s">          equations (the Lorenz equations) first studied by Edward</span>
+<span class="s">          Lorenz. It is notable for having chaotic solutions for certain</span>
+<span class="s">          parameter values and initial conditions. In particular, the</span>
+<span class="s">          Lorenz attractor is a set of chaotic solutions of the Lorenz</span>
+<span class="s">          system which, when plotted, resemble a butterfly or figure</span>
+<span class="s">          eight.</span>
+
+<span class="s">          The equation is as follows:</span>
+
+<span class="s">          x&#39; = s(y - x)</span>
+
+<span class="s">          y&#39; = x(r - z) - y</span>
+
+<span class="s">          z&#39; = xy - bz</span>
+
+<span class="s">          The time step amount determines the rate at which the ODE is</span>
+<span class="s">          evaluated.  Higher values will increase the rate, but cause</span>
+<span class="s">          more instability.  This generator uses a different algorithm</span>
+<span class="s">          than the LorenzN/L/C ugen included with current distributions.</span>
+<span class="s">          The resulting sound is somewhat different, and it also means</span>
+<span class="s">          that becomes unstable around 0.02.&quot;</span> <span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lorenz2DL&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Lorenz2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;lorenz 2D chaotic generator with linear interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Lorenz2DC&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Lorenz2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;lorenz 2D chaotic generator with cubic interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LorenzTrig&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Lorenz2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;lorenz 2D chaotic trigger&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Fhn2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;FitzHughNagumo Neuron Firing Oscillator with no interpolation&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">11025</span>
+            <span class="ss">:default:kr</span> <span class="mi">40</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">22050</span>
+            <span class="ss">:default:kr</span> <span class="mi">100</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;urate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;update rate for u&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wrate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;update rate for w&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.6</span>
+            <span class="ss">:doc</span> <span class="s">&quot;equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.8</span>
+            <span class="ss">:doc</span> <span class="s">&quot;equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;i&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;arbitrary external impulse; i.e. pulse wave, trigger,</span>
+<span class="s">                 lfnoise, or nothing.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;u0&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;reset value for u&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;w0&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;reset value for w&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;The FitzHugh–Nagumo model is a simplified version of the</span>
+<span class="s">          Hodgkin–Huxley model which models in a detailed manner</span>
+<span class="s">          activation and deactivation dynamics of a spiking neuron. For</span>
+<span class="s">          more information see the wikipedia article:</span>
+
+<span class="s">          http://en.wikipedia.org/wiki/FitzHugh–Nagumo_model&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Fhn2DL&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Fhn2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;FitzHughNagumo Neuron Firing Oscillator with linear interpolation&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Fhn2DC&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Fhn2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;FitzHughNagumo Neuron Firing Oscillator with cubic interpolation&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FhnTrig&quot;</span>
+    <span class="ss">:extends</span> <span class="s">&quot;Fhn2DN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;FitzHughNagumo Neuron Firing Oscillator trigger&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">10</span>
+            <span class="ss">:doc</span> <span class="s">&quot;iteration frequency in Hertz&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;urate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;update rate for u&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wrate&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;update rate for 2&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b0&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.6</span>
+            <span class="ss">:doc</span> <span class="s">&quot;equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.8</span>
+            <span class="ss">:doc</span> <span class="s">&quot;equation constant&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;i&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;arbitrary external impulse; i.e. pulse wave, trigger,</span>
+<span class="s">                  lfnoise or nothing&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;u0&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;reset value for u&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;w0&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;reset value for w&quot;</span><span class="p">}]}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_CommonMag&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;returns common magnitudes&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;FFT buffer a&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;FFT buffer b&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;tolerance&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;magnitudes within which test will pass&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;remove&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;scale uncommon magnitudes&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Returns magnitudes common to buffer-a &amp; buffer-b within a</span>
+<span class="s">         tolerance level.&quot;</span> <span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_CommonMul&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;tolerance&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;remove&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagMinus&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;remove&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagGate&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;thresh&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;remove&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Compander&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;thresh&quot;</span>
+            <span class="ss">:default</span> <span class="mi">50</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;slope-below&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;slope-above&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_MagScale&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Morph&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;morph&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_XFade&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;fade&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_SoftWipe&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wipe&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PV_Cutoff&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buffer-a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;buffer-b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;wipe&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NestedAllpassN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.08</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.03</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.03</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NestedAllpassL&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.08</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.03</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.03</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NestedAllpassC&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.036</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.08</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.03</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.03</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DoubleNestedAllpassN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Double Nested Allpass Filter N&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0047</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0047</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.15</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.022</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.022</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.25</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0083</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0083</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DoubleNestedAllpassL&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Double Nested Allpass Filter L&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0047</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0047</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.15</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.022</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.022</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.25</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0083</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0083</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DoubleNestedAllpassC&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Double Nested Allpass Filter C&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Input signal&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0047</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0047</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain1&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.15</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.022</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.022</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain2&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.25</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;max-delay3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0083</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0083</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gain3&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;MoogLadder&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Moog Filter Emulation&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ffreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">440</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Cutoff freq&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;res&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Resonance (0 -&gt; 1)&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Moog Filter.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RLPFD&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ffreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">440</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Cutoff freq&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;res&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Resonance (0 -&gt; 1)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dist&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Resonance (0 -&gt; 1)&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Streson&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;delay-time&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.003</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;res&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.9</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Resonance (0 -&gt; 1)&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NLFiltN&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;d&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;l&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NLFiltL&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;d&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;l&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NLFiltC&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;input&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;Audio input&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;a&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;b&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;d&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;c&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;l&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;GaussTrig&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;Impulses around a certain frequency&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">440</span>
+            <span class="ss">:doc</span> <span class="s">&quot;mean frequency&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dev&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.3</span>
+            <span class="ss">:doc</span> <span class="s">&quot;random deviation from mean (0 &lt;= dev &lt; 1)&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Impulses around a certain frequency&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFBrownNoise0&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">20</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dev&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dist&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFBrownNoise1&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">20</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dev&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dist&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;LFBrownNoise2&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;freq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">20</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dev&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dist&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TBrownRand&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dev&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dist&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Dbrown2&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;demand rate brownian movement with Gendyn distributions&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;minimum value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;maximum value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;step&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;maximum step for each new value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dist&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;gendyn distribution (see gendy1)&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;length&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;number of values to create&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;Dbrown2 returns numbers in the continuous range between lo and</span>
+<span class="s">          hi. The arguments can be a number or any other ugen.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;DGauss&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;length&quot;</span>
+            <span class="ss">:default</span> <span class="nv">Float/POSITIVE_INFINITY</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+           <span class="p">]</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:dr</span><span class="p">}</span>
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TGaussRand&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TBetaRand&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;lo&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;hi&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;prob1&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;prob2&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gendy4&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ampdist&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;adparam&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ddparam&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">440</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">660</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ampscale&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durscale&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;init-cps&quot;</span>
+            <span class="ss">:default</span> <span class="mi">12</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;knum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">12</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Gendy5&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ampdist&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;adparam&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ddparam&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;minfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">440</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;maxfreq&quot;</span>
+            <span class="ss">:default</span> <span class="mi">660</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ampscale&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;durscale&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;init-cps&quot;</span>
+            <span class="ss">:default</span> <span class="mi">12</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;knum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">12</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TGrains2&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;center-pos&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pan&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;amp&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;att&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dec&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;interp&quot;</span>
+            <span class="ss">:default</span> <span class="mi">4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">num-outs-greater-than</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;TGrains3&quot;</span>
+    <span class="ss">:summary</span> <span class="s">&quot;&quot;</span>
+    <span class="ss">:args</span> <span class="p">[</span>
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;num-channels&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:num-outs</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trigger&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bufnum&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;rate&quot;</span>
+            <span class="ss">:default</span> <span class="mi">1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;center-pos&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dur&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;pan&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;amp&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;att&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;dec&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.5</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;interp&quot;</span>
+            <span class="ss">:default</span> <span class="mi">4</span>
+            <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}]</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">num-outs-greater-than</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+   <span class="c1">;; Phenon : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;a, &lt;&gt;b, &lt;&gt;x, &lt;&gt;y, &lt;&gt;n;</span>
+   <span class="c1">;;      *new { |a=1.3, b=0.3, x=0.30501993062401, y=0.20938865431933, n=true|</span>
+   <span class="c1">;;              ^super.newCopyArgs(a, b, x, y, n);</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var locala, localb, localx, localy, localn, newx;</span>
+   <span class="c1">;;              locala = a.copy; localb = b.copy; localx = x.copy; localy = y.copy;</span>
+   <span class="c1">;;              localn = n.copy;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      newx = localy + 1 - (locala * localx.squared);</span>
+   <span class="c1">;;                      localy = localb * (localx);</span>
+   <span class="c1">;;                      localx = newx;</span>
+   <span class="c1">;;                      (localn).if(</span>
+   <span class="c1">;;                              { ([localx, localy] * [0.77850360953955, 2.5950120317984] + 1 * 0.5).yield },</span>
+   <span class="c1">;;                              { [localx, localy].yield }</span>
+   <span class="c1">;;                      );</span>
+   <span class="c1">;;              };</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; Platoo : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;a, &lt;&gt;b, &lt;&gt;c, &lt;&gt;d, &lt;&gt;x, &lt;&gt;y, &lt;&gt;n;</span>
+   <span class="c1">;;      *new {|a=3.0, b= -2.0, c=0.7, d=0.9, x=0.34082301375036, y= -0.38270086971332, n=true|</span>
+   <span class="c1">;;              ^super.newCopyArgs(a, b, c, d, x, y, n);</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var locala, localb, localc, locald, localx, localy, localn, newx;</span>
+   <span class="c1">;;              locala=a.copy; localb=b.copy; localc=c.copy; locald=d.copy; localx=x.copy; localy=y.copy;</span>
+   <span class="c1">;;              localn=n.copy;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      newx=sin(localb*localy)+(localc*sin(localb*localx));</span>
+   <span class="c1">;;                      localy=sin(locala*localy)+(locald*sin(locala*localx));</span>
+   <span class="c1">;;                      localx=newx;</span>
+   <span class="c1">;;                      (localn).if(</span>
+   <span class="c1">;;                              { ([localx, localy] * [2.8213276124707, 2.4031871436393] + 1 * 0.5).yield },</span>
+   <span class="c1">;;                              { [localx, localy].yield }</span>
+   <span class="c1">;;                      )</span>
+   <span class="c1">;;              };</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; Plorenz : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;s, &lt;&gt;r, &lt;&gt;b, &lt;&gt;h, &lt;&gt;x, &lt;&gt;y, &lt;&gt;z, &lt;&gt;h;</span>
+   <span class="c1">;;      *new {|s=10, r=28, b=2.66666666667, h=0.01, x=0.090879182417163, y=2.97077458055, z=24.282041054363|</span>
+   <span class="c1">;;              ^super.newCopyArgs(s, r, b, h, x, y, z);</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var localx, localy, localz, localh, sigma, rayleigh, ratio, newx, newy;</span>
+   <span class="c1">;;              localx=x.copy; localy=y.copy; localz=z.copy; localh=h.copy;</span>
+   <span class="c1">;;              sigma=s.copy; rayleigh=r.copy; ratio=b.copy;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      newx=localh*sigma*(localy-localx)+localx;</span>
+   <span class="c1">;;                      newy=localh*(localx.neg*localz+(rayleigh*localx)-localy)+localy;</span>
+   <span class="c1">;;                      localz=localh*(localx*localy-(ratio*localz))+localz;</span>
+   <span class="c1">;;                      localx=newx; localy=newy;</span>
+   <span class="c1">;;                      ([localx, localy, localz] * [0.048269545768799, 0.035757929840258, 0.019094390581019] + 1 * 0.5).yield</span>
+   <span class="c1">;;              }</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; Pquad : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;a, &lt;&gt;b, &lt;&gt;c, &lt;&gt;x, &lt;&gt;n;</span>
+   <span class="c1">;;      *new {|a= -3.741, b=3.741, c=0, x=0.1, n=true|</span>
+   <span class="c1">;;              ^super.newCopyArgs(a, b, c, x, n);</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var locala, localb, localc, localx, localn;</span>
+   <span class="c1">;;              locala=a.copy; localb=b.copy; localc=c.copy; localx=x.copy; localn=n.copy;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      localx=(locala*localx.squared) + (localb*localx) + localc;</span>
+   <span class="c1">;;                      (localn).if({ (localx * 1.0693715927735).yield },</span>
+   <span class="c1">;;                              {localx.yield}</span>
+   <span class="c1">;;                      )</span>
+   <span class="c1">;;              }</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; PlinCong : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;a, &lt;&gt;c, &lt;&gt;m, &lt;&gt;x, &lt;&gt;n;</span>
+   <span class="c1">;;      *new {|a=1.1, c=0.1, m=0.5, x=0.0, n=true|</span>
+   <span class="c1">;;              ^super.newCopyArgs(a, c, m, x, n);</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var locala, localc, localm, localx, localn;</span>
+   <span class="c1">;;              locala=a.copy; localc=c.copy; localm=m.copy; localx=x.copy; localn=n.copy;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      localx=((locala * localx) + localc) % localm;</span>
+   <span class="c1">;;                      (localn).if({ (localx * 2.0000515599933).yield },</span>
+   <span class="c1">;;                              {localx.yield}</span>
+   <span class="c1">;;                      )</span>
+   <span class="c1">;;              }</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; Pstandard : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;k, &lt;&gt;x, &lt;&gt;y, &lt;&gt;n;</span>
+   <span class="c1">;;      *new {|k=1.5, x=4.9789799812499, y=5.7473416156381, n=true|</span>
+   <span class="c1">;;              ^super.newCopyArgs(k, x, y, n)</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var localk, localx, localy, localn;</span>
+   <span class="c1">;;              localk=k.copy; localx=x.copy; localy=y.copy; localn=n.copy;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      localy=(localk * sin(localx) + localy) % 2pi;</span>
+   <span class="c1">;;                      localx=(localx + localy) % 2pi;</span>
+   <span class="c1">;;                      (localn).if(</span>
+   <span class="c1">;;                              { ([localx, localy] * [0.1591583187703, 0.15915788974082]).yield },</span>
+   <span class="c1">;;                              { [localx, localy].yield }</span>
+   <span class="c1">;;                      );</span>
+   <span class="c1">;;              }</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; Pgbman : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;x, &lt;&gt;y, &lt;&gt;n;</span>
+   <span class="c1">;;      *new {|x=1.2, y=2.1, n=true|</span>
+   <span class="c1">;;              ^super.newCopyArgs(x, y, n)</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var localx, localy, localn, last_x;</span>
+   <span class="c1">;;              localx=x.copy; localy=y.copy; localn=n.copy;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      last_x=localx;</span>
+   <span class="c1">;;                      (last_x &lt; 0.0).if({ localx = 1.0 - localy - last_x }, { localx = 1.0 - localy + last_x });</span>
+   <span class="c1">;;                      localy = last_x;</span>
+   <span class="c1">;;                      (localn).if({ (localx * 0.12788595029832).yield },</span>
+   <span class="c1">;;                              {localx.yield}</span>
+   <span class="c1">;;                      )</span>
+   <span class="c1">;;              }</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; Pfhn : Pattern {</span>
+   <span class="c1">;;      var &lt;&gt;a, &lt;&gt;b, &lt;&gt;c, &lt;&gt;d, &lt;&gt;i, &lt;&gt;u, &lt;&gt;v, &lt;&gt;n;</span>
+   <span class="c1">;;      *new {|a=0.7, b=0.8, c=1.0, d=1.0, i, u= -0.1, v=0.1, n=true|</span>
+   <span class="c1">;;              ^super.newCopyArgs(a, b, c, d, i, u, v, n)</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;      embedInStream {|inval|</span>
+   <span class="c1">;;              var la, lb, lc, ld, li, lu, lv, ln, newu;</span>
+   <span class="c1">;;              la=a.copy; lb=b.copy; lc=c.copy; ld=d.copy; li=i.copy; lu=u.copy; lv=v.copy;</span>
+   <span class="c1">;;              ln=n.copy;</span>
+   <span class="c1">;;              li=li ? Pseq([0.0], inf).asStream;</span>
+   <span class="c1">;;              loop {</span>
+   <span class="c1">;;                      newu=lc * (lu.cubed * -0.33333333 - lv + lu + li.next) + lu;</span>
+   <span class="c1">;;                      lv=ld * (lb * lu + la - lv) + lv;</span>
+   <span class="c1">;;                      lu=newu;</span>
+   <span class="c1">;;                      if ((lu &gt; 1.0) || (lu &lt; -1.0)) {</span>
+   <span class="c1">;;                              lu=((lu - 1)%4.0 - 2.0).abs - 1.0;</span>
+   <span class="c1">;;                      };</span>
+   <span class="c1">;;                      (ln).if({ [lu + 1 * 0.5, lv * 0.5 + 1 * 0.5].yield },</span>
+   <span class="c1">;;                              { [lu, lv].yield }</span>
+   <span class="c1">;;                      );</span>
+   <span class="c1">;;              }</span>
+   <span class="c1">;;              ^inval</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;                 }</span>
+
+   <span class="c1">;; BhobLoShelf {</span>
+   <span class="c1">;;      *ar {|in, freq, amp|</span>
+   <span class="c1">;;              var wc, a0, allpass;</span>
+   <span class="c1">;;              wc=pi * freq * SampleDur.ir;</span>
+   <span class="c1">;;              a0=(1 - wc)/(1 + wc);</span>
+   <span class="c1">;;              allpass=FOS.ar(in, a0.neg, 1, a0, -1);</span>
+   <span class="c1">;;              ^(0.5 * (in + allpass + (amp * (in-allpass))))</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; BhobHiShelf {</span>
+   <span class="c1">;;      *ar {|in, freq, amp|</span>
+   <span class="c1">;;              var wc, a0, allpass;</span>
+   <span class="c1">;;              wc=pi * freq * SampleDur.ir;</span>
+   <span class="c1">;;              a0=(1 - wc)/(1 + wc);</span>
+   <span class="c1">;;              allpass=FOS.ar(in, a0.neg, 1, a0, 1);</span>
+   <span class="c1">;;              ^(0.5 * (in + allpass + (amp * (in-allpass))))</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;; }</span>
+
+   <span class="c1">;; BhobTone {</span>
+   <span class="c1">;;      *ar {|in, tone|</span>
+   <span class="c1">;;              ^Mix([HiShelf.ar(in, 10000, tone), LoShelf.ar(in, 100, tone.reciprocal)])</span>
+   <span class="c1">;;      }</span>
+   <span class="c1">;;}</span>
+
+   <span class="p">])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

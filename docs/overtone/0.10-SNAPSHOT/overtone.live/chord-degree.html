@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>chord-degree</h1>
+    <p class="doc">Returns the notes constructed by picking thirds in a given scale
+  from in a given root. Useful if you want to try out playing standard
+  chord progressions. For example:
+
+  (chord-degree :i :c4 :ionian) ;=> (60 64 67 71)
+  (chord-degree :ii :c4 :melodic-minor-asc) ;=> (62 65 69 72)
+  </p>
+    <p>
+      File: overtone/music/pitch.clj
+      Line: 712
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">chord-degree</span>
+  <span class="s">&quot;Returns the notes constructed by picking thirds in a given scale</span>
+<span class="s">  from in a given root. Useful if you want to try out playing standard</span>
+<span class="s">  chord progressions. For example:</span>
+
+<span class="s">  (chord-degree :i :c4 :ionian) ;=&gt; (60 64 67 71)</span>
+<span class="s">  (chord-degree :ii :c4 :melodic-minor-asc) ;=&gt; (62 65 69 72)</span>
+<span class="s">  &quot;</span>
+  <span class="p">([</span><span class="nv">degree</span> <span class="nb">root </span><span class="nv">mode</span><span class="p">]</span>
+    <span class="p">(</span><span class="nf">chord-degree</span> <span class="nv">degree</span> <span class="nb">root </span><span class="nv">mode</span> <span class="mi">4</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">degree</span> <span class="nb">root </span><span class="nv">mode</span> <span class="nv">num-notes</span><span class="p">]</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">d-int</span> <span class="p">(</span><span class="nf">degree-&gt;int</span> <span class="nv">degree</span><span class="p">)</span>
+          <span class="nv">num-degrees</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nb">+ </span><span class="nv">d-int</span> <span class="p">(</span><span class="nb">* </span><span class="nv">num-notes</span> <span class="mi">2</span><span class="p">))</span> <span class="mi">1</span><span class="p">)]</span>
+          <span class="p">(</span><span class="nb">take-nth </span><span class="mi">2</span> <span class="p">(</span><span class="nb">drop </span><span class="p">(</span><span class="nf">degree-&gt;int</span> <span class="nv">degree</span><span class="p">)</span> <span class="p">(</span><span class="nf">scale</span> <span class="nb">root </span><span class="nv">mode</span> <span class="p">(</span><span class="nb">range </span><span class="nv">num-degrees</span><span class="p">)))))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

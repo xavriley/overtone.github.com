@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>branch</h1>
+    <p class="doc">Expansion time branching. Takes a test-expression and a set of
+  clauses of the following form:
+
+  clauses => clause1 ... clauseN, default-clause*
+  clause => test-constant result-expr
+  default-clause* => result-expr
+
+  Evaluates the test-expression 'e' and looks for a matching
+  test-constant in the clauses. Expands to the result-expression of the
+  matching clause or nil if no match is found and no default-expression
+  is provided.</p>
+    <p>
+      File: overtone/helpers/lib.clj
+      Line: 361
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">branch</span>
+  <span class="s">&quot;Expansion time branching. Takes a test-expression and a set of</span>
+<span class="s">  clauses of the following form:</span>
+
+<span class="s">  clauses =&gt; clause1 ... clauseN, default-clause*</span>
+<span class="s">  clause =&gt; test-constant result-expr</span>
+<span class="s">  default-clause* =&gt; result-expr</span>
+
+<span class="s">  Evaluates the test-expression &#39;e&#39; and looks for a matching</span>
+<span class="s">  test-constant in the clauses. Expands to the result-expression of the</span>
+<span class="s">  matching clause or nil if no match is found and no default-expression</span>
+<span class="s">  is provided.&quot;</span>
+  <span class="p">[</span><span class="nv">e</span> <span class="o">&amp;</span> <span class="nv">clauses</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">default</span> <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nf">odd?</span> <span class="p">(</span><span class="nb">count </span><span class="nv">clauses</span><span class="p">))</span>
+                  <span class="p">(</span><span class="nb">last </span><span class="nv">clauses</span><span class="p">))</span>
+        <span class="nv">clauses</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">odd?</span> <span class="p">(</span><span class="nb">count </span><span class="nv">clauses</span><span class="p">))</span>
+                  <span class="p">(</span><span class="nb">butlast </span><span class="nv">clauses</span><span class="p">)</span>
+                  <span class="nv">clauses</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nb">get </span><span class="p">(</span><span class="nb">apply hash-map </span><span class="nv">clauses</span><span class="p">)</span>
+         <span class="p">(</span><span class="nb">eval </span><span class="nv">e</span><span class="p">)</span>
+         <span class="nv">default</span><span class="p">)))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

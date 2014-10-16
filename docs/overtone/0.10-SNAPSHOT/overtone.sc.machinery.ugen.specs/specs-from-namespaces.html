@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs-from-namespaces</h1>
+    <p class="doc">Gathers all ugen spec metadata (stored in the vars spec and specs-collide)
+  from the specified namespaces into a single vector of maps.
+
+  Takes a seq of namespace endings (see UGEN-NAMESPACES) and returns a vector
+  of maps containing ugen metadata.</p>
+    <p>
+      File: overtone/sc/machinery/ugen/specs.clj
+      Line: 41
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn- </span><span class="nv">specs-from-namespaces</span>
+  <span class="s">&quot;Gathers all ugen spec metadata (stored in the vars spec and specs-collide)</span>
+<span class="s">  from the specified namespaces into a single vector of maps.</span>
+
+<span class="s">  Takes a seq of namespace endings (see UGEN-NAMESPACES) and returns a vector</span>
+<span class="s">  of maps containing ugen metadata.&quot;</span>
+  <span class="p">[</span><span class="nv">namespaces</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">reduce </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">mem</span> <span class="nv">ns</span><span class="p">]</span>
+            <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">full-ns</span> <span class="p">(</span><span class="nb">symbol </span><span class="p">(</span><span class="nb">str </span><span class="s">&quot;overtone.sc.machinery.ugen.metadata.&quot;</span> <span class="nv">ns</span><span class="p">))</span>
+                  <span class="nv">_</span> <span class="p">(</span><span class="nf">require</span> <span class="p">[</span><span class="nv">full-ns</span> <span class="ss">:only</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">specs</span> <span class="nv">specs-collide</span><span class="p">]])</span>
+                  <span class="nv">specs</span> <span class="p">(</span><span class="nb">var-get </span><span class="p">(</span><span class="nb">ns-resolve </span><span class="nv">full-ns</span> <span class="ss">&#39;specs</span><span class="p">))]</span>
+
+              <span class="c1">;; TODO: Currently colliders must be loaded before specs in order</span>
+              <span class="c1">;; for this to run properly, because some ugens in specs derive</span>
+              <span class="c1">;; from the &#39;index&#39; ugen in colliders.  Maybe the derivation</span>
+              <span class="c1">;; process should get smarter...</span>
+              <span class="p">(</span><span class="nb">if-let </span><span class="p">[</span><span class="nv">colliders</span> <span class="p">(</span><span class="nb">ns-resolve </span><span class="nv">full-ns</span> <span class="ss">&#39;specs-collide</span><span class="p">)]</span>
+                <span class="p">(</span><span class="nb">concat </span><span class="nv">mem</span> <span class="p">(</span><span class="nb">var-get </span><span class="nv">colliders</span><span class="p">)</span> <span class="nv">specs</span><span class="p">)</span>
+                <span class="p">(</span><span class="nb">concat </span><span class="nv">mem</span> <span class="nv">specs</span><span class="p">))))</span>
+          <span class="p">[]</span>
+          <span class="nv">namespaces</span><span class="p">))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

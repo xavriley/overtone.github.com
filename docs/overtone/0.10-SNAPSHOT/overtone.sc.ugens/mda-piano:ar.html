@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>mda-piano:ar</h1>
+    <p class="doc">
+  Synthesised piano 
+
+  [freq 440.0, gate 1.0, vel 100.0, decay 0.8, release 0.8, hard 0.8, velhard 0.8, muffle 0.8, velmuff 0.8, velcurve 0.8, stereo 0.2, tune 0.5, random 0.1, stretch 0.1, sustain 0]
+
+  freq     - Frequency of the note. 
+  gate     - Note-on occurs when gate goes from 
+             nonpositive to positive; note-off 
+             occurs when it goes from positive to 
+             nonpositive. Most of the other 
+             controls are only updated when a new 
+             note-on occurs. 
+  vel      - Velocity (range is 0 to 127). 
+  decay    - The time for notes to decay after the 
+             initial strike. 
+  release  - The time for notes to decay after the 
+             key is released. 
+  hard     - - 
+  velhard  - - 
+  muffle   - - 
+  velmuff  - - 
+  velcurve - - 
+  stereo   - Width of the stereo effect (which 
+             makes low notes sound towards the 
+             left, high notes towards the right). 
+             0 to 1. 
+  tune     - Overall tuning. 
+  random   - Randomness in note tuning. 
+  stretch  - Stretches the tuning out (higher 
+             notes pushed higher). 
+  sustain  - If positive, act as if the piano's 
+             sustain pedal is pressed. 
+
+  A piano synthesiser (originally a VST plugin by Paul 
+  Kellett, ported to SC by Dan Stowell). This UGen is not 
+  polyphonic (but can be retriggered to play notes in 
+  sequence). Note: This UGen is stereo - it returns two 
+  channels, with a stereo 'wideness' effect controlled by 
+  the stereo argument. 
+
+  Categories: 
+  Rates: [ :ar ]
+  Default rate: :ar</p>
+    <p>
+      File: 
+      Line: 
+    </p>
+    <div class="highlight"><pre><code class="clojure">      
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>demo</h1>
+    <p class="doc">Listen to an anonymous synth definition for a fixed period of time.
+  Useful for experimentation.  If the root node is not an out ugen, then
+  it will add one automatically.  You can specify a timeout in seconds
+  as the first argument otherwise it defaults to *demo-time* ms. See
+  #'run for a version of demo that does not add an out ugen.
+
+  (demo (sin-osc 440))      ;=> plays a sine wave for *demo-time* ms
+  (demo 0.5 (sin-osc 440))  ;=> plays a sine wave for half a second</p>
+    <p>
+      File: overtone/sc/synth.clj
+      Line: 667
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defmacro </span><span class="nv">demo</span>
+  <span class="s">&quot;Listen to an anonymous synth definition for a fixed period of time.</span>
+<span class="s">  Useful for experimentation.  If the root node is not an out ugen, then</span>
+<span class="s">  it will add one automatically.  You can specify a timeout in seconds</span>
+<span class="s">  as the first argument otherwise it defaults to *demo-time* ms. See</span>
+<span class="s">  #&#39;run for a version of demo that does not add an out ugen.</span>
+
+<span class="s">  (demo (sin-osc 440))      ;=&gt; plays a sine wave for *demo-time* ms</span>
+<span class="s">  (demo 0.5 (sin-osc 440))  ;=&gt; plays a sine wave for half a second&quot;</span>
+  <span class="p">[</span><span class="o">&amp;</span> <span class="nv">body</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">demo-time</span> <span class="nv">body</span><span class="p">]</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">number?</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">))</span>
+                           <span class="p">[(</span><span class="nb">first </span><span class="nv">body</span><span class="p">)</span> <span class="p">(</span><span class="nb">second </span><span class="nv">body</span><span class="p">)]</span>
+                           <span class="p">[(</span><span class="nb">* </span><span class="mf">0.001</span> <span class="nv">*demo-time*</span><span class="p">)</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">)])</span>
+        <span class="p">[</span><span class="nv">out-bus</span> <span class="nv">body</span><span class="p">]</span>   <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="ss">&#39;out</span> <span class="p">(</span><span class="nb">first </span><span class="nv">body</span><span class="p">))</span>
+                           <span class="p">[(</span><span class="nb">second </span><span class="nv">body</span><span class="p">)</span> <span class="p">(</span><span class="nb">nth </span><span class="nv">body</span> <span class="mi">2</span><span class="p">)]</span>
+                           <span class="p">[</span><span class="mi">0</span> <span class="nv">body</span><span class="p">])</span>
+
+        <span class="nv">body</span> <span class="p">(</span><span class="nb">list </span><span class="ss">&#39;out</span> <span class="nv">out-bus</span> <span class="p">(</span><span class="nb">list </span><span class="ss">&#39;hold</span> <span class="nv">body</span> <span class="nv">demo-time</span> <span class="ss">:done</span> <span class="ss">&#39;FREE</span><span class="p">))]</span>
+    <span class="o">`</span><span class="p">((</span><span class="nf">synth</span> <span class="s">&quot;audition-synth&quot;</span> <span class="o">~</span><span class="nv">body</span><span class="p">))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

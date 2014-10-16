@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>buffer-info</h1>
+    <p class="doc">Fetch the information for buffer associated with buf-id (either an
+  integer or an associative with an :id key). Synchronous.
+
+  Information returned is as follows:
+
+  :size       - number of frames in the buffer
+  :n-channels - number of audio channels stored in the buffer
+  :rate       - rate of the buffer (typical rate is 44100 samples per
+                second)
+  :n-samples  - total number of samples in the buffer (* size n-channels)
+  :rate-scale - rate to specify in order to play the buffer correctly
+                according
+                to the server's sample rate (/ rate (server-sample-rate))
+  :duration   - duration of the buffer in seconds
+  :id         - unique id for the buffer</p>
+    <p>
+      File: overtone/sc/buffer.clj
+      Line: 74
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">buffer-info</span>
+  <span class="s">&quot;Fetch the information for buffer associated with buf-id (either an</span>
+<span class="s">  integer or an associative with an :id key). Synchronous.</span>
+
+<span class="s">  Information returned is as follows:</span>
+
+<span class="s">  :size       - number of frames in the buffer</span>
+<span class="s">  :n-channels - number of audio channels stored in the buffer</span>
+<span class="s">  :rate       - rate of the buffer (typical rate is 44100 samples per</span>
+<span class="s">                second)</span>
+<span class="s">  :n-samples  - total number of samples in the buffer (* size n-channels)</span>
+<span class="s">  :rate-scale - rate to specify in order to play the buffer correctly</span>
+<span class="s">                according</span>
+<span class="s">                to the server&#39;s sample rate (/ rate (server-sample-rate))</span>
+<span class="s">  :duration   - duration of the buffer in seconds</span>
+<span class="s">  :id         - unique id for the buffer&quot;</span>
+  <span class="p">[</span><span class="nv">buf-id</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">buf-id</span> <span class="p">(</span><span class="nf">id-mapper</span> <span class="nv">buf-id</span><span class="p">)</span>
+        <span class="nv">prom</span>   <span class="p">(</span><span class="nf">recv</span> <span class="s">&quot;/b_info&quot;</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">msg</span><span class="p">]</span>
+                                 <span class="p">(</span><span class="nb">= </span><span class="nv">buf-id</span> <span class="p">(</span><span class="nb">first </span><span class="p">(</span><span class="ss">:args</span> <span class="nv">msg</span><span class="p">)))))]</span>
+    <span class="p">(</span><span class="nf">with-server-sync</span>
+      <span class="o">#</span><span class="p">(</span><span class="nf">snd</span> <span class="s">&quot;/b_query&quot;</span> <span class="nv">buf-id</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">str </span><span class="s">&quot;whilst fetching information for buffer &quot;</span> <span class="nv">buf-id</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">id</span> <span class="nv">n-frames</span> <span class="nv">n-chans</span> <span class="nv">rate</span><span class="p">]</span> <span class="p">(</span><span class="ss">:args</span> <span class="p">(</span><span class="nf">deref!</span> <span class="nv">prom</span> <span class="s">&quot;attempting to receive buffer information from the server.&quot;</span><span class="p">))</span>
+          <span class="nv">server-rate</span>                <span class="p">(</span><span class="nf">server-sample-rate</span><span class="p">)</span>
+          <span class="nv">n-samples</span>                  <span class="p">(</span><span class="nb">* </span><span class="nv">n-frames</span> <span class="nv">n-chans</span><span class="p">)</span>
+          <span class="nv">rate-scale</span>                 <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">server-rate</span> <span class="mi">0</span><span class="p">)</span>
+                                       <span class="p">(</span><span class="nb">/ </span><span class="nv">rate</span> <span class="nv">server-rate</span><span class="p">))</span>
+          <span class="nv">duration</span>                   <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">rate</span> <span class="mi">0</span><span class="p">)</span>
+                                       <span class="p">(</span><span class="nb">/ </span><span class="nv">n-frames</span> <span class="nv">rate</span><span class="p">))]</span>
+
+      <span class="p">(</span><span class="nf">map-&gt;BufferInfo</span>
+       <span class="p">{</span><span class="ss">:id</span> <span class="nv">id</span>
+        <span class="ss">:size</span> <span class="nv">n-frames</span>
+        <span class="ss">:n-channels</span> <span class="nv">n-chans</span>
+        <span class="ss">:rate</span> <span class="nv">rate</span>
+        <span class="ss">:n-samples</span> <span class="nv">n-samples</span>
+        <span class="ss">:rate-scale</span> <span class="nv">rate-scale</span>
+        <span class="ss">:duration</span> <span class="nv">duration</span><span class="p">}))))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

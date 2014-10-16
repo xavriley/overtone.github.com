@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>BINARY-OPS</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/special_ops.clj
+      Line: 68
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">BINARY-OPS</span>
+  <span class="p">{</span>
+   <span class="s">&quot;+&quot;</span> <span class="mi">0</span>             <span class="c1">; Addition</span>
+   <span class="s">&quot;-&quot;</span> <span class="mi">1</span>             <span class="c1">; Subtraction</span>
+   <span class="s">&quot;*&quot;</span> <span class="mi">2</span>             <span class="c1">; Multiplication</span>
+   <span class="c1">;;&quot;div&quot; 3         ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="s">&quot;/&quot;</span> <span class="mi">4</span>             <span class="c1">; Division</span>
+   <span class="s">&quot;mod&quot;</span> <span class="mi">5</span>           <span class="c1">; Modulus</span>
+   <span class="s">&quot;=&quot;</span> <span class="mi">6</span>             <span class="c1">; Equality</span>
+   <span class="s">&quot;not=&quot;</span> <span class="mi">7</span>          <span class="c1">; Inequality</span>
+   <span class="s">&quot;&lt;&quot;</span> <span class="mi">8</span>             <span class="c1">; Less than</span>
+   <span class="s">&quot;&gt;&quot;</span> <span class="mi">9</span>             <span class="c1">; Greater than</span>
+   <span class="s">&quot;&lt;=&quot;</span> <span class="mi">10</span>           <span class="c1">; Less than or equal to</span>
+   <span class="s">&quot;&gt;=&quot;</span> <span class="mi">11</span>           <span class="c1">; Greater than or equal to</span>
+   <span class="s">&quot;min&quot;</span> <span class="mi">12</span>          <span class="c1">; minimum</span>
+   <span class="s">&quot;max&quot;</span> <span class="mi">13</span>          <span class="c1">; maximum</span>
+   <span class="s">&quot;and&quot;</span> <span class="mi">14</span>          <span class="c1">; and (where pos sig is true)</span>
+   <span class="s">&quot;or&quot;</span> <span class="mi">15</span>           <span class="c1">; or (where pos sig is true</span>
+   <span class="s">&quot;xor&quot;</span> <span class="mi">16</span>          <span class="c1">; xor (where pos sig is true)</span>
+   <span class="c1">;;&quot;lcm&quot; 17        ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;gcd&quot; 18        ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="s">&quot;round&quot;</span> <span class="mi">19</span>        <span class="c1">; Round to nearest multiple</span>
+   <span class="s">&quot;round-up&quot;</span> <span class="mi">20</span>     <span class="c1">; Round up to next multiple</span>
+   <span class="s">&quot;round-down&quot;</span> <span class="mi">21</span>   <span class="c1">; Round down to previous multiple</span>
+   <span class="s">&quot;atan2&quot;</span> <span class="mi">22</span>        <span class="c1">; arctangent of a/b</span>
+   <span class="s">&quot;hypot&quot;</span> <span class="mi">23</span>        <span class="c1">; length of hypotenuse via Pythag</span>
+   <span class="s">&quot;hypot-aprox&quot;</span> <span class="mi">24</span>  <span class="c1">; approximation of length of hypotenuse</span>
+   <span class="s">&quot;pow&quot;</span> <span class="mi">25</span>          <span class="c1">; exponentiation</span>
+   <span class="c1">;;&quot;leftShift&quot; 26  ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;rightShift&quot; 27 ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;un-r-shift&quot; 28 ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;fill&quot; 29       ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="s">&quot;ring1&quot;</span> <span class="mi">30</span>        <span class="c1">; a * (b + 1) == a * b + a</span>
+   <span class="s">&quot;ring2&quot;</span> <span class="mi">31</span>        <span class="c1">; a * b + a + b</span>
+   <span class="s">&quot;ring3&quot;</span> <span class="mi">32</span>        <span class="c1">; a*a*b</span>
+   <span class="s">&quot;ring4&quot;</span> <span class="mi">33</span>        <span class="c1">; a*a*b - a*b*b</span>
+   <span class="s">&quot;difsqr&quot;</span> <span class="mi">34</span>       <span class="c1">; a*a - b*b</span>
+   <span class="s">&quot;sumsqr&quot;</span> <span class="mi">35</span>       <span class="c1">; a*a + b*b</span>
+   <span class="s">&quot;sqrsum&quot;</span> <span class="mi">36</span>       <span class="c1">; (a + b)^2</span>
+   <span class="s">&quot;sqrdif&quot;</span> <span class="mi">37</span>       <span class="c1">; (a - b)^2</span>
+   <span class="s">&quot;absdif&quot;</span> <span class="mi">38</span>       <span class="c1">; |a - b|</span>
+   <span class="s">&quot;thresh&quot;</span> <span class="mi">39</span>       <span class="c1">; Signal thresholding</span>
+   <span class="s">&quot;amclip&quot;</span> <span class="mi">40</span>       <span class="c1">; Two quadrant multiply</span>
+   <span class="s">&quot;scale-neg&quot;</span> <span class="mi">41</span>    <span class="c1">; scale negative part of input wave</span>
+   <span class="s">&quot;clip2&quot;</span> <span class="mi">42</span>        <span class="c1">; bilateral clipping</span>
+   <span class="s">&quot;excess&quot;</span> <span class="mi">43</span>       <span class="c1">; clipping residual</span>
+   <span class="s">&quot;fold2&quot;</span> <span class="mi">44</span>        <span class="c1">; bilateral folding</span>
+   <span class="s">&quot;wrap2&quot;</span> <span class="mi">45</span>        <span class="c1">; bilateral wrapping</span>
+   <span class="c1">;;&quot;first-arg&quot; 46  ; Returns the first arg unchanged - not useful.</span>
+   <span class="c1">;;&quot;rrand&quot; 47      ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="c1">;;&quot;exprand&quot; 48    ; Defined in BinaryOpUGens.cpp enum but not implemented on the server</span>
+   <span class="p">})</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

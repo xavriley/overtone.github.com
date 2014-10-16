@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/info.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+  <span class="p">[</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SampleRate&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the current sample rate&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SampleDur&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the current sample duration of the server in seconds&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;RadiansPerSample&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ControlRate&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the current control rate of the server&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;ControlDur&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the current control rate block duration of the server</span>
+<span class="s">          in seconds&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;SubsampleOffset&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;offset from synth start within one sample&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NumOutputBuses&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the number of output buses allocated on the server.</span>
+<span class="s">          This is the number of hardware outputs provided by the host</span>
+<span class="s">          machine such as left and right speakers.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NumInputBuses&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the number of input buses allocated on the</span>
+<span class="s">          server. This is the number of hardware inputs provided by the</span>
+<span class="s">          host machine such as a mic.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NumAudioBuses&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the number of audio buses allocated on the server.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NumControlBuses&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the number of control buses allocated on the server&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NumBuffers&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the number of buffers allocated on the server&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;NumRunningSynths&quot;</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ir</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the number of currently running synths&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufSampleRate&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a buffer&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the buffers current sample rate&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufRateScale&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a buffer&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns a ratio by which the playback of a buffer is to be</span>
+<span class="s">          scaled&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufFrames&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a buffer&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the current number of allocated frames i.e. the size</span>
+<span class="s">          of the buffer. This is the equivalent of Clojure&#39;s count on a</span>
+<span class="s">          seq.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufSamples&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a buffer&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;current number of samples allocated in the buffer&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufDur&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a buffer&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;returns the current duration of a buffer in seconds.&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;BufChannels&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;buf&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a buffer&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-buffer?</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:doc</span> <span class="s">&quot;current number of channels of soundfile in buffer&quot;</span><span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;CheckBadValues&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the UGen whose output is to be tested&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;id&quot;</span>
+            <span class="ss">:default</span> <span class="mi">0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;an id number to identify this UGen.&quot;</span> <span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;post&quot;</span>
+            <span class="ss">:default</span> <span class="mi">2</span>
+            <span class="ss">:doc</span> <span class="s">&quot;One of three post modes: 0 = no posting; 1 = post a</span>
+<span class="s">                  line for every bad value; 2 = post a line only when</span>
+<span class="s">                  the floating-point classification changes (e.g.,</span>
+<span class="s">                  normal -&gt; NaN and vice versa)&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span> <span class="ss">:ir</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;test for infinity, not-a-number, and denormals.  If one of</span>
+<span class="s">          these is found, it posts a warning. Its output is as follows:</span>
+<span class="s">          0 = a normal float, 1 = NaN, 2 = infinity, and 3 = a</span>
+<span class="s">          denormal.&quot;</span> <span class="p">}</span>
+
+
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Poll&quot;</span>
+    <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a non-positive to positive transition telling Poll to</span>
+<span class="s">                  return a value&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+            <span class="ss">:default</span> <span class="mf">0.0</span>
+            <span class="ss">:doc</span> <span class="s">&quot;the signal you want to poll&quot;</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;label&quot;</span>
+            <span class="ss">:default</span> <span class="s">&quot;polled-val&quot;</span>
+            <span class="ss">:doc</span> <span class="s">&quot;a string or symbol to be printed with the polled</span>
+<span class="s">                  value&quot;</span>
+            <span class="ss">:mode</span> <span class="ss">:append-string</span><span class="p">}</span>
+
+           <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;trig-id&quot;</span>
+            <span class="ss">:default</span> <span class="mi">-1</span>
+            <span class="ss">:doc</span> <span class="s">&quot;if greater than 0, a &#39;/tr&#39; message is sent back to the</span>
+<span class="s">                  client (similar to send-trig)&quot;</span><span class="p">}]</span>
+
+    <span class="ss">:internal-name</span> <span class="nv">true</span>
+    <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:ar</span> <span class="ss">:kr</span><span class="p">}</span>
+    <span class="ss">:doc</span> <span class="s">&quot;This ugen has been internalised for scserver</span>
+<span class="s">          compatibility. Please use the poll cgen instead.&quot;</span><span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

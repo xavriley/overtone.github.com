@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>specs</h1>
+    <p class="doc"></p>
+    <p>
+      File: overtone/sc/machinery/ugen/metadata/envgen.clj
+      Line: 4
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="k">def </span><span class="nv">specs</span>
+     <span class="p">[</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Done&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;src&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;ugen to monitor&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Outputs a one when the src ugen (typically an envelope) has</span>
+<span class="s">             finished&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FreeSelf&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Free the enclosing synth when triggered&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PauseSelf&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;in&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;input signal&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:check</span> <span class="p">(</span><span class="nf">nth-input-stream?</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Pause the enclosing synth when triggered&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;FreeSelfWhenDone&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;src&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the ugen to check for done&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Free the enclosing synth when the src ugen</span>
+<span class="s">             finishes (e.g. env-gen, play-buf, linen...)&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;PauseSelfWhenDone&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;src&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;the ugen to check for done&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Pause the enclosing synth when the src ugen</span>
+<span class="s">             finishes (e.g. env-gen, play-buf, linen...)&quot;</span> <span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Pause&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;gate&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;when gate is 0,  node is paused, when 1 it runs&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;id&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;node to be paused&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Pause a specified node when triggered&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Free&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;trig&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;when triggered, frees node&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;id&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;node to be freed&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;Free the specified node when triggered&quot;</span><span class="p">}</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;EnvGen&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;envelope&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an Array of Controls.&quot;</span>
+               <span class="ss">:mode</span> <span class="ss">:append-sequence</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;gate&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;this triggers the envelope and holds it open while</span>
+<span class="s">               &gt; 0. If the envelope is fixed-length (e.g. perc), the</span>
+<span class="s">               gate argument is used as a simple trigger. If it is an</span>
+<span class="s">               sustaining envelope (e.g. adsr, asr), the envelope is</span>
+<span class="s">               held open until the gate becomes 0, at which point is</span>
+<span class="s">               released. If the gate of an env-gen is set to -1 or</span>
+<span class="s">               below, then the envelope will cutoff immediately. The</span>
+<span class="s">               time for it to cutoff is the amount less than -1, with -1</span>
+<span class="s">               being as fast as possible, -1.5 being a cutoff in 0.5</span>
+<span class="s">               seconds, etc. The cutoff shape is linear.&quot;</span> <span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level-scale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;scales the levels of the breakpoints.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;level-bias&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;offsets the levels of the breakpoints.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;time-scale&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;scales the durations of the segments.&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>,
+               <span class="ss">:default</span> <span class="mi">0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an integer representing an action to be executed</span>
+<span class="s">                     when the env is finished playing. This can be used</span>
+<span class="s">                     to free the enclosing synth, etc.&quot;</span> <span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;envelope generator, interpolates across a path of control</span>
+<span class="s">             points over time, see the overtone.sc.envelope functions to</span>
+<span class="s">             generate the control points array</span>
+
+<span class="s">             Note:</span>
+
+<span class="s">             The actual minimum duration of a segment is not zero, but</span>
+<span class="s">             one sample step for audio rate and one block for control</span>
+<span class="s">             rate. This may result in asynchronicity when in two</span>
+<span class="s">             envelopes of different number of levels, the envelope times</span>
+<span class="s">             add up to the same total duration. Similarly, when</span>
+<span class="s">             modulating times, the new time is only updated at the end</span>
+<span class="s">             of the current segment - this may lead to asynchronicity of</span>
+<span class="s">             two envelopes with modulated times.&quot;</span>
+       <span class="ss">:default-rate</span> <span class="ss">:kr</span><span class="p">}</span>
+               <span class="c1">;(let [envec (TODO turn env object into vector)]</span>
+
+
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Linen&quot;</span>,
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;gate&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Input trigger&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;attack-time&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">0.01</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Time taken to rise to susLevel in seconds&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;sus-level&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Level to hold the envelope at until gate is triggered&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;release-time&quot;</span>,
+               <span class="ss">:default</span> <span class="mf">1.0</span>
+               <span class="ss">:doc</span> <span class="s">&quot;Time to fall from susLevel back to 0 after the gate has been triggered&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;action&quot;</span>, <span class="ss">:default</span> <span class="mi">0</span> <span class="ss">:doc</span> <span class="s">&quot;done action&quot;</span><span class="p">}]</span>,
+
+       <span class="ss">:rates</span> <span class="o">#</span><span class="p">{</span><span class="ss">:kr</span><span class="p">}</span>
+       <span class="ss">:doc</span> <span class="s">&quot;A linear envelope generator, rises to sus-level over</span>
+<span class="s">             attack-time seconds and after the gate goes non-positive</span>
+<span class="s">             falls over release-time to finally perform the (optional)</span>
+<span class="s">             action&quot;</span><span class="p">}</span>
+
+      <span class="c1">;; TODO figure out what an IEnvGen is and write init</span>
+      <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;IEnvGen&quot;</span>
+       <span class="ss">:args</span> <span class="p">[{</span><span class="ss">:name</span>
+               <span class="s">&quot;ienvelope&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;an InterplEnv (this is static for the life of the UGen)&quot;</span><span class="p">}</span>
+
+              <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;index&quot;</span>
+               <span class="ss">:doc</span> <span class="s">&quot;a point to access within the InterplEnv&quot;</span><span class="p">}]</span>
+
+       <span class="ss">:doc</span> <span class="s">&quot;Plays back break point envelopes from the index point.&quot;</span>
+<span class="c1">;;       :init (fn [rate [env &amp; args] spec])</span>
+       <span class="p">}])</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>

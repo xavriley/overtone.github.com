@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://overtone-docs-staging.herokuapp.com/media/favicon.ico" type="image/x-icon">
+    <title>Overtone - Collaborative Programmable Music</title>
+
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/style.css" />
+    <link rel="stylesheet" href="http://overtone-docs-staging.herokuapp.com/style/syntax.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript" src="http://overtone-docs-staging.herokuapp.com/js/search.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    $('#search-query').lunrSearch({
+indexUrl: '/search.json',             // URL of the `search.json` index data for your site
+results:  '#search-results',          // jQuery selector for the search results container
+entries:  '.entries',                 // jQuery selector for the element to contain the results list, must be a child of the results element above.
+template: '#search-results-template'  // jQuery selector for the Mustache.js template
+});
+    });
+    </script>
+  </head>
+
+<body>
+
+<div id="wrap">
+  <div id="top-banner"></div>
+    <img id="main-logo" src="http://overtone-docs-staging.herokuapp.com/media/overtone-logo.png" width="707" height="225">
+    <div id="header">
+      <h1 style="display:none;" id="overtone-text"><a href="http://overtone-docs-staging.herokuapp.com/index.html">overtone</a></h1>
+      <ul id="nav">
+
+        <li><a href="https://github.com/overtone/overtone/">Source</a><span>/</span></li>
+        <li><a href="https://github.com/overtone/overtone/wiki">Documentation</a><span>/</span> </li>
+        <li><a href="https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf">Cheat Sheet</a><span>/</span></li>
+        <li><a href="http://twitter.com/overtone">Twitter</a></li>
+      </ul>
+
+      <div id="search">
+        <form action="http://overtone-docs-staging.herokuapp.com/search" method="get">
+          <input type="text" id="search-query" name="q" placeholder="Search documentation" autocomplete="off">
+        </form>
+      </div>
+
+      <section id="search-results" style="display: none;">
+        <p>Search results</p>
+        <div class="entries">
+        </div>
+      </section>
+
+
+      <script id="search-results-template" type="text/mustache">
+{{#entries}}
+  <article>
+    <h3>
+      <a href="{{url}}">{{title}}</a>
+      {{#date}}<small><time datetime="{{pubdate}}" pubdate>{{displaydate}}</time></small>{{/date}}
+      {{#categories}}<small>{{categories}}</small>{{/categories}}
+    </h3>
+  </article>
+{{/entries}}
+      </script>
+
+
+    </div><!--end header-->
+
+  <div id="content">
+    <h1>buffer-save</h1>
+    <p class="doc">Save the float audio data in buf to a file in the specified path on the
+  filesystem. The following options are also available (note: not all header
+  and sample combinations work - incorrect combinations will fail silently):
+
+   :header      - Header format: "aiff", "next", "wav", "ircam", "raw"
+                  Default "wav"
+   :samples     - Sample format: "int8", "int16", "int24", "int32",
+                                 "float", "double", "mulaw", "alaw"
+                  Default "int16"
+   :n-frames    - Number of frames to write. If < 0 then all frames from
+                  start-frame to the end of the buffer are written
+                  Default -1
+   :start-frame - starting frame in buffer (0 is the start of the buffer)
+                  Default 0
+
+   Example usage:
+   (buffer-save buf "~/Desktop/foo.wav" :header "aiff" :samples "int32"
+                                          :start-frame 100)</p>
+    <p>
+      File: overtone/sc/buffer.clj
+      Line: 333
+    </p>
+    <div class="highlight"><pre><code class="clojure">      <span class="p">(</span><span class="kd">defn </span><span class="nv">buffer-save</span>
+  <span class="s">&quot;Save the float audio data in buf to a file in the specified path on the</span>
+<span class="s">  filesystem. The following options are also available (note: not all header</span>
+<span class="s">  and sample combinations work - incorrect combinations will fail silently):</span>
+
+<span class="s">   :header      - Header format: \&quot;aiff\&quot;, \&quot;next\&quot;, \&quot;wav\&quot;, \&quot;ircam\&quot;, \&quot;raw\&quot;</span>
+<span class="s">                  Default \&quot;wav\&quot;</span>
+<span class="s">   :samples     - Sample format: \&quot;int8\&quot;, \&quot;int16\&quot;, \&quot;int24\&quot;, \&quot;int32\&quot;,</span>
+<span class="s">                                 \&quot;float\&quot;, \&quot;double\&quot;, \&quot;mulaw\&quot;, \&quot;alaw\&quot;</span>
+<span class="s">                  Default \&quot;int16\&quot;</span>
+<span class="s">   :n-frames    - Number of frames to write. If &lt; 0 then all frames from</span>
+<span class="s">                  start-frame to the end of the buffer are written</span>
+<span class="s">                  Default -1</span>
+<span class="s">   :start-frame - starting frame in buffer (0 is the start of the buffer)</span>
+<span class="s">                  Default 0</span>
+
+<span class="s">   Example usage:</span>
+<span class="s">   (buffer-save buf \&quot;~/Desktop/foo.wav\&quot; :header \&quot;aiff\&quot; :samples \&quot;int32\&quot;</span>
+<span class="s">                                          :start-frame 100)&quot;</span>
+  <span class="p">[</span><span class="nv">buf</span> <span class="nb">path </span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">ensure-buffer-active!</span> <span class="nv">buf</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nf">buffer?</span> <span class="nv">buf</span><span class="p">))</span>
+
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nb">path </span><span class="p">(</span><span class="nf">resolve-tilde-path</span> <span class="nv">path</span><span class="p">)</span>
+        <span class="nv">arg-map</span> <span class="p">(</span><span class="nb">merge </span><span class="p">(</span><span class="nb">apply hash-map </span><span class="nv">args</span><span class="p">)</span>
+                       <span class="p">{</span><span class="ss">:header</span> <span class="s">&quot;wav&quot;</span>
+                        <span class="ss">:samples</span> <span class="s">&quot;int16&quot;</span>
+                        <span class="ss">:n-frames</span> <span class="mi">-1</span>
+                        <span class="ss">:start-frame</span> <span class="mi">0</span><span class="p">})</span>
+        <span class="p">{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">header</span> <span class="nv">samples</span> <span class="nv">n-frames</span> <span class="nv">start-frame</span><span class="p">]}</span> <span class="nv">arg-map</span><span class="p">]</span>
+
+    <span class="p">(</span><span class="nf">snd</span> <span class="s">&quot;/b_write&quot;</span> <span class="p">(</span><span class="ss">:id</span> <span class="nv">buf</span><span class="p">)</span> <span class="nb">path </span><span class="nv">header</span> <span class="nv">samples</span>
+                    <span class="nv">n-frames</span> <span class="nv">start-frame</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="ss">:buffer-saved</span><span class="p">))</span>
+    
+</code></pre></div>
+    <small></small>
+  </div>
+
+  <div class="footer">
+  </div>
+</div>
+
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-326839-4");
+    pageTracker._trackPageview();
+  } catch(err) {}</script>
+</body>
+</html>
